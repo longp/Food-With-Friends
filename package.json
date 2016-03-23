@@ -1,0 +1,30 @@
+{
+  "name": "final-mean-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexg2195/Food-With-Friends.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alexg2195/Food-With-Friends/issues"
+  },
+  "homepage": "https://github.com/Alexg2195/Food-With-Friends#readme",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.0",
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "mongoose": "^4.4.9",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
+}
