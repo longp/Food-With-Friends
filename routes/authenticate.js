@@ -8,21 +8,14 @@ var passport = require('../config/passport.js');
 // /Register Routes
 
 router.post('/register', function(req, res) {
-  var newUser = {
-    username: req.body.username,
-    password: req.body.password,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email
-  }
 
-  var newUser = new User(newUser);
+  var newUser = new User(req.body);
 
   newUser.save(function(err, doc) {
     if(err) {
-      // Tell user to fill out form correctly
+      res.send({state: 'failure', user: null, message: err});
     } else {
-      // Redirect to home page
+      res.send({state: 'success', user: doc.username, message: "User Created!"});
     }
   });
 });
