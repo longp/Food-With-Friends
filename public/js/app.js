@@ -21,11 +21,8 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
-    .when('/404', {
-      templateUrl: 'partials/404.html'
-    })
     .otherwise({
-      redirectTo: '404'
+        redirectTo: '/'
     });
 
   $locationProvider.html5Mode(true);
