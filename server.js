@@ -5,10 +5,11 @@ require('dotenv').config();
 // Load Modules
 
 var express = require("express");
-var expses = require('express-session')
+var expses = require('express-session');
 var bodyParser = require("body-parser");
 var logger = require('morgan');
 var path = require('path');
+var twilio = require('twilio');
 
 
 // Local config modules
@@ -68,6 +69,5 @@ app.use('/api', api);
 // Connection to PORT
 
 app.listen(PORT, function() {
-    console.log("Listening on:" + PORT)
+    console.log("Listening on:" + PORT);
 });
-
