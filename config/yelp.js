@@ -1,7 +1,7 @@
 var yelp = require("node-yelp");
 var keys = require('./keys.js');
 
-var client = yelp.createClient({
+var yelp = yelp.createClient({
   oauth: {
     consumer_key: keys.consumer_key,
     consumer_secret: keys.consumer_secret,
@@ -23,4 +23,4 @@ client.search({
 })
 
 
- module.exports = client;
+ module.exports = yelp;
