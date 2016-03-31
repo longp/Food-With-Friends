@@ -65,6 +65,14 @@ app.controller('authController', function($scope, $rootScope, $http, $location){
 
 app.controller('yelpController', function($scope, $http) {
   $scope.yelp = {
-    
+    terms:"",
+    location:"",
+  };
+
+  $scope.yelpSubmit = function () {
+    $http({
+      method:"GET",
+      url:'/yelp'
+    })
   }
 })

@@ -15,7 +15,7 @@ var yelp = yelp.createClient({
 });
 
 
-client.search({
+yelp.search({
   terms:"hotdogs",
   location:"Edison, NJ"
 }).then(function (data) {
