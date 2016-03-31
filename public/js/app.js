@@ -21,6 +21,10 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
+    .when('/yelp', {
+      templateUrl: 'partials/yelp.html',
+      controller: 'yelpController'
+    })
     .otherwise({
         redirectTo: '/'
     });
@@ -58,3 +62,9 @@ app.controller('authController', function($scope, $rootScope, $http, $location){
   }
 
 });
+
+app.controller('yelpController', function($scope, $http) {
+  $scope.yelp = {
+    
+  }
+})
