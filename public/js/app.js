@@ -73,6 +73,8 @@ app.controller('yelpController', function($scope, $http) {
     $http({
       method:"GET",
       url:'/yelp'
+    }).then(function(data) {
+      console.log(data)
     })
   }
 })
