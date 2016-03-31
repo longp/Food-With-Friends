@@ -34,7 +34,8 @@ app.controller('mainController', function($scope, $rootScope){
 
 });
 
-app.controller('authController', function($scope, $rootScope, $http, $location){
+
+app.controller('authController', function($scope, $rootScope, $http, $location, $window){
   $scope.error_message = '';
   $scope.user = {
     username: '',
@@ -46,13 +47,28 @@ app.controller('authController', function($scope, $rootScope, $http, $location){
 
   $scope.register = function () {
     $http.post("/auth/register", $scope.user).success(function (data) {
-      if(data.state == 'success') {
+      if (data.state == 'success') {
         $scope.message = data.message;
         $location.path('/');
       }
       else {
         $scope.message = data.message.errors;
         $location.path('/register');
+        $window.scrollTo(0, 0);
+      }
+    });
+  }
+
+  $scope.login = function () {
+    $http.post("/login", $scope.user).success(function (data) {
+      if (data.state == 'success') {
+        $rootScope.authenticated = true;
+        $rootScope.current_user = data.user.username;
+        $location.path('/user');
+      }
+      else {
+        $scope.error_message = data.message;
+        $location.path('/login');
       }
     });
   }
