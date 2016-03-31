@@ -9,7 +9,7 @@ var passport = require('../config/passport.js');
 
 router.post('/register', function(req, res) {
 
-  console.log(req);
+  console.log(req.body);
 
   var newUser = new User(req.body);
 

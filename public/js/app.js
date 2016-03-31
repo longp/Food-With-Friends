@@ -46,7 +46,17 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   };
 
   $scope.register = function () {
-    $http.post("/auth/register", $scope.user).success(function (data) {
+
+    var req = {
+      method: 'POST',
+      url: '/auth/register',
+      headers: {
+        'Content-Type': "application/json"
+      },
+      data: $scope.user
+    }
+
+    $http(req).success(function (data) {
       if (data.state == 'success') {
         $scope.message = data.message;
         $location.path('/');
