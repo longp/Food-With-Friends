@@ -7,8 +7,20 @@ var client = yelp.createClient({
     consumer_secret: keys.consumer_secret,
     token: keys.token,
     token_secret: keys.token_secret
+  },
+  // Optional settings:
+  httpClient: {
+    maxSockets: 25  // ~> Default is 10
   }
 });
+
+
+client.search({
+  terms:"hotdogs",
+  location:"Edison, NJ"
+}).then(function (data) {
+  console.log(data)
+})
 
 
  module.exports = client;
