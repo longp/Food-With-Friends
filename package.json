@@ -27,6 +27,7 @@
     "morgan": "^1.7.0",
     "node-yelp": "0.0.3",
     "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "twilio": "~2.9.0"
   }
 }
