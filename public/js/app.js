@@ -2,8 +2,6 @@ var app = angular.module('mainApp', ['ngRoute', 'ngResource']).run(function($roo
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
 });
-
-
 app.config(function($routeProvider, $locationProvider){
   $routeProvider
     //The Welcome Cards are Displayed
@@ -55,6 +53,6 @@ app.controller('authController', function($scope, $rootScope, $http, $location){
         $location.path('/register');
       }
     });
-  }
+  };
 
 });
