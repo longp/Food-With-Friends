@@ -1,6 +1,7 @@
 var app = angular.module('mainApp', ['ngRoute', 'ngResource']).run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
+  $rootScope.message = '';
 });
 
 
@@ -70,14 +71,26 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   }
 
   $scope.login = function () {
-    $http.post("/login", $scope.user).success(function (data) {
+
+    var req = {
+      method: 'POST',
+      url: '/auth/login',
+      headers: {
+        'Content-Type': "application/json"
+      },
+      data: $scope.user
+    }
+
+
+    $http(req).success(function (data) {
       if (data.state == 'success') {
         $rootScope.authenticated = true;
-        $rootScope.current_user = data.user.username;
-        $location.path('/user');
+        $rootScope.current_user = data.user;
+        $rootScope.message = '';
+        $location.path('/');
       }
       else {
-        $scope.error_message = data.message;
+        $rootScope.message = data.message;
         $location.path('/login');
       }
     });
