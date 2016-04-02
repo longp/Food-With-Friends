@@ -16,7 +16,7 @@ var mongoose = require('mongoose');
 
 // Local config modules
 //mongoose
-mongoose.connect('mongodb://localhost/finalProjTest' || process.env.MONGOLAB_URI);
+mongoose.connect('mongodb://heroku_hmltr69l:gh97iovcdsp7n4oethecipspj0@ds025459.mlab.com:25459/heroku_hmltr69l');
 
 
 
