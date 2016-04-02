@@ -27,7 +27,7 @@ var api = require('./routes/api.js');
 
 // Express Port Declaration
 
-var PORT = process.env || 3000;
+var PORT = process.env.PORT || 3000;
 var app = express();
 
 
