@@ -25,13 +25,18 @@ router.post('/register', function(req, res) {
 
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.render('login', { msg: "Invalid Login Credentials" }); }
-    console.log(user);
-    if (!user.activeAcc) { return res.render('login', { msg: "Please Check Email To Activate Account" }); }
+    if (err) {
+      res.send({state: 'failure', user: null, message: err});
+    }
+    if (!user) {
+      res.send({state: 'failure', message: "Invalid Login Credentials" });
+    }
     req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.redirect('/user/' + user.username);
+      if (err) {
+        return next({state: 'failure', user: null, message: err});
+      } else {
+        res.send({state: 'success', user: req.body.username});
+      }
     });
   })(req, res, next);
 });
