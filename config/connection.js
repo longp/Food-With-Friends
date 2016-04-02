@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
-var db = mongoose.connect('mongodb://localhost/finalProjTest' || process.env.MONGOLAB_URI);
+mongoose.connect('mongodb://localhost/finalProjTest' || process.env.MONGOLAB_URI);
+var db = mongoose.connection;
 
 module.exports = db;

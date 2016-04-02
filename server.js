@@ -10,11 +10,17 @@ var bodyParser = require("body-parser");
 var logger = require('morgan');
 var path = require('path');
 var twilio = require('twilio');
+var mongoose = require('mongoose');
+
 
 
 // Local config modules
+//mongoose
+mongoose.connect('mongodb://heroku_hmltr69l:gh97iovcdsp7n4oethecipspj0@ds025459.mlab.com:25459/heroku_hmltr69l');
 
-var db = require('./config/connection.js');
+
+
+// var db = require('./config/connection.js');
 var passport = require('./config/passport.js');
 
 
@@ -35,6 +41,8 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
 
 
 // Middleware
