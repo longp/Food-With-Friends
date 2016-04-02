@@ -1,5 +1,24 @@
+<<<<<<< HEAD
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+}
+
+footer{
+  position:absolute;
+  bottom:0;
+  width: 100%
+}
+
+main {
+  flex: 1 0 auto;
+}
+=======
 /*footer{
   position:absolute;
   bottom: 0;
   width: 100%;
 }*/
+>>>>>>> 28bee7612f90ac66b4f84f4e93d998a55890def4
