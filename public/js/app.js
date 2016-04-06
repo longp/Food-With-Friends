@@ -20,6 +20,11 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
+    //sendSMS route
+    .when('/smssend', {
+      templateUrl: 'partials/sendSMS.html',
+      controller: 'mainController'
+    })
     .otherwise({
         redirectTo: '/'
     });
@@ -30,7 +35,19 @@ app.config(function($routeProvider, $locationProvider){
 
 app.controller('mainController', function($scope, $rootScope){
 
+  $scope.SMS = function () {
 
+  var accountSid = 'ACac2c80a08f5af3c721cd57508e22402c';
+  var authToken = "c97605c687ac79e81f300c94ea317d40";
+  var client = require('twilio')(accountSid, authToken);
+  client.messages.create({
+      body: "Long please?! I love you <3",
+      to: "+19087529887",
+      from: "+19086529320"
+  }, function(err, message) {
+      process.stdout.write(message.sid);
+  });
+};
 });
 
 
