@@ -20,6 +20,17 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
+    // yelp partial
+    .when("/yelp", {
+      templateUrl:'partials/yelp.html',
+      controller: 'yelpController',
+    })
+    //send sms
+    .when('/send', {
+      templateUrl: 'partials/send.html',
+      controller: 'mainController'
+
+    })
     .otherwise({
         redirectTo: '/'
     });
@@ -27,10 +38,23 @@ app.config(function($routeProvider, $locationProvider){
   $locationProvider.html5Mode(true);
 });
 
+app.controller('mainController', function($scope, $rootScope, $http){
 
-app.controller('mainController', function($scope, $rootScope){
-
-
+  $scope.sms = function(){
+    var req = {
+      method: 'POST',
+      url: '/api/sendSMS',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: $scope.number
+    }
+    $http(req).success(function(data){
+      if (data.state === success){
+        console.log(data);
+      }
+    })
+  };
 });
 
 
@@ -53,7 +77,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         'Content-Type': "application/json"
       },
       data: $scope.user
-    }
+    };
 
     $http(req).success(function (data) {
       if (data.state == 'success') {
@@ -66,7 +90,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         $window.scrollTo(0, 0);
       }
     });
-  }
+  };
 
   $scope.login = function () {
 
@@ -77,7 +101,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         'Content-Type': "application/json"
       },
       data: $scope.user
-    }
+    };
 
 
     $http(req).success(function (data) {
@@ -95,3 +119,24 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   };
 
 });
+
+
+app.controller('yelpController', function($scope, $http, $location, $route) {
+  $scope.yelp = {
+    term:"",
+    location:"",
+  };
+  $scope.yelpSubmit = function () {
+    $http({
+      method:"POST",
+      url:"/yelp",
+      data:$scope.yelp
+    })
+    .then(function(data) {
+      console.log(data.config.data.location)
+      $scope.term = data.term,
+      $scope.location = data.location
+    })
+  }
+
+})
