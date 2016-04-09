@@ -72,6 +72,10 @@ app.use("/css", express.static("public/css"));
 app.use('/', index);
 app.use('/auth', authenticate);
 app.use('/api', api);
+app.use('/yelp', api);
+
+
+
 
 
 // Connection to PORT

@@ -20,10 +20,16 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
+    // yelp partial
+    .when("/yelp", {
+      templateUrl:'partials/yelp.html',
+      controller: 'yelpController',
+    })
     //send sms
     .when('/send', {
       templateUrl: 'partials/send.html',
       controller: 'mainController'
+
     })
     .otherwise({
         redirectTo: '/'
@@ -113,3 +119,24 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   };
 
 });
+
+
+app.controller('yelpController', function($scope, $http, $location, $route) {
+  $scope.yelp = {
+    term:"",
+    location:"",
+  };
+  $scope.yelpSubmit = function () {
+    $http({
+      method:"POST",
+      url:"/yelp",
+      data:$scope.yelp
+    })
+    .then(function(data) {
+      console.log(data.config.data.location)
+      $scope.term = data.term,
+      $scope.location = data.location
+    })
+  }
+
+})

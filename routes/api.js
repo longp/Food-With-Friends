@@ -3,7 +3,25 @@ var router = express.Router();
 var accountSid = 'ACac2c80a08f5af3c721cd57508e22402c';
 var authToken = "c97605c687ac79e81f300c94ea317d40";
 var client = require('twilio')(accountSid, authToken);
+var yelp  = require('../config/yelp.js');
 
+
+
+
+//yelp route
+router.use(function(req ,res ) {
+  var term = req.body.term;
+  var location = req.body.location;
+  console.log(req.body)
+  yelp.search({
+    term:term,
+    location:location
+  })
+  .then(function () {console.log('success')})
+})
+
+
+// twilio route
 router.post('/sendSMS', function(req, res){
   client.messages.create({
       body: "Long please?! I love you <3",
@@ -17,6 +35,7 @@ router.post('/sendSMS', function(req, res){
     state: "success"
   });
 });
+
 
 
 

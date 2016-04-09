@@ -1,7 +1,7 @@
 var yelp = require("node-yelp");
 var keys = require('./keys.js');
 
-var client = yelp.createClient({
+var yelp = yelp.createClient({
   oauth: {
     consumer_key: keys.consumer_key,
     consumer_secret: keys.consumer_secret,
@@ -15,12 +15,4 @@ var client = yelp.createClient({
 });
 
 
-client.search({
-  terms:"hotdogs",
-  location:"Edison, NJ"
-}).then(function (data) {
-  console.log(data)
-})
-
-
- module.exports = client;
+ module.exports = yelp;
