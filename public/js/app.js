@@ -20,9 +20,15 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
+<<<<<<< HEAD
     //send sms
     .when('/send', {
       templateUrl: 'partials/send.html',
+=======
+    //sendSMS route
+    .when('/smssend', {
+      templateUrl: 'partials/sendSMS.html',
+>>>>>>> dca8312d07dd205746343de5f2cb97cd1a8a1bce
       controller: 'mainController'
     })
     .otherwise({
@@ -31,7 +37,6 @@ app.config(function($routeProvider, $locationProvider){
 
   $locationProvider.html5Mode(true);
 });
-
 
 app.controller('mainController', function($scope, $rootScope, $http){
 
