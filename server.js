@@ -23,8 +23,7 @@ var passport = require('./config/passport.js');
 var index = require('./routes/index.js');
 var authenticate = require('./routes/authenticate.js');
 var api = require('./routes/api.js');
-var yelpRoute = require('./routes/yelpRoute.js');
-var yelpKey = require('./routes/yelpKey.js');
+
 
 // Express Port Declaration
 
@@ -65,8 +64,7 @@ app.use("/css", express.static("public/css"));
 app.use('/', index);
 app.use('/auth', authenticate);
 app.use('/api', api);
-app.use('/yelpRoute', yelpRoute);
-app.use('/yelpKey', yelpKey);
+app.use('/yelp', api);
 
 
 

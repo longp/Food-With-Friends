@@ -21,17 +21,9 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
-    .when('/yelp', {
-      templateUrl: 'partials/yelp.html',
-      controller: 'yelpController'
-    })
-    .when('/yelpRoute', {
-      templateUrl: 'partials/yelp.html',
-      controller: 'yelpController'
-    })
-    .when("/yelpKey", {
+    .when("/yelp", {
       templateUrl:'partials/yelp.html',
-      controller: 'yelpkeyController',
+      controller: 'yelpController',
       // resolve: {
       //   yelpkey: function ($http) {
       //     return $http({
@@ -82,19 +74,8 @@ app.controller('authController', function($scope, $rootScope, $http, $location){
 
 });
 
-app.controller('yelpController', function($scope, $http, $location) {
-  $scope.yelp = {
-    term:"",
-    location:"",
-  };
-  $scope.yelpSubmit = function () {
-    $http.get('yelpKey', $scope.yelp).success(function (data) {
-      console.log(data);
-    })
-  }
-})
-// httpangular goes to wildcard route
-app.controller('yelpkeyController', function($scope, $http, $location, $route) {
+
+app.controller('yelpController', function($scope, $http, $location, $route) {
   $scope.yelp = {
     term:"",
     location:"",
@@ -102,7 +83,7 @@ app.controller('yelpkeyController', function($scope, $http, $location, $route) {
   $scope.yelpSubmit = function () {
     $http({
       method:"POST",
-      url:"/yelpRoute",
+      url:"/yelp",
       data:$scope.yelp
     })
     .then(function(data) {
