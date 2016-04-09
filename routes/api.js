@@ -7,7 +7,7 @@ var client = require('twilio')(accountSid, authToken);
 router.post('/sendSMS', function(req, res){
   client.messages.create({
       body: "Long please?! I love you <3",
-      to: "+19087529887",
+      to: req.body.phone1 + "",
       from: "+19086529320"
   }, function(err, message) {
       process.stdout.write(message.sid);
