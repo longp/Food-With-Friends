@@ -1,9 +1,8 @@
 var app = angular.module('mainApp', ['ngRoute', 'ngResource']).run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
+  $rootScope.message = '';
 });
-
-
 app.config(function($routeProvider, $locationProvider){
   $routeProvider
     //The Welcome Cards are Displayed
@@ -21,20 +20,16 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
+    // yelp partial
     .when("/yelp", {
       templateUrl:'partials/yelp.html',
       controller: 'yelpController',
-      // resolve: {
-      //   yelpkey: function ($http) {
-      //     return $http({
-      //       method:'GET',
-      //       url:'/yelpKey'
-      //     })
-      //       .then(function (data) {
-      //         console.log(data);
-      //       })
-      //   }
-      // }
+    })
+    //send sms
+    .when('/send', {
+      templateUrl: 'partials/send.html',
+      controller: 'mainController'
+
     })
     .otherwise({
         redirectTo: '/'
@@ -43,13 +38,27 @@ app.config(function($routeProvider, $locationProvider){
   $locationProvider.html5Mode(true);
 });
 
+app.controller('mainController', function($scope, $rootScope, $http){
 
-app.controller('mainController', function($scope, $rootScope){
-
-
+  $scope.sms = function(){
+    var req = {
+      method: 'POST',
+      url: '/api/sendSMS',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: $scope.number
+    }
+    $http(req).success(function(data){
+      if (data.state === success){
+        console.log(data);
+      }
+    })
+  };
 });
 
-app.controller('authController', function($scope, $rootScope, $http, $location){
+
+app.controller('authController', function($scope, $rootScope, $http, $location, $window){
   $scope.error_message = '';
   $scope.user = {
     username: '',
@@ -60,17 +69,54 @@ app.controller('authController', function($scope, $rootScope, $http, $location){
   };
 
   $scope.register = function () {
-    $http.post("/auth/register", $scope.user).success(function (data) {
-      if(data.state == 'success') {
+
+    var req = {
+      method: 'POST',
+      url: '/auth/register',
+      headers: {
+        'Content-Type': "application/json"
+      },
+      data: $scope.user
+    };
+
+    $http(req).success(function (data) {
+      if (data.state == 'success') {
         $scope.message = data.message;
         $location.path('/');
       }
       else {
         $scope.message = data.message.errors;
         $location.path('/register');
+        $window.scrollTo(0, 0);
       }
     });
-  }
+  };
+
+  $scope.login = function () {
+
+    var req = {
+      method: 'POST',
+      url: '/auth/login',
+      headers: {
+        'Content-Type': "application/json"
+      },
+      data: $scope.user
+    };
+
+
+    $http(req).success(function (data) {
+      if (data.state == 'success') {
+        $rootScope.authenticated = true;
+        $rootScope.current_user = data.user;
+        $rootScope.message = '';
+        $location.path('/');
+      }
+      else {
+        $rootScope.message = data.message;
+        $location.path('/login');
+      }
+    });
+  };
 
 });
 
