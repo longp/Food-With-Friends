@@ -20,6 +20,11 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
+    //send sms
+    .when('/send', {
+      templateUrl: 'partials/send.html',
+      controller: 'mainController'
+    })
     .otherwise({
         redirectTo: '/'
     });
@@ -28,9 +33,23 @@ app.config(function($routeProvider, $locationProvider){
 });
 
 
-app.controller('mainController', function($scope, $rootScope){
+app.controller('mainController', function($scope, $rootScope, $http){
 
-
+  $scope.sms = function(){
+    var req = {
+      method: 'POST',
+      url: '/api/sendSMS',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: $scope.number
+    }
+    $http(req).success(function(data){
+      if (data.state === success){
+        console.log(data);
+      }
+    })
+  };
 });
 
 
@@ -53,7 +72,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         'Content-Type': "application/json"
       },
       data: $scope.user
-    }
+    };
 
     $http(req).success(function (data) {
       if (data.state == 'success') {
@@ -66,7 +85,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         $window.scrollTo(0, 0);
       }
     });
-  }
+  };
 
   $scope.login = function () {
 
@@ -77,7 +96,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         'Content-Type': "application/json"
       },
       data: $scope.user
-    }
+    };
 
 
     $http(req).success(function (data) {
