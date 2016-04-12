@@ -1,8 +1,9 @@
-var app = angular.module('mainApp', ['ui.router', 'ngResource']).run(function($rootScope) {
+var app = angular.module('mainApp', ['ngRoute']).run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
 });
+
 app.config(function($routeProvider, $locationProvider){
   $routeProvider
     //The Welcome Cards are Displayed
