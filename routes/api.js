@@ -1,11 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var accountSid = 'ACac2c80a08f5af3c721cd57508e22402c';
-var authToken = "c97605c687ac79e81f300c94ea317d40";
-var client = require('twilio')(accountSid, authToken);
+var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
-
-
 
 
 //yelp route
