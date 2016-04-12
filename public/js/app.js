@@ -125,7 +125,14 @@ app.controller('yelpController', function($scope, $http, $location, $route) {
   $scope.yelp = {
     term:"",
     location:"",
+    restaurant: {
+      name:[],
+      location:[]
+    }
   };
+  var newArr = []
+
+
   $scope.yelpSubmit = function () {
     $http({
       method:"POST",
@@ -133,9 +140,17 @@ app.controller('yelpController', function($scope, $http, $location, $route) {
       data:$scope.yelp
     })
     .then(function(data) {
-      console.log(data.config.data.location)
-      $scope.term = data.term,
-      $scope.location = data.location
+      console.log(data)
+      for (i=0;i<data.data.length;i++) {
+        // debugger
+        // emparr.push(data.data[i].name);
+        $scope.yelp.restaurant.name.push(data.data[i].name);
+      }
+      console.log($scope.yelp.restaurant)
+
+      // console.log(newArr)
+      //
+      // $scope.yelp.restaurant = newArr;
     })
   }
 

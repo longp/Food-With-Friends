@@ -17,7 +17,7 @@ router.use(function(req ,res ) {
     term:term,
     location:location
   })
-  .then(function () {console.log('success')})
+  .then(function (data) {console.log(data)})
 })
 
 
