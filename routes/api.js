@@ -1,23 +1,49 @@
 var express = require('express');
 var router = express.Router();
-var accountSid = 'ACac2c80a08f5af3c721cd57508e22402c';
-var authToken = "c97605c687ac79e81f300c94ea317d40";
-var client = require('twilio')(accountSid, authToken);
+var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
+var Event = require('../models/event.js');
 
 
-
-
-//yelp route
-router.use(function(req ,res ) {
-  var term = req.body.term;
-  var location = req.body.location;
-  console.log(req.body)
+//create event route
+router.post('/createEvent', function(req, res) {
+  var formData = req.body;
   yelp.search({
-    term:term,
-    location:location
+    term: formData.term,
+    location: formData.location
   })
-  .then(function () {console.log('success')})
+  .then(function (data) {
+
+    var newEvent = new Event({
+      name: formData.name,
+      location: formData.location,
+      searchLat: data.region.center.latitude,
+      searchLng: data.region.center.longitude
+    });
+
+    newEvent.save(function(err, doc) {
+      if(err) {
+        res.send({state: 'failure', message: err});
+      } else {
+        res.send({state: 'success', message: "Event Created!"});
+      }
+    });
+
+
+    console.log(data.region.center.latitude);
+    console.log(data.region.center.longitude);
+    for (var i = data.businesses.length - 1; i >= 0; i--) {
+      console.log(data.businesses[i].name);
+      console.log(data.businesses[i].image_url);
+      console.log(data.businesses[i].rating);
+      console.log(data.businesses[i].display_phone);
+      if (data.businesses[i].categories.length) {
+        for (var j = data.businesses[i].categories.length - 1; j >= 0; j--) {
+          console.log(data.businesses[i].categories[j][0]);
+        }
+      }
+    }
+  });
 })
 
 
