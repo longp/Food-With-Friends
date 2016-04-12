@@ -6,9 +6,12 @@ var eventSchema = new Schema ({
     type: String,
     require: true
   },
-  Location:{
+  location:{
     type: String,
     require: true
+  },
+  phone:{
+    type: String,
   },
   searchLat:{
     type: String
@@ -19,11 +22,11 @@ var eventSchema = new Schema ({
   places:[{type:Schema.Types.ObjectId, ref: "Place"}],
   time:{
     type: String,
-    require: true
+    // require: true
   },
   date:{
     type: Date,
-    require: true
+    // require: true
   },
   createdby:[{type:Schema.Types.ObjectId, ref:"User"}],
   attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}]

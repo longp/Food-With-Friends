@@ -1,14 +1,18 @@
 <div class="row">
+  <div class="col m12" ng-show="message !== ''">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  </div>
   <div class="col m8 offset-m2">
     <form ng-submit="createEvent()">
-      <input type="text" placeholder="term" ng-model="yelp.term" value="">
-      <input type="text" placeholder="location" ng-model="yelp.location" value="">
+      <input type="text" placeholder="Name of your event" ng-model="newEvent.name">
+      <input type="text" placeholder="Type of Food (optional)" ng-model="newEvent.term">
+      <input type="text" placeholder="Location" ng-model="newEvent.location">
       <button type="submit" name="button">submit</button>
-      {{ yelp }}
+      {{ newEvent }}
     </form>
-    <div ng-repeat="yelp in yelps">
-      {{ yelp.term }}
-      {{ yelp.location }}
-    </div>
   </div>
 </div>

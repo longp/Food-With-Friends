@@ -4,16 +4,32 @@ var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
 var Event = require('../models/event.js');
 
+
 //create event route
 router.post('/createEvent', function(req, res) {
-  var term = req.body.term;
-  var location = req.body.location;
-  console.log(req.body);
+  var formData = req.body;
   yelp.search({
-    term: term,
-    location: location
+    term: formData.term,
+    location: formData.location
   })
   .then(function (data) {
+
+    var newEvent = new Event({
+      name: formData.name,
+      location: formData.location,
+      searchLat: data.region.center.latitude,
+      searchLng: data.region.center.longitude
+    });
+
+    newEvent.save(function(err, doc) {
+      if(err) {
+        res.send({state: 'failure', message: err});
+      } else {
+        res.send({state: 'success', message: "Event Created!"});
+      }
+    });
+
+
     console.log(data.region.center.latitude);
     console.log(data.region.center.longitude);
     for (var i = data.businesses.length - 1; i >= 0; i--) {
@@ -21,8 +37,10 @@ router.post('/createEvent', function(req, res) {
       console.log(data.businesses[i].image_url);
       console.log(data.businesses[i].rating);
       console.log(data.businesses[i].display_phone);
-      for (var j = data.businesses[i].categories.length - 1; j >= 0; j--) {
-        console.log(data.businesses[i].categories[j][0]);
+      if (data.businesses[i].categories.length) {
+        for (var j = data.businesses[i].categories.length - 1; j >= 0; j--) {
+          console.log(data.businesses[i].categories[j][0]);
+        }
       }
     }
   });

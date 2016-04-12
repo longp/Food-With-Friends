@@ -21,8 +21,8 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
-    // yelp partial
-    .when("/yelp", {
+    // createEvent partial
+    .when("/newEvent", {
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
@@ -122,22 +122,31 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 });
 
 
-app.controller('createEventController', function($scope, $http, $location, $route) {
-  $scope.yelp = {
-    term:"",
-    location:"",
+app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
+  $scope.newEvent = {
+    term: "",
+    location: ""
   };
+
   $scope.createEvent = function () {
     $http({
-      method:"POST",
-      url:"/api/createEvent",
-      data:$scope.yelp
-    })
-    .then(function(data) {
-      console.log(data.config.data.location)
-      $scope.term = data.term,
-      $scope.location = data.location
-    })
+      method: "POST",
+      url: "/api/createEvent",
+      data: $scope.newEvent
+    }).success(function (data) {
+      if (data.state == 'success') {
+        $rootScope.message = data.message;
+        $location.path('/newEvent');
+      } else {
+        $rootScope.message = data.message;
+        $location.path('/newEvent');
+      }
+    });
+    // .then(function(data) {
+    //   console.log(data.config.data.location)
+    //   $scope.term = data.term,
+    //   $scope.location = data.location
+    // })
   }
 
 })
