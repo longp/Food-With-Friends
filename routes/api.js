@@ -9,15 +9,27 @@ var yelp  = require('../config/yelp.js');
 
 
 //yelp route
-router.use(function(req ,res ) {
+router.use(function(req, res) {
   var term = req.body.term;
   var location = req.body.location;
-  console.log(req.body)
+  console.log(req.body);
   yelp.search({
-    term:term,
-    location:location
+    term: term,
+    location: location
   })
-  .then(function () {console.log('success')})
+  .then(function (data) {
+    console.log(data.region.center.latitude);
+    console.log(data.region.center.longitude);
+    for (var i = data.businesses.length - 1; i >= 0; i--) {
+      console.log(data.businesses[i].name);
+      console.log(data.businesses[i].image_url);
+      console.log(data.businesses[i].rating);
+      console.log(data.businesses[i].display_phone);
+      for (var j = data.businesses[i].categories.length - 1; j >= 0; j--) {
+        console.log(data.businesses[i].categories[j][0]);
+      }
+    }
+  });
 })
 
 
