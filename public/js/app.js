@@ -23,8 +23,8 @@ app.config(function($routeProvider, $locationProvider){
     })
     // yelp partial
     .when("/yelp", {
-      templateUrl:'partials/yelp.html',
-      controller: 'yelpController',
+      templateUrl:'partials/createEvent.html',
+      controller: 'createEventController',
     })
     //send sms
     .when('/send', {
@@ -122,15 +122,15 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 });
 
 
-app.controller('yelpController', function($scope, $http, $location, $route) {
+app.controller('createEventController', function($scope, $http, $location, $route) {
   $scope.yelp = {
     term:"",
     location:"",
   };
-  $scope.yelpSubmit = function () {
+  $scope.createEvent = function () {
     $http({
       method:"POST",
-      url:"/yelp",
+      url:"/api/createEvent",
       data:$scope.yelp
     })
     .then(function(data) {

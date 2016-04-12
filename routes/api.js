@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
+var Event = require('../models/event.js');
 
-
-//yelp route
-router.use(function(req, res) {
+//create event route
+router.post('/createEvent', function(req, res) {
   var term = req.body.term;
   var location = req.body.location;
   console.log(req.body);
