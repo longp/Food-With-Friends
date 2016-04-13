@@ -3,6 +3,7 @@ var router = express.Router();
 var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
 var Event = require('../models/event.js');
+var Place = require('../models/event.js');
 
 
 //create event route
@@ -30,8 +31,6 @@ router.post('/createEvent', function(req, res) {
     });
 
 
-    console.log(data.region.center.latitude);
-    console.log(data.region.center.longitude);
     for (var i = data.businesses.length - 1; i >= 0; i--) {
       console.log(data.businesses[i].name);
       console.log(data.businesses[i].image_url);
