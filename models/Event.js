@@ -30,7 +30,7 @@ var eventSchema = new Schema ({
   },
   createdby:[{type:Schema.Types.ObjectId, ref:"User"}],
   attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}]
-})
+});
 
 var Event = mongoose.model('Event', eventSchema);
 module.exports = Event;

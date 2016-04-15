@@ -49,12 +49,12 @@ app.controller('mainController', function($scope, $rootScope, $http){
         'Content-Type': "application/JSON"
       },
       data: $scope.number
-    }
+    };
     $http(req).success(function(data){
       if (data.state === success){
         console.log(data);
       }
-    })
+    });
   };
 });
 
@@ -147,6 +147,5 @@ app.controller('createEventController', function($scope, $http, $location, $rout
     //   $scope.term = data.term,
     //   $scope.location = data.location
     // })
-  }
-
-})
+  };
+});
