@@ -43,7 +43,7 @@ router.post('/createEvent', function(req, res) {
       }
     }
   });
-})
+});
 
 
 // twilio route
