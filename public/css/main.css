@@ -27,6 +27,7 @@ label{
 }
 .registerForm, .loginForm{
   border: 2px solid black;
+  border-radius: 5px;
   background-color: white;
   opacity: 0.6;
 }
