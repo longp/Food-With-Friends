@@ -15,4 +15,4 @@ var yelp = yelp.createClient({
 });
 
 
- module.exports = yelp;
+module.exports = yelp;

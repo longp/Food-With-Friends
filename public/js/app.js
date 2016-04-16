@@ -1,8 +1,9 @@
-var app = angular.module('mainApp', ['ngRoute', 'ngResource']).run(function($rootScope) {
+var app = angular.module('mainApp', ['ngRoute']).run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
 });
+
 app.config(function($routeProvider, $locationProvider){
   $routeProvider
     //The Welcome Cards are Displayed
@@ -20,10 +21,10 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'partials/register.html',
       controller: 'authController'
     })
-    // yelp partial
-    .when("/yelp", {
-      templateUrl:'partials/yelp.html',
-      controller: 'yelpController',
+    // createEvent partial
+    .when("/newEvent", {
+      templateUrl:'partials/createEvent.html',
+      controller: 'createEventController',
     })
     //send sms
     .when('/send', {
@@ -48,12 +49,12 @@ app.controller('mainController', function($scope, $rootScope, $http){
         'Content-Type': "application/JSON"
       },
       data: $scope.number
-    }
+    };
     $http(req).success(function(data){
       if (data.state === success){
         console.log(data);
       }
-    })
+    });
   };
 });
 
@@ -121,6 +122,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 });
 
 
+
 app.controller('yelpController', function($scope, $http, $location, $route) {
   $scope.yelp = {
     term:"",
@@ -153,5 +155,33 @@ app.controller('yelpController', function($scope, $http, $location, $route) {
       // $scope.yelp.restaurant = newArr;
     })
   }
+});
 
-})
+app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
+  $scope.newEvent = {
+    term: "",
+    location: ""
+  };
+
+
+  $scope.createEvent = function () {
+    $http({
+      method: "POST",
+      url: "/api/createEvent",
+      data: $scope.newEvent
+    }).success(function (data) {
+      if (data.state == 'success') {
+        $rootScope.message = data.message;
+        $location.path('/newEvent');
+      } else {
+        $rootScope.message = data.message;
+        $location.path('/newEvent');
+      }
+    });
+    // .then(function(data) {
+    //   console.log(data.config.data.location)
+    //   $scope.term = data.term,
+    //   $scope.location = data.location
+    // })
+  };
+});
