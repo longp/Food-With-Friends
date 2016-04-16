@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
-var Event = require('../models/event.js');
+// var Event = require('../models/event.js');
 var Place = require('../models/place.js');
 
 
