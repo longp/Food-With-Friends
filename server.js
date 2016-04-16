@@ -1,6 +1,5 @@
 // Local Enviorment file loaded
 require('dotenv').config();
-var MONGOLAB_URI ='mongodb://heroku_n9mzqprs:ncflorqpso0tap853a0m31ueqn@ds011251.mlab.com:11251/heroku_n9mzqprs';
 
 // Load Modules
 
