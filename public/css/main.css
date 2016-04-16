@@ -23,7 +23,8 @@ label{
   color: black;
 }
 .input-field{
- color: black;
+  font-weight: bold;
+  color: black;
 }
 .registerForm, .loginForm{
   padding: 20px;
@@ -43,17 +44,18 @@ label{
 }
 
 ::-webkit-input-placeholder {
-   color: red;
+   color: #283593;
+   font-weight: bold;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: red;
+   color: #283593;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: red;
+   color: #283593;
 }
 
 :-ms-input-placeholder {
-   color: red;
+   color: #283593;
 }
