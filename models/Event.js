@@ -22,11 +22,9 @@ var eventSchema = new Schema ({
   places:[{type:Schema.Types.ObjectId, ref: "Place"}],
   time:{
     type: String,
-    // require: true
   },
   date:{
     type: Date,
-    // require: true
   },
   createdby:[{type:Schema.Types.ObjectId, ref:"User"}],
   attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}]

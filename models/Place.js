@@ -9,5 +9,17 @@ var placeSchema = new Schema ({
   address:{
     type:String,
     require:true,
-  }
+  },
+  rating : {
+    type:Number
+  },
+  phone: {
+    type: String
+  },
+  categories: [{
+    type:String
+  }]
 });
+
+var Place = mongoose.model('Place', placeSchema);
+module.exports = Place;
