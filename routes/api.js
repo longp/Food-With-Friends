@@ -6,6 +6,7 @@ var Event = require('../models/event.js');
 var Place = require('../models/place.js');
 
 
+//create event route
 router.post('/createEvent', function(req, res) {
   var formData = req.body;
   yelp.search({
@@ -13,12 +14,14 @@ router.post('/createEvent', function(req, res) {
     location: formData.location
   })
   .then(function (data) {
+
     var newEvent = new Event({
       name: formData.name,
       location: formData.location,
       searchLat: data.region.center.latitude,
-      searchLng: data.region.center.longitude,
+      searchLng: data.region.center.longitude
     });
+
     newEvent.save(function(err, doc) {
       if(err) {
         res.send({state: 'failure', message: err});
@@ -26,6 +29,8 @@ router.post('/createEvent', function(req, res) {
         res.send({state: 'success', message: "Event Created!"});
       }
     });
+
+
     for (var i = data.businesses.length - 1; i >= 0; i--) {
       console.log(data.businesses[i].name);
       console.log(data.businesses[i].image_url);
