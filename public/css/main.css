@@ -19,9 +19,15 @@ nav{
 main {
   flex: 1 0 auto;
 }
+label{
+  color: black;
+}
 .send{
   width: 100%
 }
 .madeBy, .welcome{
   text-align: center;
+}
+.formTextBlack{
+  color: black;
 }
