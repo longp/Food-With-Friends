@@ -1,43 +1,25 @@
-<div id="login-page" class="row">
-   <form class="login-form teal lighten-2">
-     <div class="row">
-       <div class="input-field col s12 center">
-         <img src="img/logo.png" height=150px  width="150px"alt="" class="responsive-img valign profile-image-login">
-         <p class="center login-form-text">Food With Friends</p>
-       </div>
-     </div>
-     <div class="row margin">
-       <div class="input-field col s12">
-         <i class="mdi-social-person-outline prefix"></i>
-         <input class="validate" id="email" type="email">
-         <label for="email" data-error="wrong" data-success="right" class="center-align">Email</label>
-       </div>
-     </div>
-     <div class="row margin">
-       <div class="input-field col s12">
-         <i class="mdi-action-lock-outline prefix"></i>
-         <input id="password" type="password">
-         <label for="password">Password</label>
-       </div>
-     </div>
-     <div class="row">
-       <div class="input-field col s12 m12 l12  login-text">
-           <input type="checkbox" id="remember-me" />
-           <label for="remember-me">Remember me</label>
-       </div>
-     </div>
-     <div class="row">
-       <div class="input-field col s12">
-         <a href="login.html" class="btn waves-effect waves-light col s12">Login</a>
-       </div>
-     </div>
-     <div class="row">
-       <div class="input-field col s6 m6 l6">
-         <p class="margin medium-small"><a href="/register">Register Now!</a></p>
-       </div>
-       <div class="input-field col s6 m6 l6">
-           <p class="margin right-align medium-small"><a href="/forgot-password">Forgot password?</a></p>
-       </div>
-     </div>
-   </form>
- </div>
+<div class="row">
+  <div class="col m12" ng-show="message !== ''">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col m6 offset-m3">
+    <h1>Login</h1>
+    <form ng-submit="login()">
+      <div class="form-group">
+        <label for="">User Name</label>
+        <input type="text" id="" placeholder="UserName123" name="username" ng-model="user.username">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="">Password</label>
+        <input type="password" placeholder="Sup3rS3cr3tpassw0rd" ng-model="user.password">
+      </div>
+      <br>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+</div>
