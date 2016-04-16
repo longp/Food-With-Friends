@@ -122,11 +122,47 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 });
 
 
+
+app.controller('yelpController', function($scope, $http, $location, $route) {
+  $scope.yelp = {
+    term:"",
+    location:"",
+    restaurant: {
+      name:[],
+      location:[]
+    }
+  };
+  var newArr = []
+
+
+  $scope.yelpSubmit = function () {
+    $http({
+      method:"POST",
+      url:"/yelp",
+      data:$scope.yelp
+    })
+    .then(function(data) {
+      console.log(data)
+      for (i=0;i<data.data.length;i++) {
+        // debugger
+        // emparr.push(data.data[i].name);
+        $scope.yelp.restaurant.name.push(data.data[i].name);
+      }
+      console.log($scope.yelp.restaurant)
+
+      // console.log(newArr)
+      //
+      // $scope.yelp.restaurant = newArr;
+    })
+  }
+});
+
 app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
   $scope.newEvent = {
     term: "",
     location: ""
   };
+
 
   $scope.createEvent = function () {
     $http({
