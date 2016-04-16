@@ -15,8 +15,8 @@ var mongoose = require('mongoose');
 
 
 // Local config modules
-//mongoose
-// mongoose.connect(MONGOLAB_URI);
+// mongoose
+mongoose.connect(MONGOLAB_URI);
 
 
 
