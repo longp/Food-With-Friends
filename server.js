@@ -11,7 +11,8 @@ var logger = require('morgan');
 var path = require('path');
 var twilio = require('twilio');
 var mongoose = require('mongoose');
-
+var Event = require('../models/event.js');
+var Place = require('../models/place.js');
 
 
 // Local config modules
