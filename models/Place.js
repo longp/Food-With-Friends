@@ -10,4 +10,4 @@ var placeSchema = new Schema ({
     type:STRING,
     require:true,
   }
-})
+});
