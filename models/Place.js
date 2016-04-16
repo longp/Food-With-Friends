@@ -3,11 +3,11 @@ var Schema = mongoose.Schema;
 
 var placeSchema = new Schema ({
   name:{
-    type:STRING,
+    type:String,
     require:true,
   },
   address:{
-    type:STRING,
+    type:String,
     require:true,
   }
 });
