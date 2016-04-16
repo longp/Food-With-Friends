@@ -33,7 +33,7 @@ label{
 .send{
   width: 100%
 }
-.madeBy, .welcome, .reg{
+.madeBy, .welcome, .reg, .logins{
   text-align: center;
 }
 .formTextBlack{
