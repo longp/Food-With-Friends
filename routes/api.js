@@ -41,7 +41,7 @@ var Place = require('../models/place.js');
         }
       }
     }
-  });
+  })
 });
 
 
