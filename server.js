@@ -18,8 +18,6 @@ var mongoose = require('mongoose');
 //mongoose
 // mongoose.connect(MONGOLAB_URI);
 
-
-
 var db = require('./config/connection.js');
 var passport = require('./config/passport.js');
 
