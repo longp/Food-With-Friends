@@ -26,7 +26,7 @@ var eventSchema = new Schema ({
   date:{
     type: Date,
   },
-  createdby:[{type:Schema.Types.ObjectId, ref:"User"}],
+  createdby:{type:Schema.Types.ObjectId, ref:"User"},
   attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}]
 });
 

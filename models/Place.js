@@ -18,7 +18,8 @@ var placeSchema = new Schema ({
   },
   categories: [{
     type:String
-  }]
+  }],
+  event:{type:Schema.Types.ObjectId, ref:'Event'}
 });
 
 var Place = mongoose.model('Place', placeSchema);
