@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
-var Event = require('../models/event.js');
-var Place = require('../models/place.js');
+var Event = require('../models/Event.js');
+var Place = require('../models/Place.js');
 
 
 
@@ -30,7 +30,7 @@ router.post('/createEvent', function(req, res) {
         res.send({state: 'success', message: "Event Created! " + doc});
       }
     });
-    
+
     for (var i = 4; i >= 0; i--) {
       var categoryArr = [];
       if (data.businesses[i].categories.length && data.businesses[i].categories.length>0) {
