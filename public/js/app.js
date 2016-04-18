@@ -32,6 +32,12 @@ app.config(function($routeProvider, $locationProvider){
       controller: 'mainController'
 
     })
+    //user account page
+    .when('/myaccount', {
+      templateUrl: 'partials/myaccount.html',
+      controller: 'mainController'
+
+    })
     .otherwise({
         redirectTo: '/'
     });

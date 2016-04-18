@@ -41,6 +41,17 @@ label{
 .formTextBlack{
   color: black;
 }
+.cardAcc{
+  height: 400px;
+  width: 400px;
+}
+.card-title{
+  text-align: center;
+}
+.blankImg{
+  height: 300px;
+  width: 50px;
+}
 
 ::-webkit-input-placeholder {
    color: #283593;
