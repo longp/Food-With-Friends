@@ -9,7 +9,7 @@ app.config(function($routeProvider, $locationProvider){
     //The Welcome Cards are Displayed
     .when('/', {
       templateUrl: 'partials/welcome.html',
-      controller: 'mainController'
+      controller: 'authController'
     })
     //the login display
     .when('/login', {
@@ -94,7 +94,6 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   };
 
   $scope.login = function () {
-
     var req = {
       method: 'POST',
       url: '/auth/login',
@@ -103,9 +102,8 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       },
       data: $scope.user
     };
-
-
     $http(req).success(function (data) {
+      console.log($rootScope.current_user)
       if (data.state == 'success') {
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user;
@@ -118,7 +116,6 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       }
     });
   };
-
 });
 
 
@@ -142,7 +139,7 @@ app.controller('yelpController', function($scope, $http, $location, $route) {
       data:$scope.yelp
     })
     .then(function(data) {
-      console.log(data)
+      // console.log(data)
       for (i=0;i<data.data.length;i++) {
         // debugger
         // emparr.push(data.data[i].name);
@@ -162,8 +159,6 @@ app.controller('createEventController', function($scope, $http, $location, $rout
     term: "",
     location: ""
   };
-
-
   $scope.createEvent = function () {
     $http({
       method: "POST",
