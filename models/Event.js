@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var Promise = require('bluebird')
+var mongoose = Promise.promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 
 var eventSchema = new Schema ({
@@ -27,7 +28,8 @@ var eventSchema = new Schema ({
     type: Date,
   },
   createdby:{type:Schema.Types.ObjectId, ref:"User"},
-  attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}]
+  attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}],
+  eventUrl:String
 });
 
 var Event = mongoose.model('Event', eventSchema);

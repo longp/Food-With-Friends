@@ -38,7 +38,7 @@ router.post('/login', function(req, res, next) {
         res.send({state: 'success', user: req.body.username});
       }
     });
-  })(req, res, next);
+  })(req,res,next);
 });
 
 
