@@ -19,9 +19,53 @@ nav{
 main {
   flex: 1 0 auto;
 }
+label{
+  color: black;
+}
+.input-field{
+  color: black;
+}
+.registerForm, .loginForm{
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  opacity: 0.6;
+}
 .send{
   width: 100%
 }
-.madeBy, .welcome{
+.madeBy, .welcome, .reg, .logins{
+  padding-top: 20px;
   text-align: center;
+}
+.formTextBlack{
+  color: black;
+}
+.cardAcc{
+  height: 400px;
+  width: 400px;
+}
+.card-title{
+  text-align: center;
+}
+.blankImg{
+  height: 300px;
+  width: 50px;
+}
+
+::-webkit-input-placeholder {
+   color: #283593;
+   font-weight: bold;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #283593;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #283593;
+}
+
+:-ms-input-placeholder {
+   color: #283593;
 }

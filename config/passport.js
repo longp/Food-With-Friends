@@ -12,7 +12,7 @@ passport.use(new passportLocal(
         // if user exists then check password against hash
         bcrypt.compare(password, user.password, function(err, check) {
           if (check) {
-            done(null, { id: user.id, username: username, activeAcc: user.activeAcc });
+            done(null, { id:user.id, username: username, activeAcc: user.activeAcc });
           } else{
             done(null, null);
           }

@@ -9,7 +9,7 @@ app.config(function($routeProvider, $locationProvider){
     //The Welcome Cards are Displayed
     .when('/', {
       templateUrl: 'partials/welcome.html',
-      controller: 'mainController'
+      controller: 'authController'
     })
     //the login display
     .when('/login', {
@@ -26,21 +26,29 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
+    //events page
+    .when('/event/:eventUrl', {
+      templateUrl:'partials/event.html',
+      // controller:'eventController'
+    })
     //send sms
     .when('/send', {
       templateUrl: 'partials/send.html',
+      controller: 'mainController'
+    })
+    //user account page
+    .when('/myaccount', {
+      templateUrl: 'partials/myaccount.html',
       controller: 'mainController'
 
     })
     .otherwise({
         redirectTo: '/'
     });
-
   $locationProvider.html5Mode(true);
 });
 
 app.controller('mainController', function($scope, $rootScope, $http){
-
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -58,7 +66,6 @@ app.controller('mainController', function($scope, $rootScope, $http){
   };
 });
 
-
 app.controller('authController', function($scope, $rootScope, $http, $location, $window){
   $scope.error_message = '';
   $scope.user = {
@@ -68,9 +75,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
     lastName: '',
     email: ''
   };
-
   $scope.register = function () {
-
     var req = {
       method: 'POST',
       url: '/auth/register',
@@ -79,7 +84,6 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       },
       data: $scope.user
     };
-
     $http(req).success(function (data) {
       if (data.state == 'success') {
         $scope.message = data.message;
@@ -92,9 +96,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       }
     });
   };
-
   $scope.login = function () {
-
     var req = {
       method: 'POST',
       url: '/auth/login',
@@ -103,14 +105,15 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       },
       data: $scope.user
     };
-
-
     $http(req).success(function (data) {
+      // console.log($scope.user)
       if (data.state == 'success') {
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user;
+        $scope.user = data.user;
         $rootScope.message = '';
         $location.path('/');
+        console.log(data.user)
       }
       else {
         $rootScope.message = data.message;
@@ -118,34 +121,33 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       }
     });
   };
-
 });
-
 
 app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
   $scope.newEvent = {
     term: "",
-    location: ""
+    location: "",
+    eventUrl:''
   };
-
   $scope.createEvent = function () {
     $http({
       method: "POST",
       url: "/api/createEvent",
       data: $scope.newEvent
     }).success(function (data) {
+      console.log(data)
       if (data.state == 'success') {
         $rootScope.message = data.message;
+        $scope.newEvent.eventUrl = data.eventUrl;
         $location.path('/newEvent');
+        // $location.path('/newEvent/' +data.eventUrl);
+
       } else {
         $rootScope.message = data.message;
         $location.path('/newEvent');
       }
     });
-    // .then(function(data) {
-    //   console.log(data.config.data.location)
-    //   $scope.term = data.term,
-    //   $scope.location = data.location
-    // })
   };
 });
+
+// app.controller('eventController', function () {})

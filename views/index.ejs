@@ -17,12 +17,20 @@
 </head>
 <body ng-app="mainApp">
   <nav class="indigo darken-3">
-    <div class="nav-wrapper">
+    <div ng-hide="current_user" class="nav-wrapper">
       <a href="/" class="brand-logo">Food With Friends</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="login">Login</a></li>
         <li><a href="register">Register</a></li>
-        <li><a href="send">Send an SMS</a></li>
+      </ul>
+    </div>
+    <div ng-show="current_user" class="nav-wrapper">
+      <a href="/" class="brand-logo">Food With Friends</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="newEvent">Create Event</a></li>
+        <li><a href="/">Map</a></li>
+        <li><a href="send">SMS</a></li>
+        <li><a href="/">Account</a></li>
       </ul>
     </div>
   </nav>

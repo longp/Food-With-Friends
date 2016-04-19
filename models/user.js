@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var Promise = require('bluebird')
+var mongoose = Promise.promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
 
@@ -57,6 +58,7 @@ UserSchema.pre('save', function(next) {
   user.password = bcrypt.hashSync(user.password, 10);
   next();
 });
+
 
 
 var User = mongoose.model('User', UserSchema);
