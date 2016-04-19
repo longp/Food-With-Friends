@@ -29,7 +29,7 @@ var eventSchema = new Schema ({
   },
   createdby:{type:Schema.Types.ObjectId, ref:"User"},
   attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}],
-  randomUrl:String
+  eventUrl:String
 });
 
 var Event = mongoose.model('Event', eventSchema);

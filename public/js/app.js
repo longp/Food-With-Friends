@@ -26,21 +26,23 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
+    //events page
+    .when('/event/:eventUrl', {
+      templateUrl:'partials/event.html',
+      // controller:'eventController'
+    })
     //send sms
     .when('/send', {
       templateUrl: 'partials/send.html',
       controller: 'mainController'
-
     })
     .otherwise({
         redirectTo: '/'
     });
-
   $locationProvider.html5Mode(true);
 });
 
 app.controller('mainController', function($scope, $rootScope, $http){
-
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -58,7 +60,6 @@ app.controller('mainController', function($scope, $rootScope, $http){
   };
 });
 
-
 app.controller('authController', function($scope, $rootScope, $http, $location, $window){
   $scope.error_message = '';
   $scope.user = {
@@ -68,9 +69,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
     lastName: '',
     email: ''
   };
-
   $scope.register = function () {
-
     var req = {
       method: 'POST',
       url: '/auth/register',
@@ -79,7 +78,6 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       },
       data: $scope.user
     };
-
     $http(req).success(function (data) {
       if (data.state == 'success') {
         $scope.message = data.message;
@@ -92,7 +90,6 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       }
     });
   };
-
   $scope.login = function () {
     var req = {
       method: 'POST',
@@ -103,12 +100,14 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       data: $scope.user
     };
     $http(req).success(function (data) {
-      console.log($rootScope.current_user)
+      // console.log($scope.user)
       if (data.state == 'success') {
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user;
+        $scope.user = data.user;
         $rootScope.message = '';
         $location.path('/');
+        console.log(data.user)
       }
       else {
         $rootScope.message = data.message;
@@ -118,46 +117,11 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   };
 });
 
-
-
-app.controller('yelpController', function($scope, $http, $location, $route) {
-  $scope.yelp = {
-    term:"",
-    location:"",
-    restaurant: {
-      name:[],
-      location:[]
-    }
-  };
-  var newArr = []
-
-
-  $scope.yelpSubmit = function () {
-    $http({
-      method:"POST",
-      url:"/yelp",
-      data:$scope.yelp
-    })
-    .then(function(data) {
-      // console.log(data)
-      for (i=0;i<data.data.length;i++) {
-        // debugger
-        // emparr.push(data.data[i].name);
-        $scope.yelp.restaurant.name.push(data.data[i].name);
-      }
-      console.log($scope.yelp.restaurant)
-
-      // console.log(newArr)
-      //
-      // $scope.yelp.restaurant = newArr;
-    })
-  }
-});
-
 app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
   $scope.newEvent = {
     term: "",
-    location: ""
+    location: "",
+    eventUrl:''
   };
   $scope.createEvent = function () {
     $http({
@@ -168,16 +132,16 @@ app.controller('createEventController', function($scope, $http, $location, $rout
       console.log(data)
       if (data.state == 'success') {
         $rootScope.message = data.message;
+        $scope.newEvent.eventUrl = data.eventUrl;
         $location.path('/newEvent');
+        // $location.path('/newEvent/' +data.eventUrl);
+
       } else {
         $rootScope.message = data.message;
         $location.path('/newEvent');
       }
     });
-    // .then(function(data) {
-    //   console.log(data.config.data.location)
-    //   $scope.term = data.term,
-    //   $scope.location = data.location
-    // })
   };
 });
+
+// app.controller('eventController', function () {})

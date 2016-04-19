@@ -40,7 +40,8 @@ function createEvent (req,res,randomS) {
         location: formData.location,
         searchLat: data.region.center.latitude,
         searchLng: data.region.center.longitude,
-        randomUrl: randomS
+        createdby: req.user.id,
+        eventUrl: randomS
       });
       newEvent.saveAsync(function (err, event) {
         createPlaces(data, event);
@@ -49,7 +50,7 @@ function createEvent (req,res,randomS) {
         if(err) {
           res.send({state: 'failure', message: err});
         } else {
-          res.send({state: 'success', message: "Event Created! " + event});
+          res.send({state: 'success', message:event.name + " Event Created!", eventUrl:randomS});
         }
       }).
       then(function (doc) {
