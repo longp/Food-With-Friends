@@ -5,19 +5,10 @@ var yelp  = require('../config/yelp.js');
 var Event = require('../models/Event.js');
 var Place = require('../models/Place.js');
 
-
-
 //create event route
 router.post('/createEvent', function(req, res) {
-  createEvent(req,res);
-
+  createEvent(req,res)
 });
-
-
-
-
-
-
 
 // twilio route
 router.post('/sendSMS', function(req, res){
@@ -49,15 +40,19 @@ function createEvent (req,res) {
         // places
       });
       newEvent.saveAsync(function (err, event) {
-        if(err) {
-          res.send({state: 'failure', message: err});
-        } else {
-          res.send({state: 'success', message: "Event Created! " + event});
-        }
-          createPlaces(data, event);
-          addPlaces(event);
-      });
-
+        createPlaces(data, event);
+        addPlaces(event);
+        populatePlaces(event, res);
+        // if(err) {
+        //   res.send({state: 'failure', message: err});
+        // } else {
+        //   res.send({state: 'success', message: "Event Created! " + event});
+        // }
+      }).
+      then(function (doc) {
+        console.log(doc)
+        console.log('doc')
+      })
     })
     .catch(function (err) {
       console.log(err)
@@ -65,16 +60,13 @@ function createEvent (req,res) {
 }
 
 function createPlaces (data, event){
-  // console.log(event)
-  // data.businesses.length-1
-  for (var i = 4; i >= 0; i--) {
+  for (var i = data.businesses.length-1; i >= 0; i--) {
     var categoryArr = [];
     if (data.businesses[i].categories.length && data.businesses[i].categories.length>0) {
       for (var j = data.businesses[i].categories.length - 1; j >= 0; j--) {
         categoryArr.push(data.businesses[i].categories[j][0]);
       }
     }
-    // console.log("category arr " +categoryArr);
     var newPlace = new Place({
       name: data.businesses[i].name,
       address: data.businesses[i].location.display_address,
@@ -83,20 +75,7 @@ function createPlaces (data, event){
       event: event._id,
       categories: categoryArr
     });
-    newPlace.saveAsync(function (err, docs) {
-      // var place_id = [];
-      // place_id.push(place);
-      // var counter = i;
-      // console.log(docs + "coutner: "+counter)
-      // Event.findOneAndUpdateAsync(
-      //   {_id:doc._id},
-      //    {places: place_id},
-      //    function(err, docs) {
-      //      if (err) {
-      //        console.log(err)
-      //      }
-      // })
-    })
+    newPlace.saveAsync(function (err, docs) {})
   }
 }
 
@@ -106,21 +85,23 @@ function addPlaces(event) {
     cheddar = doc.map(function(n,i) {
       return [n._id]
     })
-    // console.log(cheddar);
     Event.findOneAndUpdateAsync({_id:event._id},{places:cheddar}, function (err,doc) {
       if  (err) {
         console.log(err)
       }
-      console.log(doc)
     })
   })
 }
 
-function populatePlaces(event) {
-  Event.findOneAsync({event:event_id})
+function populatePlaces(event, res) {
+  Event.find({_id:event._id})
   .populate('places')
   .exec(function (err, doc) {
-    console.log(doc)
+    if(err) {
+      res.send({state: 'failure', message: err});
+    } else {
+      res.send({state: 'success', message: "Event Created! " + doc});
+    }
   })
 }
 
