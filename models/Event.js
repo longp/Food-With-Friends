@@ -28,7 +28,8 @@ var eventSchema = new Schema ({
     type: Date,
   },
   createdby:{type:Schema.Types.ObjectId, ref:"User"},
-  attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}]
+  attendee:[{type:Schema.Types.ObjectId, ref:"Attendee"}],
+  randomUrl:String
 });
 
 var Event = mongoose.model('Event', eventSchema);

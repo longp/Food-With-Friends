@@ -170,6 +170,7 @@ app.controller('createEventController', function($scope, $http, $location, $rout
       url: "/api/createEvent",
       data: $scope.newEvent
     }).success(function (data) {
+      console.log(data)
       if (data.state == 'success') {
         $rootScope.message = data.message;
         $location.path('/newEvent');

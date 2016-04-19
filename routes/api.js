@@ -4,10 +4,12 @@ var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
 var Event = require('../models/Event.js');
 var Place = require('../models/Place.js');
+var randomstring = require('randomstring');
 
 //create event route
 router.post('/createEvent', function(req, res) {
-  createEvent(req,res)
+  var randomS = randomstring.generate(7)
+  createEvent(req,res,randomS)
 });
 
 // twilio route
@@ -25,7 +27,8 @@ router.post('/sendSMS', function(req, res){
   });
 });
 
-function createEvent (req,res) {
+//creates teh event and calls createPlaces and addPlaces fx, then sends data to angular
+function createEvent (req,res,randomS) {
   var formData = req.body;
   yelp.search({
     term: formData.term,
@@ -37,17 +40,17 @@ function createEvent (req,res) {
         location: formData.location,
         searchLat: data.region.center.latitude,
         searchLng: data.region.center.longitude,
-        // places
+        randomUrl: randomS
       });
       newEvent.saveAsync(function (err, event) {
         createPlaces(data, event);
         addPlaces(event);
-        populatePlaces(event, res);
-        // if(err) {
-        //   res.send({state: 'failure', message: err});
-        // } else {
-        //   res.send({state: 'success', message: "Event Created! " + event});
-        // }
+        populatePlaces(event, res, randomS);
+        if(err) {
+          res.send({state: 'failure', message: err});
+        } else {
+          res.send({state: 'success', message: "Event Created! " + event});
+        }
       }).
       then(function (doc) {
         console.log(doc)
@@ -59,6 +62,7 @@ function createEvent (req,res) {
     })
 }
 
+//creates the places found in the yelpseach location and adds to mongo
 function createPlaces (data, event){
   for (var i = data.businesses.length-1; i >= 0; i--) {
     var categoryArr = [];
@@ -79,6 +83,7 @@ function createPlaces (data, event){
   }
 }
 
+//adds the place Ids to event document
 function addPlaces(event) {
   Place.findAsync({event:event._id}, function(err, doc) {
     var cheddar = [];
@@ -93,15 +98,12 @@ function addPlaces(event) {
   })
 }
 
-function populatePlaces(event, res) {
+
+//population fx
+function populatePlaces(event, res, randomS) {
   Event.find({_id:event._id})
   .populate('places')
   .exec(function (err, doc) {
-    if(err) {
-      res.send({state: 'failure', message: err});
-    } else {
-      res.send({state: 'success', message: "Event Created! " + doc});
-    }
   })
 }
 
