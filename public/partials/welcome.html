@@ -3,17 +3,20 @@
   <div class="col s12">
     <div class="card light-blue darken-1">
       <div ng-hide="current_user" class="card-content white-text welcome">
-        <h4>{{current_user}}</h4>
         <span class="card-title">Welcome To Food With Friends!</span>
-        <p>Our goal is to make meeting with your friends to get a bite to eat, hassle free.</p><br>
+        <p>Our goal is to make meeting with your friends to get a bite to eat, hassle free.</p>
+        <br>
+        <br>
+        <br>
         <a href="/register" class="waves-effect waves-light btn orange darken-2">Create Account</a>
         <a href="/login" ng-hide="current_user" class="waves-effect waves-light btn orange darken-2">Login</a>
         <a href="/newEvent" class="waves-effect waves-light btn orange darken-2">Create Event</a>
       </div>
       <div ng-show='current_user' class="card-content white-text welcome">
         <h4>Welcome, {{current_user}}</h4>
-        {{current_user}}
-        <span>What are ya waiting for?! Create an event!</span>
+        <span>What are ya waiting for?! &nbsp Create an event!</span>
+        <br>
+        <br>
         <br>
         <a href="/newEvent" class="waves-effect waves-light btn orange darken-2">Create Event</a>
       </div>
