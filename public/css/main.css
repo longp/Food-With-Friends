@@ -1,9 +1,14 @@
+html {
+  height: 100%;
+}
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
+  background-size: width height;
+  background-repeat: no-repeat;
 }
 
 footer{
@@ -30,6 +35,7 @@ label{
   border-radius: 5px;
   background-color: white;
   opacity: 0.6;
+
 }
 .send{
   padding-top: 30px;
@@ -69,4 +75,25 @@ label{
 
 :-ms-input-placeholder {
    color: #283593;
+}
+#formHead{
+color: RED;
+}
+.formtxt{
+  color: teal;
+}
+input[type=text],
+input[type=text]:focus{
+color: purple;
+border-bottom: 11px solid red;
+box-shadow: 0 1px 0 0 white;
+}
+input[type=password],
+input[type=password]:focus{
+color: darkblue;
+border-bottom: 11px solid yellow;
+box-shadow: 0 1px 0 0 white;
+}
+#input-field {
+  background-color: BlanchedAlmond;
 }
