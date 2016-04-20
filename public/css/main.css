@@ -75,3 +75,24 @@ label{
 :-ms-input-placeholder {
    color: #283593;
 }
+#formHead{
+color: RED;
+}
+.formtxt{
+  color: teal;
+}
+input[type=text],
+input[type=text]:focus{
+color: purple;
+border-bottom: 11px solid red;
+box-shadow: 0 1px 0 0 white;
+}
+input[type=password],
+input[type=password]:focus{
+color: darkblue;
+border-bottom: 11px solid yellow;
+box-shadow: 0 1px 0 0 white;
+}
+#input-field {
+  background-color: BlanchedAlmond;
+}

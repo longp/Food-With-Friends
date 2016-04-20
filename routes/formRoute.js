@@ -7,7 +7,7 @@ var randomstring = require('randomstring');
 
 
 router.post('/form', function (req, res) {
-  res.send('HIHIHIHI')
+  res.send('HIHIHIHI');
 })
 
 
