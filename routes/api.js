@@ -12,6 +12,10 @@ router.post('/createEvent', function(req, res) {
   createEvent(req,res,randomS)
 });
 
+router.get('/form', function (req, res) {
+  res.send('hihih')
+})
+
 // twilio route
 router.post('/sendSMS', function(req, res){
   client.messages.create({
@@ -97,7 +101,6 @@ function addPlaces(event) {
   })
 }
 
-
 //population fx
 function populatePlaces(event) {
   Event.find({_id:event._id})
@@ -106,6 +109,4 @@ function populatePlaces(event) {
     // console.log(doc)
   })
 }
-
-
 module.exports = router;

@@ -1,3 +1,4 @@
+
 var app = angular.module('mainApp', ['ngRoute']).run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
@@ -34,7 +35,7 @@ app.config(function($routeProvider, $locationProvider){
     //form page
     .when('/form', {
       templateUrl:'partials/form.html',
-      controller: 'createFormController'
+      controller: 'formController'
     } )
     //send sms
     .when('/send', {
@@ -154,4 +155,17 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   };
 });
 
-app.controller('createFormController', function () {})
+
+
+  app.controller('formController', function () {
+    console.log('yoyo')
+    $http({
+      method:'GET',
+      url: '/api/form',
+    }).success(function (data) {
+      console.log('data');
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+  })
