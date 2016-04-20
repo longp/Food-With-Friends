@@ -25,13 +25,14 @@ label{
 .input-field{
   color: black;
 }
-.registerForm, .loginForm{
+.registerForm, .loginForm, .sendForm{
   padding: 20px;
   border-radius: 5px;
   background-color: white;
   opacity: 0.6;
 }
 .send{
+  padding-top: 30px;
   width: 100%
 }
 .madeBy, .welcome, .reg, .logins{
