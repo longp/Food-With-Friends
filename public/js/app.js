@@ -31,6 +31,11 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl:'partials/event.html',
       // controller:'eventController'
     })
+    //form page
+    .when('/form', {
+      templateUrl:'partials/form.html',
+      controller: 'createFormController'
+    } )
     //send sms
     .when('/send', {
       templateUrl: 'partials/send.html',
@@ -141,7 +146,6 @@ app.controller('createEventController', function($scope, $http, $location, $rout
         $scope.newEvent.eventUrl = data.eventUrl;
         $location.path('/newEvent');
         // $location.path('/newEvent/' +data.eventUrl);
-
       } else {
         $rootScope.message = data.message;
         $location.path('/newEvent');
@@ -150,4 +154,4 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   };
 });
 
-// app.controller('eventController', function () {})
+app.controller('createFormController', function () {})
