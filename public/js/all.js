@@ -1,3 +1,4 @@
+
 var app = angular.module('mainApp', ['ngRoute']).run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
@@ -31,6 +32,11 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl:'partials/event.html',
       // controller:'eventController'
     })
+    //form page
+    .when('/form', {
+      templateUrl:'partials/form.html',
+      controller: 'formController'
+    } )
     //send sms
     .when('/send', {
       templateUrl: 'partials/send.html',
@@ -46,24 +52,6 @@ app.config(function($routeProvider, $locationProvider){
         redirectTo: '/'
     });
   $locationProvider.html5Mode(true);
-});
-
-app.controller('mainController', function($scope, $rootScope, $http){
-  $scope.sms = function(){
-    var req = {
-      method: 'POST',
-      url: '/api/sendSMS',
-      headers: {
-        'Content-Type': "application/JSON"
-      },
-      data: $scope.number
-    };
-    $http(req).success(function(data){
-      if (data.state === success){
-        console.log(data);
-      }
-    });
-  };
 });
 
 app.controller('authController', function($scope, $rootScope, $http, $location, $window){
@@ -151,4 +139,37 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   };
 });
 
-// app.controller('eventController', function () {})
+
+
+  app.controller('formController', function ($http) {
+    console.log('yoyo');
+    $http({
+      method:'GET',
+      url: '/api/form',
+    }).success(function (data) {
+      console.log(data);
+      console.log('12312123datssssa');
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+  })
+
+
+app.controller('mainController', function($scope, $rootScope, $http){
+  $scope.sms = function(){
+    var req = {
+      method: 'POST',
+      url: '/api/sendSMS',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: $scope.number
+    };
+    $http(req).success(function(data){
+      if (data.state === success){
+        console.log(data);
+      }
+    });
+  };
+});

@@ -12,6 +12,10 @@ router.post('/createEvent', function(req, res) {
   createEvent(req,res,randomS)
 });
 
+router.get('/form', function (req, res) {
+  res.send('hihih')
+})
+
 // twilio route
 router.post('/sendSMS', function(req, res){
   client.messages.create({
@@ -46,16 +50,12 @@ function createEvent (req,res,randomS) {
       newEvent.saveAsync(function (err, event) {
         createPlaces(data, event);
         addPlaces(event);
-        populatePlaces(event, res, randomS);
+        populatePlaces(event);
         if(err) {
           res.send({state: 'failure', message: err});
         } else {
           res.send({state: 'success', message:event.name + " Event Created!", eventUrl:randomS});
         }
-      }).
-      then(function (doc) {
-        console.log(doc)
-        console.log('doc')
       })
     })
     .catch(function (err) {
@@ -80,7 +80,9 @@ function createPlaces (data, event){
       event: event._id,
       categories: categoryArr
     });
-    newPlace.saveAsync(function (err, docs) {})
+    newPlace.saveAsync(function (err, docs) {
+      populatePlaces(event, docs)
+    })
   }
 }
 
@@ -99,14 +101,12 @@ function addPlaces(event) {
   })
 }
 
-
 //population fx
-function populatePlaces(event, res, randomS) {
+function populatePlaces(event) {
   Event.find({_id:event._id})
   .populate('places')
   .exec(function (err, doc) {
+    // console.log(doc)
   })
 }
-
-
 module.exports = router;
