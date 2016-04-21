@@ -6,13 +6,13 @@
       </div>
     </div>
   </div>
-  <div class="col m8 offset-m2">
-    <form ng-submit="createEvent()">
-      <input type="text" placeholder="Name of your event" ng-model="newEvent.name">
-      <input type="text" placeholder="Type of Food (optional)" ng-model="newEvent.term">
-      <input type="text" placeholder="Location" ng-model="newEvent.location">
-      <button type="submit" name="button">submit</button>
-      {{ newEvent }}
-    </form>
+    <div class="col m8 offset-m2">
+      <form ng-submit="createEvent()">
+        <input type="text" placeholder="Name of your event" ng-model="newEvent.name">
+        <input type="text" placeholder="Type of Food (optional)" ng-model="newEvent.term">
+        <input type="text" placeholder="Location" ng-model="newEvent.location">
+        <button type="submit" name="button">submit</button>
+        {{ newEvent }}
+      </form>
+    </div>
   </div>
-</div>
