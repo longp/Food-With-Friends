@@ -1,1 +1,34 @@
-hi im event page
+<form class="" ng-submit='myEventSubmit()'>
+  <button type="submit" name="button">submito</button>
+</form>
+
+<div>
+  <table>
+    <thead>
+      <th>
+        <tr>
+          Event
+        </tr>
+      </th>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="col 3" ng-repeat="event in events">
+          {{event.name}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+   <!-- <ul ng-repeat="event in events">
+    <li>{{event.name}}</li>
+    <li>{{event.location}}</li>
+    <li>
+      <ul ng-repeat='place in event.places'>
+        <li>{{place.name}}</li>
+         <li>{{place.rating}}</li>
+         <li>{{place.phone}}</li>
+         <li>{{place.address}}</li>
+      </ul>
+    </li>
+  </ul>  -->
+</div>

@@ -1,15 +1,20 @@
-
-
-  app.controller('formController', function ($http) {
+  app.controller('formController', function ($http, $scope) {
     console.log('yoyo');
-    $http({
-      method:'GET',
-      url: '/api/form',
-    }).success(function (data) {
-      console.log(data);
-      console.log('12312123datssssa');
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
+    $scope.form={
+      term:'',
+      location:''
+    };
+    $scope.formSubmit = function () {
+      $http({
+        method:'POST',
+        url: '/form/form',
+        data:$scope.form
+      }).success(function (data) {
+        console.log(data);
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    }
+
   })

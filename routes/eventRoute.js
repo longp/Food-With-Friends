@@ -5,12 +5,19 @@ var Event = require('../models/Event.js');
 var Place = require('../models/Place.js');
 var randomstring = require('randomstring');
 
-router.post('/form', function (req, res) {
-  Event.find()
+router.post('/mine', function (req, res) {
+  var userId = req.user.id;
+  var username = req.user.username;
+  Event.find({createdby:userId})
   .populate('places')
-  .then(function(data){
+  .then(function (data) {
     res.send(data);
   })
+  // Event.find()
+  // .populate('places')
+  // .then(function(data){
+  //   res.send(data);
+  // })
 })
 
 
