@@ -183,6 +183,7 @@ app.controller('mainController', function($scope, $rootScope, $http){
 
   app.controller('myEventController', function ($http, $scope) {
     console.log('yoyo');
+    var self = this;
     $scope.events={
       name:'',
       places:'',
