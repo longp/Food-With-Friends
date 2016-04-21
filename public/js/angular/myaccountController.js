@@ -8,7 +8,7 @@ app.controller('myaccountController', function($http, $scope){
   $scope.myAccount = function(){
     $http({
       method:'GET',
-      url: '/myaccount',
+      url: '/acc/myaccount',
       data:$scope.users
     }).success(function (users){
       console.log(users);

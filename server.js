@@ -74,7 +74,7 @@ app.use('/auth', authenticate);
 app.use('/api', api);
 app.use('form', formRoute);
 app.use('/event', eventRoute);
-app.use('/myaccount', accountRoute);
+app.use('/acc', accountRoute);
 
 
 
