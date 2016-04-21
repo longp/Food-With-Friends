@@ -27,10 +27,14 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
-    //events page
-    .when('/event/:eventUrl', {
+    // //events page
+    // .when('/event/:eventUrl', {
+    //   templateUrl:'partials/event.html',
+    //   // controller:'eventController'
+    // })
+    .when('/event', {
       templateUrl:'partials/event.html',
-      // controller:'eventController'
+      controller:'myEventController'
     })
     //form page
     .when('/form', {
@@ -45,7 +49,7 @@ app.config(function($routeProvider, $locationProvider){
     //user account page
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
-      controller: 'mainController'
+      controller: 'myaccountController'
 
     })
     .otherwise({

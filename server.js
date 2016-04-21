@@ -23,12 +23,13 @@ var passport = require('./config/passport.js');
 
 
 // Routing Modules
-
+// var accountRoute = require('./routes/accountRoute.js');
 var index = require('./routes/index.js');
 var authenticate = require('./routes/authenticate.js');
 var api = require('./routes/api.js');
 var formRoute = require('./routes/formRoute.js');
-
+var eventRoute = require('./routes/eventRoute.js');
+var accountRoute = require('./routes/accountRoute.js');
 
 // Express Port Declaration
 
@@ -71,7 +72,9 @@ app.use("/css", express.static("public/css"));
 app.use('/', index);
 app.use('/auth', authenticate);
 app.use('/api', api);
-app.use('/form', formRoute);
+app.use('form', formRoute);
+app.use('/event', eventRoute);
+app.use('/myaccount', accountRoute);
 
 
 

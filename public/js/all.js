@@ -27,10 +27,14 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
-    //events page
-    .when('/event/:eventUrl', {
+    // //events page
+    // .when('/event/:eventUrl', {
+    //   templateUrl:'partials/event.html',
+    //   // controller:'eventController'
+    // })
+    .when('/event', {
       templateUrl:'partials/event.html',
-      // controller:'eventController'
+      controller:'myEventController'
     })
     //form page
     .when('/form', {
@@ -45,7 +49,7 @@ app.config(function($routeProvider, $locationProvider){
     //user account page
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
-      controller: 'mainController'
+      controller: 'myaccountController'
 
     })
     .otherwise({
@@ -101,6 +105,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         $scope.user = data.user;
         $rootScope.message = '';
         $location.path('/');
+        console.log("booyah");
         console.log(data.user)
       }
       else {
@@ -139,20 +144,25 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   };
 });
 
-
-
-  app.controller('formController', function ($http) {
+  app.controller('formController', function ($http, $scope) {
     console.log('yoyo');
-    $http({
-      method:'GET',
-      url: '/api/form',
-    }).success(function (data) {
-      console.log(data);
-      console.log('12312123datssssa');
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
+    $scope.form={
+      term:'',
+      location:''
+    };
+    $scope.formSubmit = function () {
+      $http({
+        method:'POST',
+        url: '/form/form',
+        data:$scope.form
+      }).success(function (data) {
+        console.log(data);
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    }
+
   })
 
 
@@ -173,3 +183,52 @@ app.controller('mainController', function($scope, $rootScope, $http){
     });
   };
 });
+
+app.controller('myaccountController', function($http, $scope){
+  console.log("suh dude");
+  $scope.users = {
+    firstName: '',
+    lastName:''
+  }
+
+  $scope.myAccount = function(){
+    $http({
+      method:'GET',
+      url: '/myaccount',
+      data:$scope.users
+    }).success(function (users){
+      console.log(users);
+    }).catch(function(err){
+      console.log(err)
+    })
+  }
+  $scope.myAccount();
+})
+
+  app.controller('myEventController', function ($http, $scope) {
+    console.log('yoyo');
+    var self = this;
+    $scope.events={
+      name:'',
+      places:'',
+      location:'',
+      friends:''
+    };
+    $scope.myEventSubmit = function () {
+      $http({
+        method:'POST',
+        url: '/event/mine',
+        data:$scope.events
+      }).success(function (data) {
+        $scope.events = data;
+        // $scope.event.name= data[0].name;
+        // $scope.event.places= data[0].places[0];
+        // $scope.event.location= data[0].location;
+        console.log($scope.events)
+        // console.log(data.data);
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    }
+  })
