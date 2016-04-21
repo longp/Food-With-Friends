@@ -18,21 +18,21 @@
 <body ng-app="mainApp">
   <nav class="indigo darken-3">
     <div ng-hide="current_user" class="navbar-fixed">
->
       <a href="/" class="brand-logo">Food With Friends</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="login">Login</a></li>
-        <li><a href="register">Register</a></li>
-        <li><a href="form">Form</a></li>
+        <li><a ng-hide='current_user' href="login">Login</a></li>
+        <li><a ng-hide='current_user' href="register">Register</a></li>
+        <li><a ng-hide='current_user' href="form">Form</a></li>
+        <li><a ng-show='current_user' href="/myaccount">My Account</a></li>
       </ul>
     </div>
     <div ng-show="current_user" class="nav-wrapper">
       <a href="/" class="brand-logo">Food With Friends</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="newEvent">Create Event</a></li>
-        <li><a href="/">Map</a></li>
-        <li><a href="send">SMS</a></li>
-        <li><a href="/">Account</a></li>
+        <li><a ng-hide='current_user' href="newEvent">Create Event</a></li>
+        <li><a ng-hide='current_user' href="/">Map</a></li>
+        <li><a ng-hide='current_user' href="send">SMS</a></li>
+        <li><a ng-show='current_user' href="/myaccount">My Account</a></li>
       </ul>
     </div>
   </nav>
