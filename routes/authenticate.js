@@ -10,7 +10,7 @@ var passport = require('../config/passport.js');
 router.post('/register', function(req, res) {
 
   var newUser = new User(req.body);
-
+  
   newUser.save(function(err, doc) {
     if(err) {
       res.send({state: 'failure', user: null, message: err});

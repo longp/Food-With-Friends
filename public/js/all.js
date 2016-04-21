@@ -27,10 +27,14 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
-    //events page
-    .when('/event/:eventUrl', {
+    // //events page
+    // .when('/event/:eventUrl', {
+    //   templateUrl:'partials/event.html',
+    //   // controller:'eventController'
+    // })
+    .when('/event', {
       templateUrl:'partials/event.html',
-      // controller:'eventController'
+      controller:'myEventController'
     })
     //form page
     .when('/form', {
@@ -137,20 +141,25 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   };
 });
 
-
-
-  app.controller('formController', function ($http) {
+  app.controller('formController', function ($http, $scope) {
     console.log('yoyo');
-    $http({
-      method:'GET',
-      url: '/api/form',
-    }).success(function (data) {
-      console.log(data);
-      console.log('12312123datssssa');
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
+    $scope.form={
+      term:'',
+      location:''
+    };
+    $scope.formSubmit = function () {
+      $http({
+        method:'POST',
+        url: '/form/form',
+        data:$scope.form
+      }).success(function (data) {
+        console.log(data);
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    }
+
   })
 
 
@@ -171,3 +180,30 @@ app.controller('mainController', function($scope, $rootScope, $http){
     });
   };
 });
+
+  app.controller('myEventController', function ($http, $scope) {
+    console.log('yoyo');
+    $scope.events={
+      name:'',
+      places:'',
+      location:'',
+      friends:''
+    };
+    $scope.myEventSubmit = function () {
+      $http({
+        method:'POST',
+        url: '/event/mine',
+        data:$scope.events
+      }).success(function (data) {
+        $scope.events = data;
+        // $scope.event.name= data[0].name;
+        // $scope.event.places= data[0].places[0];
+        // $scope.event.location= data[0].location;
+        console.log($scope.events)
+        // console.log(data.data);
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    }
+  })
