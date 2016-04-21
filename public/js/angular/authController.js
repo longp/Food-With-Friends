@@ -45,6 +45,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         $scope.user = data.user;
         $rootScope.message = '';
         $location.path('/');
+        console.log("booyah");
         console.log(data.user)
       }
       else {

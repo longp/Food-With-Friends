@@ -28,7 +28,7 @@
           <li><a ng-hide='current_user' href="newEvent">Create Event</a></li>
           <li><a ng-hide='current_user' href="/">Map</a></li>
           <li><a ng-hide='current_user' href="send">SMS</a></li>
-          <li><a ng-show='current_user' ng-click="myAccount()" href="/myaccount">My Account</a></li>
+          <li><a ng-show='current_user' ng-click='myAccount()' href="/myaccount">My Account</a></li>
         </ul>
       </div>
     </nav>
@@ -39,25 +39,19 @@
     </div>
     <footer class="page-footer indigo darken-3">
       <div class="container">
-        <div ng-view>
-          <!-- Partials Render Here -->
+        <div class="row">
+          <div class="col l12 s12 madeBy">
+            <h5 class="white-text">Food with friends was created with hunger by</h5>
+            <p class="grey-text text-lighten-4">Alex Giordano, Long Phan, Tammer Galal, and Terrence Henriquez</p>
+          </div>
         </div>
       </div>
-      <footer class="page-footer indigo darken-3">
+      <div class="footer-copyright">
         <div class="container">
-          <div class="row">
-            <div class="col l12 s12 madeBy">
-              <h5 class="white-text">Food with friends was created with hunger by</h5>
-              <p class="grey-text text-lighten-4">Alex Giordano, Long Phan, Tammer Galal, and Terrence Henriquez</p>
-            </div>
-          </div>
+          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
         </div>
-        <div class="footer-copyright">
-          <div class="container">
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-          </div>
-        </div>
-      </footer>
+      </div>
+    </footer>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

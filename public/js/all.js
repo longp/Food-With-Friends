@@ -105,6 +105,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         $scope.user = data.user;
         $rootScope.message = '';
         $location.path('/');
+        console.log("booyah");
         console.log(data.user)
       }
       else {
@@ -183,22 +184,18 @@ app.controller('mainController', function($scope, $rootScope, $http){
 
 app.controller('myaccountController', function($http, $scope){
   console.log("suh dude");
-  var self = this;
-  $scope.users = {
-    firstName: '',
-    lastName: ''
-  };
+
   $scope.myAccount = function(){
     $http({
       method:'GET',
-      url: '/myaccount',
-      data: $scope.users
-    }).sucess(function (data){
-      console.log($scope.users)
+      url: '/myaccount'
+    }).success(function (data){
+      console.log(data);
     }).catch(function(err){
       console.log(err)
     })
   }
+  $scope.myAccount();
 })
 
   app.controller('myEventController', function ($http, $scope) {
