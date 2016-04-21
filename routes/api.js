@@ -42,7 +42,8 @@ function createEvent (req,res,randomS) {
   var formData = req.body;
   yelp.search({
     term: formData.term,
-    location: formData.location
+    location: formData.location,
+    limit:10
   })
     .then(function(data) {
       var newEvent = new Event({
