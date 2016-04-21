@@ -29,15 +29,21 @@ passport.use(new passportLocal(
 // =========================================================================
 // FACEBOOK ==========PASPPORT==============================================
 // =========================================================================
+
+
+
 passport.use(new FacebookStrategy({
   clientID: configAuth.facebookAuth.clientID,
   clientSecret: configAuth.facebookAuth.clientSecret,
   callbackURL: configAuth.facebookAuth.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
+    process.nextTick(function(){
+      User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+        return done(err, user);
+      });
+    })
+
   }
 ));
 
