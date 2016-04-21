@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-hide="eventCreated">
   <div class="col m12" ng-show="message !== ''">
     <div class="card blue-grey darken-1">
       <div class="card-content white-text">
@@ -14,5 +14,15 @@
       <button type="submit" name="button">submit</button>
       {{ newEvent }}
     </form>
+  </div>
+</div>
+
+<div class="row" ng-show="eventCreated">
+  <div class="col m12" ng-show="message !== ''">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <p>{{ message }}</p>
+      </div>
+    </div>
   </div>
 </div>
