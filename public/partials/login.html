@@ -8,18 +8,23 @@
   </div>
   <div class="col m6 offset-m3">
     <h1 class="logins">Login</h1>
-    <form ng-submit="login()" class="loginForm z-depth-5">
-      <div class="form-group">
-        <label for=""> <i class="material-icons">account_circle</i>User Name</label>
-        <input type="text" id="" placeholder="UserName" name="username" ng-model="user.username">
-      </div>
+    <div class="loginForm z-depth-5">
+      <form ng-submit="login()" >
+        <div class="form-group">
+          <label for=""> <i class="material-icons">account_circle</i>User Name</label>
+          <input type="text" id="" placeholder="UserName" name="username" ng-model="user.username">
+        </div>
+        <br>
+        <div class="form-group">
+          <label for=""><i class="material-icons">https</i>Password</label>
+          <input type="password" placeholder="Sup3rS3cr3tpassw0rd" ng-model="user.password">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-block">Login</button>
+      </form>
       <br>
-      <div class="form-group">
-        <label for=""><i class="material-icons">https</i>Password</label>
-        <input type="password" placeholder="Sup3rS3cr3tpassw0rd" ng-model="user.password">
-      </div>
-      <br>
-      <button type="submit" class="btn">Login</button>
-    </form>
+      <a href="/auth/facebook" class="btn btn-block" id="facebook-btn"><span class="fa fa-facebook"></span> Facebook</a>
+    </div>
+
   </div>
 </div>

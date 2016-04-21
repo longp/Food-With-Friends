@@ -3,8 +3,10 @@ var passportLocal = require('passport-local').Strategy;
 var User = require('../models/user.js');
 var bcrypt = require('bcryptjs');
 
-// passport auth strategy
+var FacebookStrategy = require('passport-facebook').Strategy;
+var configAuth = require('./auth.js')
 
+// passportlocal auth strategy
 passport.use(new passportLocal(
   function(username, password, done) {
     User.findOne({ username: username }).then(function(user) {
@@ -24,6 +26,22 @@ passport.use(new passportLocal(
   }
 ));
 
+// =========================================================================
+// FACEBOOK ==========PASPPORT==============================================
+// =========================================================================
+passport.use(new FacebookStrategy({
+  clientID: configAuth.facebookAuth.clientID,
+  clientSecret: configAuth.facebookAuth.clientSecret,
+  callbackURL: configAuth.facebookAuth.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+
+
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
@@ -33,6 +51,7 @@ passport.deserializeUser(function(id, done) {
     done(null, { id: user.id, username: user.username});
   });
 });
+
 
 
 module.exports = passport;
