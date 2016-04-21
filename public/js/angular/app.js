@@ -49,7 +49,7 @@ app.config(function($routeProvider, $locationProvider){
     //user account page
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
-      controller: 'mainController'
+      controller: 'myaccountController'
 
     })
     .otherwise({

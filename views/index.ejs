@@ -28,7 +28,7 @@
           <li><a ng-hide='current_user' href="newEvent">Create Event</a></li>
           <li><a ng-hide='current_user' href="/">Map</a></li>
           <li><a ng-hide='current_user' href="send">SMS</a></li>
-          <li><a ng-show='current_user' href="/myaccount">My Account</a></li>
+          <li><a ng-show='current_user' ng-click="myAccount()" href="/myaccount">My Account</a></li>
         </ul>
       </div>
     </nav>

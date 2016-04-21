@@ -29,6 +29,7 @@ var authenticate = require('./routes/authenticate.js');
 var api = require('./routes/api.js');
 var formRoute = require('./routes/formRoute.js');
 var eventRoute = require('./routes/eventRoute.js');
+var accountRoute = require('./routes/accountRoute.js');
 
 // Express Port Declaration
 
@@ -73,6 +74,7 @@ app.use('/auth', authenticate);
 app.use('/api', api);
 app.use('form', formRoute);
 app.use('/event', eventRoute);
+app.use('/myaccount', accountRoute);
 
 
 

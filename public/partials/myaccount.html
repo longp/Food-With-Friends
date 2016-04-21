@@ -7,10 +7,10 @@
     <p><a href="/newEvent">Get some grub!</a></p>
   </div>
   <div class="card-reveal">
-    <span class="card-title grey-text text-darken-4">Here are some details on your account<i class="material-icons right">close</i></span>
+    <span class="card-title grey-text text-darken-4">Here are some details on your account, {{users.firstName}} {{users.lastName}}<i class="material-icons right">close</i></span>
     <p>Here is some more information about your activity on the app!</p>
     <ul>
-      <li>Date Joined:</li>
+      <li>Date Joined: {{createdAt}}</li>
       <li>Events Created:</li>
       <li>Favorite Restaurants:</li>
       <li>Favorite Food:</li>
