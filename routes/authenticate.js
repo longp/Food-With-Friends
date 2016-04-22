@@ -40,19 +40,5 @@ router.post('/login', function(req, res, next) {
   })(req,res,next);
 });
 
-//facebook login route
-router.post('/facebook', function (req,res ,next) {
-  passport.authenticate('facebook', function (err, user, info) {
-    res.send('user')
-  })
-})
-
-//facebook callback
-router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
 
 module.exports = router;
