@@ -11,15 +11,7 @@ router.post('/createEvent', function(req, res) {
   var randomS = randomstring.generate(7)
   createEvent(req,res,randomS)
 });
-router.post('/form', function (req, res) {
-  yelp.search({
-    term: req.body.term,
-    location: req.body.location
-  }).then(function (data) {
-    console.log(data)
-    res.send(data)
-  })
-})
+
 
 
 // twilio route
@@ -43,7 +35,6 @@ function createEvent (req,res,randomS) {
   yelp.search({
     term: formData.term,
     location: formData.location,
-    limit:10
   })
     .then(function(data) {
       var newEvent = new Event({

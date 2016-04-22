@@ -2,9 +2,27 @@
   <div class="">
     <h1 class="form-header">My Events</h1>
   </div>
+  <div class="row">
+    <!-- <h4 class='center-align'>Search Options</h4> -->
+    <form ng-submit="findMyEvents()">
+      <div class="form-group ">
+        <h5 class="center-align">Number of Events</h5>
+        <p class="range-field">
+          <input type="text" ng-model='search.limit'name="name" value="">
+          <input type="range" ng-model="search.limit" min="0" max="20" />
+        </p>
+        <p>
+          <h5>Search by location</h5>
+          <input type="text" ng-model='search.location' name="name" value="">
+        </p>
+      </div>
+      <button type="submit" class="btn search-btn">Search</button>
+    </form>
+  </div>
+  <br>
   <div ng-repeat="event in events" ng-if="$index % 3 == 0" class="row">
     <table >
-      <thead>
+      <tbody>
         <th>
           <td class="col m4">
             <a href="#"><button type="button" class="eventimg" name="button">{{events[$index].name}}</button></a>
@@ -12,11 +30,11 @@
           <td class="col m4" ng-if="events.length > ($index + 1)">
             <a href="#"><button class="eventimg" type="button" name="button">{{events[$index+1].name}}</button></a>
           </td>
-          <td class="col m3" ng-if="events.length > ($index + 2)">
+          <td class="col m4" ng-if="events.length > ($index + 2)">
             <a href="#"><button class="eventimg" type="button" name="button">{{events[$index+2].name}}</button></a>
           </td>
         </th>
-      </thead>
+      </tbody>
     </table>
   </div>
 </div>

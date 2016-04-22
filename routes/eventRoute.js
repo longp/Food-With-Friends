@@ -8,17 +8,31 @@ var randomstring = require('randomstring');
 router.post('/mine', function (req, res) {
   var userId = req.user.id;
   var username = req.user.username;
-  Event.find({createdby:userId})
+  var limit = parseInt(req.body.limit);
+  var searchLocation = req.body.location
+  console.log(req.body.limit)
+  //limit search paramter
+  // if (req.body.limit === '' ) {
+  //   limit = 10;
+  // } else {
+  //   var limit = parseInt(req.body.limit)
+  // };
+  // req.body.limit = '';
+  // console.log(req.body.limit)
+  Event.find({
+    $and :[
+      {createdby:userId},
+      {location:searchLocation}
+    ]
+    })
   .populate('places')
-  .limit(5)
+  .limit(10)
   .then(function (data) {
+    // console.log(data)
     res.send(data);
   })
-  // Event.find()
-  // .populate('places')
-  // .then(function(data){
-  //   res.send(data);
-  // })
+
+
 })
 
 
