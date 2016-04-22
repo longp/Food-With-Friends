@@ -26,7 +26,13 @@ main {
   flex: 1 0 auto;
 }
 label{
-  color: black;
+  color: MediumOrchid;
+  font-size: 1.4em;
+}
+
+.form-header {
+  color: darkOrange;
+  text-align: center;
 }
 .input-field{
   color: black;
