@@ -1,29 +1,31 @@
-var app = angular.module('mainApp', ['ngRoute' ,'ezfb']).run(function($rootScope, ezfb) {
+var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+app.run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
-  ezfb.init({
-    // This is my FB app id for plunker demo app
-    appId: '386469651480295'
-  });
+
+  // Load the facebook SDK asynchronously
+  (function(){
+     // If we've already installed the SDK, we're done
+     if (document.getElementById('facebook-jssdk')) {return;}
+
+     // Get the first script element, which we'll use to find the parent node
+     var firstScriptElement = document.getElementsByTagName('script')[0];
+
+     // Create a new script element and set its id
+     var facebookJS = document.createElement('script');
+     facebookJS.id = 'facebook-jssdk';
+
+     // Set the new script's source to the source of the Facebook JS SDK
+     facebookJS.src = '//connect.facebook.net/en_US/sdk.js';
+
+     // Insert the Facebook JS SDK into the DOM
+     firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
+   }());
 });
 
-app.config(function($routeProvider, $locationProvider, ezfbProvider){
-  // Default init function
-
-ezfbProvider.setLoadSDKFunction(function (ezfbAsyncInit) {
-   ezfbAsyncInit();
- });
-  ezfbProvider.setInitParams({
-    // This is my FB app id for plunker demo app
-    appId: '386469651480295',
-
-    // Module default is `v2.4`.
-    // If you want to use Facebook platform `v2.3`, you'll have to add the following parameter.
-    // https://developers.facebook.com/docs/javascript/reference/FB.init
-    version: 'v2.3'
-  });
-
+app.config(function($routeProvider, $locationProvider, $facebookProvider){
+  $facebookProvider.setAppId('1702470703324769');
   $routeProvider
     //The Welcome Cards are Displayed
     .when('/', {

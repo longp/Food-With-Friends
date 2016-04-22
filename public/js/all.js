@@ -1,29 +1,31 @@
-var app = angular.module('mainApp', ['ngRoute' ,'ezfb']).run(function($rootScope, ezfb) {
+var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+app.run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
-  ezfb.init({
-    // This is my FB app id for plunker demo app
-    appId: '386469651480295'
-  });
+
+  // Load the facebook SDK asynchronously
+  (function(){
+     // If we've already installed the SDK, we're done
+     if (document.getElementById('facebook-jssdk')) {return;}
+
+     // Get the first script element, which we'll use to find the parent node
+     var firstScriptElement = document.getElementsByTagName('script')[0];
+
+     // Create a new script element and set its id
+     var facebookJS = document.createElement('script');
+     facebookJS.id = 'facebook-jssdk';
+
+     // Set the new script's source to the source of the Facebook JS SDK
+     facebookJS.src = '//connect.facebook.net/en_US/sdk.js';
+
+     // Insert the Facebook JS SDK into the DOM
+     firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
+   }());
 });
 
-app.config(function($routeProvider, $locationProvider, ezfbProvider){
-  // Default init function
-
-ezfbProvider.setLoadSDKFunction(function (ezfbAsyncInit) {
-   ezfbAsyncInit();
- });
-  ezfbProvider.setInitParams({
-    // This is my FB app id for plunker demo app
-    appId: '386469651480295',
-
-    // Module default is `v2.4`.
-    // If you want to use Facebook platform `v2.3`, you'll have to add the following parameter.
-    // https://developers.facebook.com/docs/javascript/reference/FB.init
-    version: 'v2.3'
-  });
-
+app.config(function($routeProvider, $locationProvider, $facebookProvider){
+  $facebookProvider.setAppId('1702470703324769');
   $routeProvider
     //The Welcome Cards are Displayed
     .when('/', {
@@ -168,81 +170,25 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   };
 });
 
-app.controller('facebookController', function($scope, ezfb, $window, $location) {
-
-  updateLoginStatus(updateApiMe);
-
-  $scope.login = function () {
-    /**
-     * Calling FB.login with required permissions specified
-     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.0
-     */
-    ezfb.login(function (res) {
-      /**
-       * no manual $scope.$apply, I got that handled
-       */
-      if (res.authResponse) {
-        updateLoginStatus(updateApiMe);
-      }
-    }, {scope: 'email,user_likes'});
-  };
-
-  $scope.logout = function () {
-    /**
-     * Calling FB.logout
-     * https://developers.facebook.com/docs/reference/javascript/FB.logout
-     */
-    ezfb.logout(function () {
-      updateLoginStatus(updateApiMe);
+app.controller('facebookController', function ($scope, $facebook)  {
+  $scope.isLoggedIn = false;
+  $scope.login = function() {
+    $facebook.login().then(function() {
+      refresh();
     });
-  };
-
-  $scope.share = function () {
-    ezfb.ui(
-      {
-        method: 'feed',
-        name: 'angular-easyfb API demo',
-        picture: 'http://plnkr.co/img/plunker.png',
-        link: 'http://plnkr.co/edit/qclqht?p=preview',
-        description: 'angular-easyfb is an AngularJS module wrapping Facebook SDK.' +
-                     ' Facebook integration in AngularJS made easy!' +
-                     ' Please try it and feel free to give feedbacks.'
+  }
+  function refresh() {
+    $facebook.api("/me").then(
+      function(response) {
+        $scope.welcomeMsg = "Welcome " + response.name;
+        $scope.isLoggedIn = true;
       },
-      function (res) {
-        // res: FB.ui response
-      }
-    );
-  };
-
-  /**
-   * For generating better looking JSON results
-   */
-  var autoToJSON = ['loginStatus', 'apiMe'];
-  angular.forEach(autoToJSON, function (varName) {
-    $scope.$watch(varName, function (val) {
-      $scope[varName + 'JSON'] = JSON.stringify(val, null, 2);
-    }, true);
-  });
-
-  /**
-   * Update loginStatus result
-   */
-  function updateLoginStatus (more) {
-    ezfb.getLoginStatus(function (res) {
-      $scope.loginStatus = res;
-
-      (more || angular.noop)();
-    });
+      function(err) {
+        $scope.welcomeMsg = "Please log in";
+      });
   }
 
-  /**
-   * Update api('/me') result
-   */
-  function updateApiMe () {
-    ezfb.api('/me', function (res) {
-      $scope.apiMe = res;
-    });
-  }
+  refresh();
 });
 
   app.controller('formController', function ($http, $scope) {
@@ -294,7 +240,7 @@ app.controller('mainController', function($scope, $rootScope, $http){
       location:'',
       friends:''
     };
-    $scope.myEventSubmit = function () {
+    // $scope.myEventSubmit = function () {
       $http({
         method:'POST',
         url: '/event/mine',
@@ -310,5 +256,5 @@ app.controller('mainController', function($scope, $rootScope, $http){
       .catch(function (err) {
         console.log(err)
       })
-    }
+    // }
   })

@@ -103,6 +103,10 @@ display: block;
 width: 100%;
 }
 
+.eventimg {
+  width: 200px;
+  height: 100px;
+}
 #facebook-btn {
   background-color: blue;
 }
