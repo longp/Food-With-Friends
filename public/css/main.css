@@ -3,8 +3,9 @@ html {
 }
 body {
   display: flex;
-  min-height: 100vh;
+  min-height: 400px;
   flex-direction: column;
+  margin-bottom:100px;
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
   background-size: width height;
@@ -13,7 +14,7 @@ body {
 
 footer{
   color: #283593;
-  position:fixed;
+  position: fixed;
   bottom:0;
   width: 100%;
   height: 12%
@@ -42,7 +43,7 @@ label{
   width: 100%
 }
 .madeBy, .welcome, .reg, .logins{
-  padding-top: 20px;
+  padding-top: 10px;
   text-align: center;
 }
 .formTextBlack{
