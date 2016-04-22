@@ -26,7 +26,7 @@ router.post('/mine', function (req, res) {
     ]
     })
   .populate('places')
-  .limit(10)
+  .limit(limit)
   .then(function (data) {
     // console.log(data)
     res.send(data);
