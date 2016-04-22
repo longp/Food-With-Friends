@@ -10,6 +10,7 @@ router.post('/mine', function (req, res) {
   var username = req.user.username;
   Event.find({createdby:userId})
   .populate('places')
+  .limit(5)
   .then(function (data) {
     res.send(data);
   })
