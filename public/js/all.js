@@ -166,7 +166,6 @@ app.controller('createEventController', function($scope, $http, $location, $rout
     location: "",
     eventUrl:''
   };
-  $scope.eventCreated = false;
   $scope.createEvent = function () {
     $http({
       method: "POST",
@@ -175,7 +174,6 @@ app.controller('createEventController', function($scope, $http, $location, $rout
     }).success(function (data) {
       console.log(data)
       if (data.state == 'success') {
-        $scope.eventCreated = True;
         $rootScope.message = data.message;
         $scope.newEvent.eventUrl = data.eventUrl;
         $location.path('/newEvent');
