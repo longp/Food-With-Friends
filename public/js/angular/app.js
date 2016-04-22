@@ -69,7 +69,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     //user account page
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
-      controller: 'mainController'
+      controller: 'myaccountController'
 
     })
     .otherwise({

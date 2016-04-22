@@ -69,7 +69,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     //user account page
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
-      controller: 'mainController'
+      controller: 'myaccountController'
 
     })
     .otherwise({
@@ -125,6 +125,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         $scope.user = data.user;
         $rootScope.message = '';
         $location.path('/');
+        console.log("booyah");
         console.log(data.user)
       }
       else {
@@ -230,6 +231,27 @@ app.controller('mainController', function($scope, $rootScope, $http){
     });
   };
 });
+
+app.controller('myaccountController', function($http, $scope){
+  console.log("suh dude");
+  $scope.users = {
+    firstName: '',
+    lastName:''
+  }
+
+  $scope.myAccount = function(){
+    $http({
+      method:'POST',
+      url: '/acc/myaccount',
+      data:$scope.users
+    }).success(function (users){
+      console.log(users);
+    }).catch(function(err){
+      console.log(err)
+    })
+  }
+  $scope.myAccount();
+})
 
   app.controller('myEventController', function ($http, $scope) {
     console.log('yoyo');
