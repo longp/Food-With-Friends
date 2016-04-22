@@ -1,13 +1,27 @@
 var express = require('express');
 var router = express.Router();
+//tammers client sms
 var client = require('../config/twilio.js');
+// yelp client search with keys
 var yelp  = require('../config/yelp.js');
+//models from mongoose
 var Event = require('../models/Event.js');
 var Place = require('../models/Place.js');
+// randomstring for url events
 var randomstring = require('randomstring');
+
+//geocoder setup
+var geocoderProvider = 'google';
+var httpAdapter = 'http';
+var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
+
 
 //create event route
 router.post('/createEvent', function(req, res) {
+//   geocoder.geocode({address: '29 champs elysée', country: 'France', zipcode: '75008'}, function(err, res) {
+//     console.log(res);
+// });
+
   var randomS = randomstring.generate(7)
   createEvent(req,res,randomS)
 });
@@ -37,28 +51,39 @@ function createEvent (req,res,randomS) {
     location: formData.location,
   })
     .then(function(data) {
-      var newEvent = new Event({
-        name: formData.name,
-        location: formData.location,
-        searchLat: data.region.center.latitude,
-        searchLng: data.region.center.longitude,
-        createdby: req.user.id,
-        eventUrl: randomS
-      });
-      newEvent.saveAsync(function (err, event) {
-        createPlaces(data, event);
-        addPlaces(event);
-        populatePlaces(event);
-        if(err) {
-          res.send({state: 'failure', message: err});
-        } else {
-          res.send({state: 'success', message:event.name + " Event Created!", eventUrl:randomS});
-        }
+      var lat = data.region.center.latitude;
+      var lon = data.region.center.longitude;
+      geocoder.reverse({lat:lat, lon:lon, countryCode: 'us'}, function(err, res) {
       })
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
+      .then(function (location) {
+        console.log(location)
+        // new event model with params from yelp search/ and user input
+        var newEvent = new Event({
+          name: formData.name,
+          location: location[0].formattedAddress,
+          searchLat: data.region.center.latitude,
+          searchLng: data.region.center.longitude,
+          createdby: req.user.id,
+          eventUrl: randomS
+        })
+
+          newEvent.saveAsync(function (err, event) {
+            createPlaces(data, event);
+            addPlaces(event);
+            populatePlaces(event);
+            if(err) {
+              res.send({state: 'failure', message: err});
+            } else {
+              res.send({state: 'success', message:event.name + " Event Created!", eventUrl:randomS});
+            }
+          })
+        .catch(function (err) {
+          console.log(err)
+        })
+        });
+      })
+
+
 }
 
 //creates the places found in the yelpseach location and adds to mongo
@@ -73,6 +98,8 @@ function createPlaces (data, event){
     var newPlace = new Place({
       name: data.businesses[i].name,
       address: data.businesses[i].location.display_address,
+      state: data.businesses[i].location.state_code,
+      neightborhoods: data.businesses[i].location.neighborhoods,
       rating: data.businesses[i].rating,
       phone: data.businesses[i].display_phone,
       event: event._id,
