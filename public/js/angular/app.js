@@ -26,6 +26,7 @@ app.run(function($rootScope) {
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
   $facebookProvider.setAppId('1702470703324769');
+
   $routeProvider
     //The Welcome Cards are Displayed
     .when('/', {
@@ -64,8 +65,11 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     .when('/facebook',{
       templateUrl:'partials/facebook.html',
       controller: 'facebookController'
-    }
-  )
+    })
+    .when('/eventform/:id',{
+      templateUrl:'/partials/eventForm.html',
+      controller: 'eventFormController'
+    })
     //send sms
     .when('/send', {
       templateUrl: 'partials/send.html',
@@ -75,7 +79,6 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
       controller: 'myaccountController'
-
     })
     .otherwise({
         redirectTo: '/'
