@@ -37,6 +37,11 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl: 'partials/login.html',
       controller: 'authController'
     })
+    //logout route
+    .when('/logout', {
+      templateUrl: 'partials/login.html',
+      controller: 'authController'
+    })
     //the signup display
     .when('/register', {
       templateUrl: 'partials/register.html',
@@ -141,6 +146,16 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       data:$scope.user
     }).success(function (data) {
       console.log(data)
+    })
+  }
+  $scope.logout = function () {
+    $http({
+      method:'post',
+      url:'/auth/logout',
+      data:$scope.user
+    }).success(function (data) {
+      // $scope.user= data;
+      console.log($scope.user)
     })
   }
 });
