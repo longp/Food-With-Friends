@@ -26,7 +26,13 @@ main {
   flex: 1 0 auto;
 }
 label{
-  color: black;
+  color: MediumOrchid;
+  font-size: 1.4em;
+}
+
+.form-header {
+  color: darkOrange;
+  text-align: center;
 }
 .input-field{
   color: black;
@@ -98,3 +104,15 @@ box-shadow: 0 1px 0 0 white;
 #input-field {
   background-color: BlanchedAlmond;
 }
+
+.eventimg {
+  width: 200px;
+   height: 100px;
+ }
+ .btn-block{
+   display: block;
+   width: 100%;
+ }
+  #facebook-btn {
+    background-color: blue;
+  }

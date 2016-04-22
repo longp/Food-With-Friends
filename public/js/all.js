@@ -37,6 +37,11 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl: 'partials/login.html',
       controller: 'authController'
     })
+    //logout route
+    .when('/logout', {
+      templateUrl: 'partials/login.html',
+      controller: 'authController'
+    })
     //the signup display
     .when('/register', {
       templateUrl: 'partials/register.html',
@@ -141,6 +146,16 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       data:$scope.user
     }).success(function (data) {
       console.log(data)
+    })
+  }
+  $scope.logout = function () {
+    $http({
+      method:'post',
+      url:'/auth/logout',
+      data:$scope.user
+    }).success(function (data) {
+      // $scope.user= data;
+      console.log($scope.user)
     })
   }
 });
@@ -256,29 +271,17 @@ app.controller('myaccountController', function($http, $scope){
 })
 
   app.controller('myEventController', function ($http, $scope) {
-    console.log('yoyo');
-    var self = this;
-    $scope.events={
-      name:'',
-      places:'',
-      location:'',
-      friends:''
-    };
-    // $scope.myEventSubmit = function () {
+    $scope.findMyEvents = function () {
       $http({
         method:'POST',
         url: '/event/mine',
-        data:$scope.events
+        data:$scope.search
       }).success(function (data) {
         $scope.events = data;
-        // $scope.event.name= data[0].name;
-        // $scope.event.places= data[0].places[0];
-        // $scope.event.location= data[0].location;
-        console.log($scope.events)
-        // console.log(data.data);
+        console.log(data)
       })
       .catch(function (err) {
         console.log(err)
       })
-    // }
+    }
   })

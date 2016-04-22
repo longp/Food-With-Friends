@@ -40,5 +40,10 @@ router.post('/login', function(req, res, next) {
   })(req,res,next);
 });
 
+router.get('/logout', function(req, res){
+    req.logout();
+    req.session.destroy();
+    res.redirect("/login");
+});
 
 module.exports = router;
