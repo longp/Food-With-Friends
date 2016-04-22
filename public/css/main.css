@@ -3,8 +3,9 @@ html {
 }
 body {
   display: flex;
-  min-height: 100vh;
+  min-height: 400px;
   flex-direction: column;
+  margin-bottom:100px;
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
   background-size: width height;
