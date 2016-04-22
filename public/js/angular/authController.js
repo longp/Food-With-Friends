@@ -63,4 +63,14 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       console.log(data)
     })
   }
+  $scope.logout = function () {
+    $http({
+      method:'post',
+      url:'/auth/logout',
+      data:$scope.user
+    }).success(function (data) {
+      // $scope.user= data;
+      console.log($scope.user)
+    })
+  }
 });
