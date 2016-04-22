@@ -29,6 +29,7 @@
     "morgan": "^1.7.0",
     "node-yelp": "0.0.3",
     "passport": "^0.3.2",
+    "passport-facebook": "^2.1.0",
     "passport-local": "^1.0.0",
     "randomstring": "^1.1.4",
     "twilio": "^2.9.1"
