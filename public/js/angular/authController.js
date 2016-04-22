@@ -54,4 +54,13 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
       }
     });
   };
+  $scope.facebook = function () {
+    $http({
+      method:'post',
+      url:'/auth/facebook',
+      data:$scope.user
+    }).success(function (data) {
+      console.log(data)
+    })
+  }
 });

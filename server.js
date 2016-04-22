@@ -72,9 +72,9 @@ app.use("/css", express.static("public/css"));
 app.use('/', index);
 app.use('/auth', authenticate);
 app.use('/api', api);
-app.use('form', formRoute);
+app.use('/form', formRoute);
 app.use('/event', eventRoute);
-app.use('/myaccount', accountRoute);
+app.use('/acc', accountRoute);
 
 
 

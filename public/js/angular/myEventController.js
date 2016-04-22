@@ -7,7 +7,7 @@
       location:'',
       friends:''
     };
-    $scope.myEventSubmit = function () {
+    // $scope.myEventSubmit = function () {
       $http({
         method:'POST',
         url: '/event/mine',
@@ -23,5 +23,5 @@
       .catch(function (err) {
         console.log(err)
       })
-    }
+    // }
   })
