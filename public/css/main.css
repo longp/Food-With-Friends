@@ -8,7 +8,7 @@ body {
   margin-bottom:100px;
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
-  background-size: 100%;
+  background-size: height auto;
   background-repeat: no-repeat;
 }
 
@@ -97,17 +97,4 @@ box-shadow: 0 1px 0 0 white;
 }
 #input-field {
   background-color: BlanchedAlmond;
-}
-
-.btn-block {
-display: block;
-width: 100%;
-}
-
-.eventimg {
-  width: 200px;
-  height: 100px;
-}
-#facebook-btn {
-  background-color: blue;
 }
