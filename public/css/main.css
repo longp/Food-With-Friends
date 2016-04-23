@@ -28,6 +28,10 @@ label{
   color: MediumOrchid;
   font-size: 1.4em;
 }
+.myEventBtn{
+  opacity: .6
+}
+
 
 .form-header {
   color: darkOrange;
