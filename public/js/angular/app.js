@@ -1,4 +1,4 @@
-var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+var app = angular.module('mainApp', ['ngRoute', 'ngFacebook','uiGmapgoogle-maps', 'nemLogging']);
 
 app.run(function($rootScope) {
   $rootScope.authenticated = false;
@@ -25,6 +25,13 @@ app.run(function($rootScope) {
    }());
 });
 
+app.config(function (uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyDcaTjAeuU6Qb7DNvUy0i-MldMRfh0K3uk',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+})
 
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
@@ -69,7 +76,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       controller: 'facebookController'
     })
     .when('/map', {
-      templateUrl:'partials/googleMap.html',
+      templateUrl:'partials/maps.html',
       controller: 'googleController'
     })
     //send sms
@@ -81,7 +88,6 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
       controller: 'myaccountController'
-
     })
     .otherwise({
         redirectTo: '/'

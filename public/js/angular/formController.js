@@ -1,4 +1,4 @@
-  app.controller('formController', function ($http, $scope) {
+app.controller('formController', function ($http, $scope) {
     console.log('yoyo');
     $scope.form={
       term:'',
