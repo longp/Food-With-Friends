@@ -5,7 +5,7 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   // develop/heroku testng
   // var urlBegin = 'http://getfoodwithfriends.herokuapp.com/eventform/'
 
-  // fx for creatign event
+  // fx for creatign event and inputting to mongo db
   $scope.createEvent = function () {
     $http({
       method: "POST",
@@ -24,31 +24,35 @@ app.controller('createEventController', function($scope, $http, $location, $rout
       }
     });
   };
-// fx to add attendee from input form
+
+// fx to add attendee from input form and add to mongo
   $scope.createAttendee = function () {
-    console.log('attendees ' + $scope.attendees)
-    console.log('scope ' + $scope)
-    var inData = {'attendees':$scope.attendees, 'eventId':$scope.newEvent.id}
+      var inData = {'attendees':$scope.attendees, 'eventId':$scope.newEvent.id}
     $http({
       method:'POST',
       url:'/api/createAttendee',
       data:inData
     })
     .success(function (data) {
-      console.log(data);
+      console.log('successful stuff')
+      console.log(data)
+
     })
     .catch(function (err) {console.log(err)})
   }
-  $scope.attendees = [];
-     $scope.addfield = function () {
-         $scope.attendees.push({})
-     }
-     $scope.getValue = function (item) {
-         alert(item.value)
-     }
 
-    $scope.removeChoice = function() {
-      var lastItem = $scope.attendees.length-1;
-      $scope.attendees.splice(lastItem);
-    };
+
+// logic for adding/removing new attendees
+   $scope.attendees = [];
+   $scope.addfield = function () {
+       $scope.attendees.push({})
+   }
+   $scope.getValue = function (item) {
+       alert(item.value)
+   }
+
+  $scope.removeChoice = function() {
+    var lastItem = $scope.attendees.length-1;
+    $scope.attendees.splice(lastItem);
+  };
 });

@@ -1,10 +1,11 @@
 var app = angular.module('mainApp', ['ngRoute', 'ngFacebook','uiGmapgoogle-maps', 'nemLogging']);
 
-app.run(function($rootScope) {
+app.run(function($rootScope, $http) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
-
+  $http.defaults.headers.common['Accept'] = 'application/json';
+   $http.defaults.headers.common['Content-Type'] = 'application/json';
   // Load the facebook SDK asynchronously
   (function(){
      // If we've already installed the SDK, we're done
@@ -62,11 +63,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
-    .when('/newAttende', {
-      templateUrl:'partials/createEvent.html',
-      controller: 'createEventController',
-    })
-    .when('/event', {
+      .when('/event', {
       templateUrl:'partials/event.html',
       controller:'myEventController'
     })
@@ -180,7 +177,7 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   // develop/heroku testng
   // var urlBegin = 'http://getfoodwithfriends.herokuapp.com/eventform/'
 
-  // fx for creatign event
+  // fx for creatign event and inputting to mongo db
   $scope.createEvent = function () {
     $http({
       method: "POST",
@@ -199,33 +196,37 @@ app.controller('createEventController', function($scope, $http, $location, $rout
       }
     });
   };
-// fx to add attendee from input form
+
+// fx to add attendee from input form and add to mongo
   $scope.createAttendee = function () {
-    console.log('attendees ' + $scope.attendees)
-    console.log('scope ' + $scope)
-    var inData = {'attendees':$scope.attendees, 'eventId':$scope.newEvent.id}
+      var inData = {'attendees':$scope.attendees, 'eventId':$scope.newEvent.id}
     $http({
       method:'POST',
       url:'/api/createAttendee',
       data:inData
     })
     .success(function (data) {
-      console.log(data);
+      console.log('successful stuff')
+      console.log(data)
+
     })
     .catch(function (err) {console.log(err)})
   }
-  $scope.attendees = [];
-     $scope.addfield = function () {
-         $scope.attendees.push({})
-     }
-     $scope.getValue = function (item) {
-         alert(item.value)
-     }
 
-    $scope.removeChoice = function() {
-      var lastItem = $scope.attendees.length-1;
-      $scope.attendees.splice(lastItem);
-    };
+
+// logic for adding/removing new attendees
+   $scope.attendees = [];
+   $scope.addfield = function () {
+       $scope.attendees.push({})
+   }
+   $scope.getValue = function (item) {
+       alert(item.value)
+   }
+
+  $scope.removeChoice = function() {
+    var lastItem = $scope.attendees.length-1;
+    $scope.attendees.splice(lastItem);
+  };
 });
 
 app.controller('facebookController', function ($scope, $facebook)  {

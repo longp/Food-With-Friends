@@ -17,6 +17,7 @@ var httpAdapter = 'http';
 var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
 
 
+
 //create event route
 router.post('/createEvent', function(req, res) {
   var randomS = randomstring.generate(7)
@@ -25,13 +26,7 @@ router.post('/createEvent', function(req, res) {
 
 // attendee creation routoe
 router.post('/createAttendee', function (req, res) {
-  // { attendee:
-  //  [ { name: 'longd', phone: '1231231231' },
-  //    { name: 'dave', phone: '1312312312' },
-  //    { name: 'jon', phone: '1231231231' } ],
-  // eventId: '571b31c577d7530026e810a5' }
-
-  // var name = req.body.attendees.name;
+    // var name = req.body.attendees.name;
   // var phone = req.body.attendees.phone;
   var event = req.body.eventId;
   console.log(req.body.attendees)
@@ -44,9 +39,26 @@ router.post('/createAttendee', function (req, res) {
       phone:phone,
       event:event
     });
-    newAttendee.saveAsync({name:name,phone:phone,event:event}, function (err, attendee) {
-      console.log(attendee)
-    })
+    Attendee.findOneAndUpdateAsync(
+      {name:name,phone:phone,event:event},
+      {$setOnInsert: {
+        name:name,
+        phone:phone,
+        event:event
+      }},
+      {new:true, upsert:true},
+      function (err,data) {
+        if (err) {
+          console.log(err)
+        }
+        console.log(data)
+      }).then(function (err, attendee) {
+        if (err) {
+          res.send({state: "failure", message:err})
+        } else {
+          res.send({state: 'success', message:attendee + " added"});
+        }
+      })
   }
 })
 
