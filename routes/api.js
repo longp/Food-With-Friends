@@ -43,6 +43,25 @@ router.post('/sendSMS', function(req, res){
   });
 });
 
+
+router.post('/eventData', function(req, res){
+  var searchUrl = req.body.eventUrl
+
+  Event.findOne({eventUrl: searchUrl}), function (err, eventData) {
+    // if (err) console.log(err);
+    console.log(eventData);
+    if (eventData) {
+      res.send({
+        state: "success",
+        data: eventData
+      });
+    }
+  };
+});
+
+
+
+
 //creates teh event and calls createPlaces and addPlaces fx, then sends data to angular
 function createEvent (req,res,randomS) {
   var formData = req.body;

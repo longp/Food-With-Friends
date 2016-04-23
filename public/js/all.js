@@ -190,8 +190,24 @@ app.controller('createEventController', function($scope, $http, $location, $rout
 });
 
 app.controller('eventFormController', function($scope, $http, $location, $routeParams){
-  // console.log("Hello I am at the right controller!");
   $scope.eventId = $routeParams.id;
+
+  $scope.$watch('$viewContentLoaded', function() {
+    var req = {
+      method: 'POST',
+      url: '/api/eventData',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: {eventUrl: $scope.eventId}
+    };
+
+    $http(req).success(function(data){
+      if (data.state === "success"){
+        console.log(data.data);
+      }
+    });
+  });
 });
 
 app.controller('facebookController', function ($scope, $facebook)  {
@@ -276,18 +292,18 @@ app.controller('myaccountController', function($http, $scope){
   $scope.myAccount();
 })
 
-  app.controller('myEventController', function ($http, $scope) {
-    $scope.findMyEvents = function () {
-      $http({
-        method:'POST',
-        url: '/event/mine',
-        data:$scope.search
-      }).success(function (data) {
-        $scope.events = data;
-        console.log(data)
-      })
-      .catch(function (err) {
-        console.log(err)
-      })
-    }
-  })
+app.controller('myEventController', function ($http, $scope) {
+  $scope.findMyEvents = function () {
+    $http({
+      method:'POST',
+      url: '/event/mine',
+      data:$scope.search
+    }).success(function (data) {
+      $scope.events = data;
+      console.log(data)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+  }
+});
