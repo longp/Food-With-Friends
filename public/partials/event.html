@@ -1,10 +1,8 @@
 <div class="container-fluid">
-  <div class="">
-    <h1 class="form-header">My Events</h1>
-  </div>
   <div class="row">
     <!-- <h4 class='center-align'>Search Options</h4> -->
-    <form ng-submit="findMyEvents()">
+    <form ng-submit="findMyEvents()" class="findMyEvents">
+      <h1 class="form-header">My Events</h1>
       <div class="form-group ">
         <h5 class="center-align form-header">Number of Events</h5>
         <p class="range-field">
@@ -16,7 +14,7 @@
           <input type="text" ng-model='search.location' name="name" value="">
         </p>
       </div>
-      <button type="submit" class="btn search-btn">Search</button>
+      <button class="myEventSearchBtn btn btn-block" type="submit">Search</button>
     </form>
   </div>
   <br>
