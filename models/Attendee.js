@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var attendeeSchema = new Schema({
   name: String,
-  phone: Number,
-  event: {Schema.Types.ObjectId, ref:'Event'}
+  phone: String,
+  event: {type:Schema.Types.ObjectId, ref:'Event'}
 })
 
 
