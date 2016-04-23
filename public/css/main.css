@@ -8,7 +8,6 @@ body {
   margin-bottom:100px;
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
-  background-size: height auto;
   background-repeat: no-repeat;
 }
 
