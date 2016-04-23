@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Alexg2195/Food-With-Friends#readme",
   "dependencies": {
+    "angular-google-maps": "^2.3.2",
     "bcryptjs": "^2.3.0",
     "bluebird": "^3.3.5",
     "body-parser": "^1.15.0",
