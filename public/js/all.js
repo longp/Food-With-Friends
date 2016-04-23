@@ -69,15 +69,13 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/facebook.html',
       controller: 'facebookController'
     })
-<<<<<<< HEAD
     .when('/eventform/:id',{
       templateUrl:'/partials/eventForm.html',
       controller: 'eventFormController'
-=======
+    })
     .when('/map', {
       templateUrl:'partials/googleMap.html',
       controller: 'googleController'
->>>>>>> 718e9089c767b7431ff9598b9b911a7d279a451b
     })
     //send sms
     .when('/send', {
