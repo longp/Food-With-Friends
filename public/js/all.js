@@ -170,7 +170,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   }
 });
 
-app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
+app.controller('createEventController', function($scope, $http, $location, $route, $rootScope, $window) {
 
   // for local testing
   var urlBegin = 'localhost:3000/eventform/';
@@ -205,9 +205,12 @@ app.controller('createEventController', function($scope, $http, $location, $rout
       url:'/api/createAttendee',
       data:inData
     })
-    .success(function (data) {
+    .then(function (data) {
       console.log('successful stuff')
       console.log(data)
+      $window.location.href = '/event'
+      // $location.path('/event');
+
 
     })
     .catch(function (err) {console.log(err)})
@@ -334,7 +337,20 @@ app.controller('myaccountController', function($http, $scope){
     $scope.findMyEvents = function () {
       $http({
         method:'POST',
-        url: '/event/mine',
+        url: '/event/find',
+        data:$scope.search
+      }).success(function (data) {
+        $scope.events = data;
+        console.log(data)
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    }
+    $scope.ShowAllEvents = function () {
+      $http({
+        method:'POST',
+        url: '/event/all',
         data:$scope.search
       }).success(function (data) {
         $scope.events = data;
