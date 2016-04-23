@@ -132,6 +132,13 @@ color: darkblue;
 border-bottom: 11px solid #39ACA1;
 box-shadow: 0 1px 0 0 white;
 }
+input[type=email],
+input[type=email]:focus{
+  color: darkblue;
+  border-bottom: 11px solid #39ACA1;
+  box-shadow: 0 1px 0 0 white;
+
+}
 #input-field {
   background-color: BlanchedAlmond;
 }
