@@ -10,7 +10,7 @@
     <span class="card-title grey-text text-darken-4">Here are some details on your account, {{users.firstName}} {{users.lastName}}<i class="material-icons right">close</i></span>
     <p>Here is some more information about your activity on the app!</p>
     <ul>
-      <li>Date Joined: {{createdAt}}</li>
+      <li>Date Joined: {{users.createdAt | date: longDate}}</li>
       <li>Events Created:</li>
       <li>Favorite Restaurants:</li>
       <li>Favorite Food:</li>
