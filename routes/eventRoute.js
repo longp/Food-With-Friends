@@ -21,15 +21,7 @@ router.post('/mine', function (req, res) {
   .then(function (location) {
     stateLong = location[0].administrativeLevels.level1long;
     stateShort = location[0].administrativeLevels.level1short;
-    if (location[0].administrativeLevels.level2short) {
-      county = location[0].administrativeLevels.level2short;
-    } else {
-      county = ''
-    }
     var searchLocation = stateLong+ ' ' + stateShort
-    console.log(location)
-    console.log(stateLong)
-    console.log(stateShort)
     Event.find({
       $and :
         [

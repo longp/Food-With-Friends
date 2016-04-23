@@ -26,20 +26,12 @@ router.post('/createEvent', function(req, res) {
 
 // attendee creation routoe
 router.post('/createAttendee', function (req, res) {
-    // var name = req.body.attendees.name;
-  // var phone = req.body.attendees.phone;
   var event = req.body.eventId;
-  // console.log(req.body.attendees)
   var attendees = req.body.attendees
   var attnArr = [];
   for (i=0;i<attendees.length;i++) {
     var name = req.body.attendees[i].name;
     var phone = req.body.attendees[i].phone;
-    // attnArr.push(req.body.attendees[i])
-
-    // console.log(attnArr)
-    // console.log(i + 'count' + name)
-    // console.log(i + 'count' + phone)
     if (name === undefined || phone === undefined) {
       break;
     }
@@ -58,23 +50,13 @@ router.post('/createAttendee', function (req, res) {
       {new:true, upsert:true},
       function (err,data) {
         attnArr.push(data._id)
-        // console.log("attndee"+data)
-        console.log('arr '+attnArr)
-        Event.findOneAndUpdateAsync(
+              Event.findOneAndUpdateAsync(
           {_id:event},
           {attendees:attnArr},
           {upsert:true}
         )
       })
   }
-  // console.log('arr '+attnArr)
-  // Event.findOneAndUpdateAsync(
-  //   {_id:event},
-  //   {$setOnInsert: {
-  //     attendees:attnArr
-  //   }},
-  //   {new:true, upsert:true}
-  // )
 })
 
 
