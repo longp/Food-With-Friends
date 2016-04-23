@@ -1,5 +1,6 @@
 
 app.controller('mainController', function($scope, $rootScope, $http){
+  
   $scope.sms = function(){
     var req = {
       method: 'POST',
