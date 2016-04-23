@@ -34,6 +34,9 @@ label{
 .goEventBtn{
   opacity: 1;
 }
+.myEventSearchBtn{
+  text-align: center;
+}
 .form-header {
   color: #283593;
   text-align: center;
@@ -41,12 +44,10 @@ label{
 .input-field{
   color: black;
 }
-
 .createEventText{
   font-size: 26px;
 }
-
-.registerForm, .loginForm, .sendForm, .myEventform{
+.registerForm, .loginForm, .sendForm{
   padding: 20px;
   border-radius: 5px;
   background-color: white;
@@ -57,7 +58,10 @@ label{
   border-radius: 5px;
   background-color: white;
   opacity: 0.9;
-  margin-top: 150px;
+  margin-top: 10vh;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .newEventHeader{
   color: #283593;
@@ -87,20 +91,26 @@ label{
   height: 300px;
   width: 50px;
 }
-
+.findMyEvents{
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  opacity: 0.9;
+  margin-top: 150px;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
 ::-webkit-input-placeholder {
    color: #283593;
    font-weight: bold;
 }
-
 :-moz-placeholder { /* Firefox 18- */
    color: #283593;
 }
-
 ::-moz-placeholder {  /* Firefox 19+ */
    color: #283593;
 }
-
 :-ms-input-placeholder {
    color: #283593;
 }
@@ -113,20 +123,37 @@ color: RED;
 input[type=text],
 input[type=text]:focus{
 color: purple;
-border-bottom: 11px solid indigo;
+border-bottom: 11px solid #39ACA1;
 box-shadow: 0 1px 0 0 white;
 }
 input[type=password],
 input[type=password]:focus{
 color: darkblue;
-border-bottom: 11px solid indigo;
+border-bottom: 11px solid #39ACA1;
 box-shadow: 0 1px 0 0 white;
+}
+input[type=email],
+input[type=email]:focus{
+  color: darkblue;
+  border-bottom: 11px solid #39ACA1;
+  box-shadow: 0 1px 0 0 white;
+
+}
+input[type=tel],
+input[type=tel]:focus{
+  color: darkblue;
+  border-bottom: 11px solid #39ACA1;
+  box-shadow: 0 1px 0 0 white;
+
 }
 #input-field {
   background-color: BlanchedAlmond;
 }
-
-.eventimg {
+span.ng-binding:{
+  font-size: 1.2em;
+  colr-red;
+}
+.event-img {
   width: 200px;
    height: 100px;
  }
@@ -134,6 +161,6 @@ box-shadow: 0 1px 0 0 white;
    display: block;
    width: 100%;
  }
-  #facebook-btn {
+#facebook-btn {
     background-color: blue;
-  }
+}

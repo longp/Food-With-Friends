@@ -1,10 +1,7 @@
 <div class="container-fluid">
-  <div class="">
-    <h1 class="form-header">My Events</h1>
-  </div>
   <div class="row">
-    <!-- <h4 class='center-align'>Search Options</h4> -->
-    <form class="myEventForm" ng-submit="findMyEvents()">
+    <form ng-submit="findMyEvents()" class="findMyEvents">
+      <h1 class="form-header">My Events</h1>
       <div class="form-group ">
         <h5 class="center-align form-header">Number of Events</h5>
         <p class="range-field">
@@ -16,7 +13,7 @@
           <input type="text" ng-model='search.location' name="name" value="">
         </p>
       </div>
-      <button type="submit" class="btn search-btn">Search</button>
+      <button class="myEventSearchBtn btn btn-block" type="submit">Search</button>
     </form>
   </div>
   <br>
@@ -25,13 +22,13 @@
       <tbody>
         <th>
           <td class="col m4">
-            <a href="#"><button type="button" class="eventimg" name="button">{{events[$index].name}}</button></a>
+            <a href="#"><button type="button" class="event-img" name="button">{{events[$index].name}}</button></a>
           </td>
           <td class="col m4" ng-if="events.length > ($index + 1)">
-            <a href="#"><button class="eventimg" type="button" name="button">{{events[$index+1].name}}</button></a>
+            <a href="#"><button class="event-img" type="button" name="button">{{events[$index+1].name}}</button></a>
           </td>
           <td class="col m4" ng-if="events.length > ($index + 2)">
-            <a href="#"><button class="eventimg" type="button" name="button">{{events[$index+2].name}}</button></a>
+            <a href="#"><button class="event-img" type="button" name="button">{{events[$index+2].name}}</button></a>
           </td>
         </th>
       </tbody>

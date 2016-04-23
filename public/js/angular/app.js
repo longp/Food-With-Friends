@@ -55,6 +55,10 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
+    .when('/newAttende', {
+      templateUrl:'partials/createEvent.html',
+      controller: 'createEventController',
+    })
     .when('/event', {
       templateUrl:'partials/event.html',
       controller:'myEventController'

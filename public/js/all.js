@@ -55,6 +55,10 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
+    .when('/newAttende', {
+      templateUrl:'partials/createEvent.html',
+      controller: 'createEventController',
+    })
     .when('/event', {
       templateUrl:'partials/event.html',
       controller:'myEventController'
@@ -164,36 +168,58 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 });
 
 app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
-  $scope.newEvent = {
-    id:'',
-    term: "",
-    location: "",
-    eventUrl:''
-  };
+
   // for local testing
-  var urlBegin = 'localhost:3000/eventform/'
+  var urlBegin = 'localhost:3000/eventform/';
   // develop/heroku testng
   // var urlBegin = 'http://getfoodwithfriends.herokuapp.com/eventform/'
+
+  // fx for creatign event
   $scope.createEvent = function () {
     $http({
       method: "POST",
       url: "/api/createEvent",
       data: $scope.newEvent
     }).success(function (data) {
-      console.log(data)
       if (data.state == 'success') {
         $rootScope.message = data.message;
         $scope.newEvent.eventUrl = data.eventUrl;
         $scope.newEvent.id = data.eventId;
         $scope.urlPath= urlBegin + data.eventUrl;
         $location.path('/newEvent');
-
       } else {
         $rootScope.message = data.message;
         $location.path('/newEvent');
       }
     });
   };
+// fx to add attendee from input form
+  $scope.createAttendee = function () {
+    console.log('attendees ' + $scope.attendees)
+    console.log('scope ' + $scope)
+    var inData = {'attendee':$scope.attendees, 'eventId':$scope.newEvent.id}
+    $http({
+      method:'POST',
+      url:'/api/createAttendee',
+      data:inData
+    })
+    .success(function (data) {
+      console.log(data);
+    })
+    .catch(function (err) {console.log(err)})
+  }
+  $scope.attendees = [];
+     $scope.addfield = function () {
+         $scope.attendees.push({})
+     }
+     $scope.getValue = function (item) {
+         alert(item.value)
+     }
+
+    $scope.removeChoice = function() {
+      var lastItem = $scope.attendees.length-1;
+      $scope.attendees.splice(lastItem);
+    };
 });
 
 app.controller('facebookController', function ($scope, $facebook)  {

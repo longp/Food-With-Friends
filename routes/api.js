@@ -6,6 +6,7 @@ var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
 //models from mongoose
 var Event = require('../models/Event.js');
+var Attendee = require('../models/Attendee.js')
 var Place = require('../models/Place.js');
 // randomstring for url events
 var randomstring = require('randomstring');
@@ -18,14 +19,28 @@ var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
 
 //create event route
 router.post('/createEvent', function(req, res) {
-//   geocoder.geocode({address: '29 champs elysée', country: 'France', zipcode: '75008'}, function(err, res) {
-//     console.log(res);
-// });
-
   var randomS = randomstring.generate(7)
   createEvent(req,res,randomS)
 });
 
+// attendee creation routoe
+router.post('/createAttendee', function (req, res) {
+  var name = req.body.name;
+  var phone = req.body.phone;
+  var event = req.body.event;
+  console.log(req.body)
+  var newAttendee = new Attendee ({
+    name:name,
+    phone:phone,
+    event:event
+  });
+  newAttendee.saveAsync({name:name,phone:phone,event:event}, function (err, attendee) {
+    if (err) {
+      console.log(err)
+    }
+    res.send(attendee)
+  })
+})
 
 
 // twilio route
@@ -56,7 +71,6 @@ function createEvent (req,res,randomS) {
       geocoder.reverse({lat:lat, lon:lon, countryCode: 'us'}, function(err, res) {
       })
       .then(function (location) {
-        console.log(location)
         // new event model with params from yelp search/ and user input
         var newEvent = new Event({
           name: formData.name,
