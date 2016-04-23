@@ -27,6 +27,10 @@ var eventSchema = new Schema ({
   date:{
     type: Date,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
   createdby:{type:Schema.Types.ObjectId, ref:"User"},
   attendees:[{type:Schema.Types.ObjectId, ref:"Attendee"}],
   eventUrl:String

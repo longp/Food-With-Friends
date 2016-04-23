@@ -110,7 +110,8 @@ label{
 }
 .myEventResults{
   border-radius: 5px;
-  background-color: white;
+  border-color: red;
+  background-color: black;
   opacity: 0.9;
   width: 700px;
 }
