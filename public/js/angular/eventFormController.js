@@ -1,7 +1,11 @@
 app.controller('eventFormController', function($scope, $http, $location, $routeParams){
   $scope.eventId = $routeParams.id;
 
+
   $scope.$watch('$viewContentLoaded', function() {
+
+    $('select').material_select();
+
     var req = {
       method: 'POST',
       url: '/api/eventData',
