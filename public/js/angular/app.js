@@ -1,4 +1,5 @@
 var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+
 app.run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
@@ -23,6 +24,8 @@ app.run(function($rootScope) {
      firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
    }());
 });
+
+
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
   $facebookProvider.setAppId('1702470703324769');
@@ -69,6 +72,10 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     .when('/eventform/:id',{
       templateUrl:'/partials/eventForm.html',
       controller: 'eventFormController'
+    })
+    .when('/map', {
+      templateUrl:'partials/googleMap.html',
+      controller: 'googleController'
     })
     //send sms
     .when('/send', {

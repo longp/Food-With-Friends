@@ -8,7 +8,6 @@ body {
   margin-bottom:100px;
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
-  background-size: height auto;
   background-repeat: no-repeat;
 }
 
@@ -29,20 +28,44 @@ label{
   color: MediumOrchid;
   font-size: 1.4em;
 }
-
+.myEventBtn{
+  opacity: 0.9;
+}
+.goEventBtn{
+  opacity: 1;
+}
+.myEventSearchBtn{
+  text-align: center;
+}
 .form-header {
-  color: darkOrange;
+  color: #283593;
   text-align: center;
 }
 .input-field{
   color: black;
 }
+.createEventText{
+  font-size: 26px;
+}
 .registerForm, .loginForm, .sendForm{
   padding: 20px;
   border-radius: 5px;
   background-color: white;
-  opacity: 0.6;
-
+  opacity: 0.9;
+}
+.createEventForm{
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  opacity: 0.9;
+  margin-top: 150px;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.newEventHeader{
+  color: #283593;
+  text-align: center;
 }
 .send{
   padding-top: 30px;
@@ -56,8 +79,10 @@ label{
   color: black;
 }
 .cardAcc{
-  height: 400px;
+  height: 450px;
   width: 400px;
+  margin: auto;
+  margin-top: 100px
 }
 .card-title{
   text-align: center;
@@ -66,20 +91,26 @@ label{
   height: 300px;
   width: 50px;
 }
-
+.findMyEvents{
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  opacity: 0.9;
+  margin-top: 150px;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
 ::-webkit-input-placeholder {
    color: #283593;
    font-weight: bold;
 }
-
 :-moz-placeholder { /* Firefox 18- */
    color: #283593;
 }
-
 ::-moz-placeholder {  /* Firefox 19+ */
    color: #283593;
 }
-
 :-ms-input-placeholder {
    color: #283593;
 }
@@ -92,19 +123,25 @@ color: RED;
 input[type=text],
 input[type=text]:focus{
 color: purple;
-border-bottom: 11px solid red;
+border-bottom: 11px solid #39ACA1;
 box-shadow: 0 1px 0 0 white;
 }
 input[type=password],
 input[type=password]:focus{
 color: darkblue;
-border-bottom: 11px solid yellow;
+border-bottom: 11px solid #39ACA1;
 box-shadow: 0 1px 0 0 white;
+}
+input[type=email],
+input[type=email]:focus{
+  color: darkblue;
+  border-bottom: 11px solid #39ACA1;
+  box-shadow: 0 1px 0 0 white;
+
 }
 #input-field {
   background-color: BlanchedAlmond;
 }
-
 .eventimg {
   width: 200px;
    height: 100px;
@@ -113,6 +150,6 @@ box-shadow: 0 1px 0 0 white;
    display: block;
    width: 100%;
  }
-  #facebook-btn {
+#facebook-btn {
     background-color: blue;
-  }
+}

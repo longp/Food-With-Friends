@@ -1,4 +1,5 @@
 var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+
 app.run(function($rootScope) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
@@ -23,6 +24,8 @@ app.run(function($rootScope) {
      firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
    }());
 });
+
+
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
   $facebookProvider.setAppId('1702470703324769');
@@ -66,9 +69,15 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/facebook.html',
       controller: 'facebookController'
     })
+<<<<<<< HEAD
     .when('/eventform/:id',{
       templateUrl:'/partials/eventForm.html',
       controller: 'eventFormController'
+=======
+    .when('/map', {
+      templateUrl:'partials/googleMap.html',
+      controller: 'googleController'
+>>>>>>> 718e9089c767b7431ff9598b9b911a7d279a451b
     })
     //send sms
     .when('/send', {
@@ -254,6 +263,7 @@ app.controller('facebookController', function ($scope, $facebook)  {
 
 
 app.controller('mainController', function($scope, $rootScope, $http){
+  
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -285,6 +295,9 @@ app.controller('myaccountController', function($http, $scope){
       data:$scope.users
     }).success(function (users){
       console.log(users);
+      $scope.users.firstName = users.firstName;
+      $scope.users.lastName = users.lastName;
+      $scope.users.createdAt = users.createdAt;
     }).catch(function(err){
       console.log(err)
     })

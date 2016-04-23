@@ -26,16 +26,18 @@ router.post('/mine', function (req, res) {
     } else {
       county = ''
     }
-    var searchLocation = stateLong +' ' + stateShort  +' ' + county
-    console.log(searchLocation)
+    var searchLocation = stateLong+ ' ' + stateShort
+    console.log(location)
+    console.log(stateLong)
+    console.log(stateShort)
     Event.find({
       $and :
         [
           {createdby:userId},
             {$or:
-               [{location:{$regex:stateLong,$options:"$i"}},
-                    {location:{$regex:stateShort,$options:"$i"}},
-                    {location:{$regex:county,$options:"$i"}},
+             [
+               {location:{$regex:stateLong,$options:"$i"}},
+              {location:{$regex:stateShort,$options:"$i"}},
                 ]
             },
         ]
@@ -43,7 +45,6 @@ router.post('/mine', function (req, res) {
     .populate('places')
     .limit(limit)
     .then(function (data) {
-      console.log(data)
       res.send(data);
     })
   });
