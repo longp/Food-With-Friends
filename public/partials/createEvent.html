@@ -6,8 +6,8 @@
       </div>
     </div>
   </div>
-    <div class="col m8 offset-m2">
-      <form ng-submit="createEvent()">
+      <form ng-submit="createEvent()" class="createEventForm">
+        <h3 class="newEventHeader"> Create an Event</h3>
         <input type="text" placeholder="Name of your event" ng-model="newEvent.name">
         <input type="text" placeholder="Type of Food (optional)" ng-model="newEvent.term">
         <input type="text" placeholder="Location" ng-model="newEvent.location">
