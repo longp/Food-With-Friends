@@ -74,7 +74,7 @@ function createEvent (req,res,randomS) {
             if(err) {
               res.send({state: 'failure', message: err});
             } else {
-              res.send({state: 'success', message:event.name + " Event Created!", eventUrl:randomS});
+              res.send({state: 'success', message:event.name + " Event Created!",eventId:event._id, eventUrl:randomS});
             }
           })
         .catch(function (err) {

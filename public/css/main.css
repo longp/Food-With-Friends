@@ -29,23 +29,39 @@ label{
   font-size: 1.4em;
 }
 .myEventBtn{
-  opacity: .6
+  opacity: 0.9;
 }
-
-
+.goEventBtn{
+  opacity: 1;
+}
 .form-header {
-  color: darkOrange;
+  color: #283593;
   text-align: center;
 }
 .input-field{
   color: black;
 }
+
+.createEventText{
+  font-size: 26px;
+}
+
 .registerForm, .loginForm, .sendForm, .myEventform{
   padding: 20px;
   border-radius: 5px;
   background-color: white;
-  opacity: 0.6;
-
+  opacity: 0.9;
+}
+.createEventForm{
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  opacity: 0.9;
+  margin-top: 150px;
+}
+.newEventHeader{
+  color: #283593;
+  text-align: center;
 }
 .send{
   padding-top: 30px;
@@ -59,8 +75,10 @@ label{
   color: black;
 }
 .cardAcc{
-  height: 400px;
+  height: 450px;
   width: 400px;
+  margin: auto;
+  margin-top: 100px
 }
 .card-title{
   text-align: center;
@@ -95,13 +113,13 @@ color: RED;
 input[type=text],
 input[type=text]:focus{
 color: purple;
-border-bottom: 11px solid red;
+border-bottom: 11px solid indigo;
 box-shadow: 0 1px 0 0 white;
 }
 input[type=password],
 input[type=password]:focus{
 color: darkblue;
-border-bottom: 11px solid yellow;
+border-bottom: 11px solid indigo;
 box-shadow: 0 1px 0 0 white;
 }
 #input-field {
