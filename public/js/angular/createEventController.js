@@ -33,9 +33,12 @@ app.controller('createEventController', function($scope, $http, $location, $rout
       url:'/api/createAttendee',
       data:inData
     })
-    .success(function (data) {
+    .then(function (data) {
       console.log('successful stuff')
       console.log(data)
+      $window.location.href = '/event'
+      // $location.path('/event');
+
 
     })
     .catch(function (err) {console.log(err)})
