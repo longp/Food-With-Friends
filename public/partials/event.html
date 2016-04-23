@@ -1,6 +1,5 @@
-<div class="container-fluid">
   <div class="row">
-    <form ng-submit="findMyEvents()" class="findMyEvents">
+    <form ng-submit="findMyEvents()" class="findMyEvents col s3">
       <h1 class="form-header">My Events</h1>
       <div class="form-group ">
         <h5 class="center-align form-header">Number of Events</h5>
@@ -15,23 +14,36 @@
       </div>
       <button class="myEventSearchBtn btn btn-block" type="submit">Search</button>
     </form>
+    <div ng-repeat="event in events"  class="col s9 myEventResults">
+      <table >
+        <tbody>
+          <tr>
+            <td >
+              <a href="#"><span >Event Name :{{event.name}}</span></a>
+            </td>
+            </tr>
+            <tr>
+            <td >
+              <a href="#"><span ng-repeat='attendee in event.attendees' >AttendeeS: {{attendee.name}}</span></a>
+            </td>
+            </tr>
+            <tr>
+            <td >
+              <a href="#"><span ng-repeat='place in event.places' >places : {{place.name}}</span></a>
+            </td>
+          </tr>
+          <!-- <tr>
+            <td>
+              <a href="#"><button class="event-img" type="button" name="button">{{events.name}}</button></a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#"><button class="event-img" type="button" name="button">{{events.name}}</button></a>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+
   </div>
-  <br>
-  <div ng-repeat="event in events" ng-if="$index % 3 == 0" class="row">
-    <table >
-      <tbody>
-        <th>
-          <td class="col m4">
-            <a href="#"><button type="button" class="event-img" name="button">{{events[$index].name}}</button></a>
-          </td>
-          <td class="col m4" ng-if="events.length > ($index + 1)">
-            <a href="#"><button class="event-img" type="button" name="button">{{events[$index+1].name}}</button></a>
-          </td>
-          <td class="col m4" ng-if="events.length > ($index + 2)">
-            <a href="#"><button class="event-img" type="button" name="button">{{events[$index+2].name}}</button></a>
-          </td>
-        </th>
-      </tbody>
-    </table>
-  </div>
-</div>
