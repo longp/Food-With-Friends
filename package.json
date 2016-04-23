@@ -5,7 +5,6 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
-    /*"postinstall": "gulp default"*/
   },
   "repository": {
     "type": "git",
