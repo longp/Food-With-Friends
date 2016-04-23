@@ -198,6 +198,11 @@ app.controller('createEventController', function($scope, $http, $location, $rout
 
 app.controller('eventFormController', function($scope, $http, $location, $routeParams){
   $scope.eventId = $routeParams.id;
+  $scope.event = {
+    name: "",
+    places: []
+  }
+
 
   $scope.$watch('$viewContentLoaded', function() {
     var req = {
@@ -209,9 +214,13 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
       data: {eventUrl: $scope.eventId}
     };
 
-    $http(req).success(function(data){
-      if (data.state === "success"){
-        console.log(data.data);
+    $http(req).success(function(responce){
+      if (responce.state === "success"){
+        console.log(responce.data);
+        $scope.event = {
+          name: responce.data.name,
+          places: responce.data.places
+        }
       }
     });
   });
