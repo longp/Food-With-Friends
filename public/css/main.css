@@ -8,7 +8,6 @@ body {
   margin-bottom:100px;
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
-  background-size: height auto;
   background-repeat: no-repeat;
 }
 
@@ -29,6 +28,10 @@ label{
   color: MediumOrchid;
   font-size: 1.4em;
 }
+.myEventBtn{
+  opacity: .6
+}
+
 
 .form-header {
   color: darkOrange;

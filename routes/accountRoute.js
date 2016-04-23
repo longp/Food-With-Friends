@@ -4,9 +4,8 @@ var User = require('../models/user.js');
 
 
 router.post('/myaccount', function(req, res){
-  var userId = req.user._id;
-  var username = req.user.username;
-  User.find({_id:userId}, function(err, users){
+  var userId = req.user.id;
+  User.findOne({_id:userId}, function(err, users){
     if (err) return console.log(err);
     console.log(users);
     res.send(users);

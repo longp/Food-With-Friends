@@ -236,6 +236,7 @@ app.controller('facebookController', function ($scope, $facebook)  {
 
 
 app.controller('mainController', function($scope, $rootScope, $http){
+  
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -267,6 +268,9 @@ app.controller('myaccountController', function($http, $scope){
       data:$scope.users
     }).success(function (users){
       console.log(users);
+      $scope.users.firstName = users.firstName;
+      $scope.users.lastName = users.lastName;
+      $scope.users.createdAt = users.createdAt;
     }).catch(function(err){
       console.log(err)
     })
