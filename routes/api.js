@@ -47,16 +47,17 @@ router.post('/sendSMS', function(req, res){
 router.post('/eventData', function(req, res){
   var searchUrl = req.body.eventUrl
 
-  Event.findOne({eventUrl: searchUrl}), function (err, eventData) {
-    // if (err) console.log(err);
-    console.log(eventData);
+  Event.findOne({eventUrl:searchUrl})
+  .populate('places')
+  .exec(function (err, eventData) {
     if (eventData) {
       res.send({
         state: "success",
         data: eventData
       });
     }
-  };
+  });
+
 });
 
 
