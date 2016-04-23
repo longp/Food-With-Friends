@@ -37,6 +37,11 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl: 'partials/login.html',
       controller: 'authController'
     })
+    //logout route
+    .when('/logout', {
+      templateUrl: 'partials/login.html',
+      controller: 'authController'
+    })
     //the signup display
     .when('/register', {
       templateUrl: 'partials/register.html',
