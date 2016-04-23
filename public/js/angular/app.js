@@ -1,10 +1,11 @@
 var app = angular.module('mainApp', ['ngRoute', 'ngFacebook','uiGmapgoogle-maps', 'nemLogging']);
 
-app.run(function($rootScope) {
+app.run(function($rootScope, $http) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
-
+  $http.defaults.headers.common['Accept'] = 'application/json';
+   $http.defaults.headers.common['Content-Type'] = 'application/json';
   // Load the facebook SDK asynchronously
   (function(){
      // If we've already installed the SDK, we're done
@@ -62,11 +63,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
-    .when('/newAttende', {
-      templateUrl:'partials/createEvent.html',
-      controller: 'createEventController',
-    })
-    .when('/event', {
+      .when('/event', {
       templateUrl:'partials/event.html',
       controller:'myEventController'
     })
