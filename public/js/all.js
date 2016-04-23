@@ -170,7 +170,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   }
 });
 
-app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
+app.controller('createEventController', function($scope, $http, $location, $route, $rootScope, $window) {
 
   // for local testing
   var urlBegin = 'localhost:3000/eventform/';

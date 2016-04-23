@@ -43,6 +43,7 @@ router.post('/mine', function (req, res) {
         ]
       })
     .populate('places')
+    .populate('attendees')
     .limit(limit)
     .then(function (data) {
       res.send(data);
