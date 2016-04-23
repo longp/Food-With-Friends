@@ -202,7 +202,9 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
     name: "",
     places: []
   }
-
+  $scope.form = {
+    firstPlace: "0"
+  };
 
   $scope.$watch('$viewContentLoaded', function() {
     var req = {
@@ -216,7 +218,6 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
 
     $http(req).success(function(responce){
       if (responce.state === "success"){
-        console.log(responce.data);
         $scope.event = {
           name: responce.data.name,
           places: responce.data.places
@@ -224,6 +225,11 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
       }
     });
   });
+
+  $scope.submit = function () {
+    console.log($scope.form);
+  };
+
 });
 
 app.controller('facebookController', function ($scope, $facebook)  {
