@@ -203,7 +203,7 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   $scope.createAttendee = function () {
     console.log('attendees ' + $scope.attendees)
     console.log('scope ' + $scope)
-    var inData = {'attendee':$scope.attendees, 'eventId':$scope.newEvent.id}
+    var inData = {'attendees':$scope.attendees, 'eventId':$scope.newEvent.id}
     $http({
       method:'POST',
       url:'/api/createAttendee',

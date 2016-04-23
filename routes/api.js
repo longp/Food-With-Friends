@@ -25,21 +25,29 @@ router.post('/createEvent', function(req, res) {
 
 // attendee creation routoe
 router.post('/createAttendee', function (req, res) {
-  var name = req.body.name;
-  var phone = req.body.phone;
-  var event = req.body.event;
-  console.log(req.body)
-  var newAttendee = new Attendee ({
-    name:name,
-    phone:phone,
-    event:event
-  });
-  newAttendee.saveAsync({name:name,phone:phone,event:event}, function (err, attendee) {
-    if (err) {
-      console.log(err)
-    }
-    res.send(attendee)
-  })
+  // { attendee:
+  //  [ { name: 'longd', phone: '1231231231' },
+  //    { name: 'dave', phone: '1312312312' },
+  //    { name: 'jon', phone: '1231231231' } ],
+  // eventId: '571b31c577d7530026e810a5' }
+
+  // var name = req.body.attendees.name;
+  // var phone = req.body.attendees.phone;
+  var event = req.body.eventId;
+  console.log(req.body.attendees)
+  var attendees = req.body.attendees
+  for (i=0;i<attendees.length;i++) {
+    var name = req.body.attendees[i].name;
+    var phone = req.body.attendees[i].phone;
+    var newAttendee = new Attendee ({
+      name:name,
+      phone:phone,
+      event:event
+    });
+    newAttendee.saveAsync({name:name,phone:phone,event:event}, function (err, attendee) {
+      console.log(attendee)
+    })
+  }
 })
 
 
