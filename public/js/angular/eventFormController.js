@@ -4,9 +4,7 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
     name: "",
     places: []
   }
-  $scope.form = {
-    firstPlace: "0"
-  };
+  $scope.form = [];
 
   $scope.$watch('$viewContentLoaded', function() {
     var req = {

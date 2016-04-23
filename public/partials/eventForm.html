@@ -10,11 +10,11 @@
               <p>{{place.name}}</p>
               <div class="chip" ng-repeat="category in place.categories">{{category}}</div>
               <p>
-                <input name="{{place.name}}" type="radio" id="input{{place.$$hashKey}}1" value="1" ng-model="form.firstPlace"/>
+                <input name="{{place.name}}" type="radio" id="input{{place.$$hashKey}}1" value="1" ng-model="form[$index]"/>
                 <label for="input{{place.$$hashKey}}1">Yes</label>
-                <input name="{{place.name}}" type="radio" id="input{{place.$$hashKey}}2" value="0" ng-model="form.firstPlace"/>
+                <input name="{{place.name}}" type="radio" id="input{{place.$$hashKey}}2" value="0" ng-model="form[$index]"/>
                 <label for="input{{place.$$hashKey}}2">No</label>
-                <input name="{{place.name}}" type="radio" id="input{{place.$$hashKey}}3" value="-10" ng-model="form.firstPlace"/>
+                <input name="{{place.name}}" type="radio" id="input{{place.$$hashKey}}3" value="-10" ng-model="form[$index]"/>
                 <label for="input{{place.$$hashKey}}3">Allergic</label>
               </p>
               <br>
