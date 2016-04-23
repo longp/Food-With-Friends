@@ -1,4 +1,4 @@
-var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+var app = angular.module('mainApp', ['ngRoute', 'ngFacebook','uiGmapgoogle-maps', 'nemLogging']);
 
 app.run(function($rootScope) {
   $rootScope.authenticated = false;
@@ -25,6 +25,13 @@ app.run(function($rootScope) {
    }());
 });
 
+app.config(function (uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyDcaTjAeuU6Qb7DNvUy0i-MldMRfh0K3uk',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+})
 
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
@@ -73,7 +80,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       controller: 'facebookController'
     })
     .when('/map', {
-      templateUrl:'partials/googleMap.html',
+      templateUrl:'partials/maps.html',
       controller: 'googleController'
     })
     //send sms
@@ -85,7 +92,6 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     .when('/myaccount', {
       templateUrl: 'partials/myaccount.html',
       controller: 'myaccountController'
-
     })
     .otherwise({
         redirectTo: '/'
@@ -243,7 +249,7 @@ app.controller('facebookController', function ($scope, $facebook)  {
   refresh();
 });
 
-  app.controller('formController', function ($http, $scope) {
+app.controller('formController', function ($http, $scope) {
     console.log('yoyo');
     $scope.form={
       term:'',
@@ -263,6 +269,21 @@ app.controller('facebookController', function ($scope, $facebook)  {
     }
 
   })
+
+app.controller("googleController", function ($scope, nemSimpleLogger) {
+  nemSimpleLogger.doLog = true; //default is true
+  nemSimpleLogger.currentLevel = nemSimpleLogger.LEVELS.debug;//defaults to error only
+});
+
+app.controller("googleController", function($scope, uiGmapGoogleMapApi) {
+  var areaLat = 44.2126995,
+      areaLng = -100.2471641,
+      areaZoom = 3;
+  uiGmapGoogleMapApi.then(function (maps) {
+     $scope.map = { center: { latitude: areaLat, longitude: areaLng }, zoom: areaZoom };
+     $scope.options = { scrollwheel: false };
+ });
+});
 
 
 app.controller('mainController', function($scope, $rootScope, $http){

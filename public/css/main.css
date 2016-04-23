@@ -28,6 +28,13 @@ label{
   color: MediumOrchid;
   font-size: 1.4em;
 }
+.angular-google-map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
 .myEventBtn{
   opacity: 0.9;
 }
@@ -116,6 +123,12 @@ label{
 }
 #formHead{
 color: RED;
+}
+#map_canvas {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  position: relative;
 }
 .formtxt{
   color: teal;
