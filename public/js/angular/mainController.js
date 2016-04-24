@@ -1,6 +1,6 @@
 
 app.controller('mainController', function($scope, $rootScope, $http){
-  
+
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -8,7 +8,10 @@ app.controller('mainController', function($scope, $rootScope, $http){
       headers: {
         'Content-Type': "application/JSON"
       },
-      data: $scope.number
+      data: {
+        number: $scope.number,
+        url: $rootScope.urlPath
+      }
     };
     $http(req).success(function(data){
       if (data.state === success){

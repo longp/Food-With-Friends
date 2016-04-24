@@ -63,8 +63,8 @@ router.post('/createAttendee', function (req, res) {
 // twilio route
 router.post('/sendSMS', function(req, res){
   client.messages.create({
-      body: "Long please?! I love you <3",
-      to: req.body.phone1 + "",
+      body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
+      to: req.body.number.phone1 + "",
       from: "+19086529320"
   }, function(err, message) {
       process.stdout.write(message.sid);
