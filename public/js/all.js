@@ -188,7 +188,7 @@ app.controller('createEventController', function($scope, $http, $location, $rout
         $rootScope.message = data.message;
         $scope.newEvent.eventUrl = data.eventUrl;
         $scope.newEvent.id = data.eventId;
-        $scope.urlPath= urlBegin + data.eventUrl;
+        $rootScope.urlPath= urlBegin + data.eventUrl;
         $location.path('/newEvent');
       } else {
         $rootScope.message = data.message;
@@ -291,7 +291,7 @@ app.controller("googleController", function($scope, uiGmapGoogleMapApi) {
 
 
 app.controller('mainController', function($scope, $rootScope, $http){
-  
+
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -299,7 +299,10 @@ app.controller('mainController', function($scope, $rootScope, $http){
       headers: {
         'Content-Type': "application/JSON"
       },
-      data: $scope.number
+      data: {
+        number: $scope.number,
+        url: $rootScope.urlPath
+      }
     };
     $http(req).success(function(data){
       if (data.state === success){

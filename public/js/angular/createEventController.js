@@ -16,7 +16,7 @@ app.controller('createEventController', function($scope, $http, $location, $rout
         $rootScope.message = data.message;
         $scope.newEvent.eventUrl = data.eventUrl;
         $scope.newEvent.id = data.eventId;
-        $scope.urlPath= urlBegin + data.eventUrl;
+        $rootScope.urlPath= urlBegin + data.eventUrl;
         $location.path('/newEvent');
       } else {
         $rootScope.message = data.message;
