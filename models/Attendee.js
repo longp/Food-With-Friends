@@ -3,9 +3,10 @@ var mongoose = Promise.promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 
 var attendeeSchema = new Schema({
-  name: String,
-  phone: Number,
-  event: {Schema.Types.ObjectId, ref:'Event'}
+  // name: String,
+  // phone: String,
+  attendees: String,
+  event: {type:Schema.Types.ObjectId, ref:'Event'}
 })
 
 

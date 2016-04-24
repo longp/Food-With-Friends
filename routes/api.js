@@ -6,6 +6,7 @@ var client = require('../config/twilio.js');
 var yelp  = require('../config/yelp.js');
 //models from mongoose
 var Event = require('../models/Event.js');
+var Attendee = require('../models/Attendee.js')
 var Place = require('../models/Place.js');
 // randomstring for url events
 var randomstring = require('randomstring');
@@ -16,16 +17,47 @@ var httpAdapter = 'http';
 var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
 
 
+
 //create event route
 router.post('/createEvent', function(req, res) {
-//   geocoder.geocode({address: '29 champs elysée', country: 'France', zipcode: '75008'}, function(err, res) {
-//     console.log(res);
-// });
-
   var randomS = randomstring.generate(7)
   createEvent(req,res,randomS)
 });
 
+// attendee creation routoe
+router.post('/createAttendee', function (req, res) {
+  var event = req.body.eventId;
+  var attendees = req.body.attendees
+  var attnArr = [];
+  for (i=0;i<attendees.length;i++) {
+    var name = req.body.attendees[i].name;
+    var phone = req.body.attendees[i].phone;
+    if (name === undefined || phone === undefined) {
+      break;
+    }
+    var newAttendee = new Attendee ({
+      name:name,
+      phone:phone,
+      event:event
+    });
+    Attendee.findOneAndUpdateAsync(
+      {name:name,phone:phone,event:event},
+      {$setOnInsert: {
+        name:name,
+        phone:phone,
+        event:event
+      }},
+      {new:true, upsert:true},
+      function (err,data) {
+        attnArr.push(data._id)
+              Event.findOneAndUpdateAsync(
+          {_id:event},
+          {attendees:attnArr},
+          {upsert:true}
+        )
+      })
+  }
+})
 
 
 // twilio route
@@ -56,7 +88,6 @@ function createEvent (req,res,randomS) {
       geocoder.reverse({lat:lat, lon:lon, countryCode: 'us'}, function(err, res) {
       })
       .then(function (location) {
-        console.log(location)
         // new event model with params from yelp search/ and user input
         var newEvent = new Event({
           name: formData.name,
@@ -74,7 +105,7 @@ function createEvent (req,res,randomS) {
             if(err) {
               res.send({state: 'failure', message: err});
             } else {
-              res.send({state: 'success', message:event.name + " Event Created!", eventUrl:randomS});
+              res.send({state: 'success', message:event.name + " Event Created!",eventId:event._id, eventUrl:randomS});
             }
           })
         .catch(function (err) {
