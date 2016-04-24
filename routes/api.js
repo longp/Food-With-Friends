@@ -63,7 +63,7 @@ router.post('/createAttendee', function (req, res) {
 // twilio route
 router.post('/sendSMS', function(req, res){
   client.messages.create({
-      body: "Long please?! I love you <3",
+      body: "{{urlPath}}",
       to: req.body.phone1 + "",
       from: "+19086529320"
   }, function(err, message) {
