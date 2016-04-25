@@ -6,6 +6,7 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
   }
   $scope.form = [];
 
+
   $scope.$watch('$viewContentLoaded', function() {
     var req = {
       method: 'POST',
@@ -26,8 +27,27 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
     });
   });
 
+
   $scope.submit = function () {
     console.log($scope.form);
+
+    var req = {
+      method: 'POST',
+      url: '/api/eventFormSubmit',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: {
+        form: $scope.form,
+        eventUrl: $scope.eventId
+      }
+    };
+
+    $http(req).success(function(responce){
+      if (responce.state === "success"){
+        console.log("Your form has been submitted!!!");
+      }
+    });
   };
 
 });

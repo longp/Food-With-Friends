@@ -45,7 +45,7 @@ router.post('/sendSMS', function(req, res){
 
 
 router.post('/eventData', function(req, res){
-  var searchUrl = req.body.eventUrl
+  var searchUrl = req.body.eventUrl;
 
   Event.findOne({eventUrl:searchUrl})
   .populate('places')
@@ -60,6 +60,29 @@ router.post('/eventData', function(req, res){
 
 });
 
+
+router.post('/eventFormSubmit', function(req, res){
+  var eventUrl = req.body.eventUrl;
+  var currentSubmission = req.body.form;
+
+  console.log(currentSubmission);
+
+  Event.findOneAndUpdate({"eventUrl":eventUrl}, { results: currentSubmission }, {upsert:true}, function(err, doc){
+    if (err) {
+      console.log(err);
+      return res.send({
+        state: "failure",
+        msg: "Oh Noes!"
+      });
+    } else {
+      console.log(doc);
+      return res.send({
+        state: "success",
+        msg: "WOOT!"
+      });
+    }
+  });
+});
 
 
 
