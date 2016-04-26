@@ -75,6 +75,65 @@ router.post('/sendSMS', function(req, res){
   });
 });
 
+
+router.post('/eventData', function(req, res){
+  var searchUrl = req.body.eventUrl;
+
+  Event.findOne({eventUrl:searchUrl})
+  .populate('places')
+  .exec(function (err, eventData) {
+    if (eventData) {
+      res.send({
+        state: "success",
+        data: eventData
+      });
+    }
+  });
+
+});
+
+
+router.post('/eventFormSubmit', function(req, res){
+  var eventUrl = req.body.eventUrl;
+  var currentSubmission = req.body.form;
+
+  console.log(currentSubmission);
+
+  Event.findOne({"eventUrl":eventUrl}, function(err, doc){
+    if (err) {
+      console.log(err);
+      return res.send({
+        state: "failure",
+        msg: "Oh Noes!"
+      });
+    } else {
+
+      for(var i = 0; currentSubmission.length > i; i++) {
+        if (currentSubmission[i]) {
+          if (doc.results[i]) {
+            doc.results[i].result = parseInt(doc.results[i].result) + parseInt(currentSubmission[i]);
+          } else {
+            doc.results[i] = {result: parseInt(currentSubmission[i])};
+          }
+        }
+      }
+
+      doc.markModified('results');
+      doc.save(function () {
+        console.log("event updated!");
+      });
+
+      return res.send({
+        state: "success",
+        msg: "WOOT!"
+      });
+    }
+  });
+
+});
+
+
+
 //creates teh event and calls createPlaces and addPlaces fx, then sends data to angular
 function createEvent (req,res,randomS) {
   var formData = req.body;

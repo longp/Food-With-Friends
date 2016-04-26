@@ -37,6 +37,7 @@ app.config(function (uiGmapGoogleMapApiProvider) {
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
   $facebookProvider.setAppId('1702470703324769');
+
   $routeProvider
     //The Welcome Cards are Displayed
     .when('/', {
@@ -75,6 +76,10 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     .when('/facebook',{
       templateUrl:'partials/facebook.html',
       controller: 'facebookController'
+    })
+    .when('/eventform/:id',{
+      templateUrl:'/partials/eventForm.html',
+      controller: 'eventFormController'
     })
     .when('/map', {
       templateUrl:'partials/maps.html',
@@ -232,6 +237,61 @@ app.controller('createEventController', function($scope, $http, $location, $rout
   };
 });
 
+app.controller('eventFormController', function($scope, $http, $location, $routeParams){
+  $scope.eventId = $routeParams.id;
+  $scope.event = {
+    name: "",
+    places: []
+  }
+  $scope.form = [];
+
+
+  $scope.$watch('$viewContentLoaded', function() {
+    var req = {
+      method: 'POST',
+      url: '/api/eventData',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: {eventUrl: $scope.eventId}
+    };
+
+    $http(req).success(function(responce){
+      if (responce.state === "success"){
+        $scope.event = {
+          name: responce.data.name,
+          places: responce.data.places
+        }
+      }
+    });
+  });
+
+
+  $scope.submit = function () {
+    console.log($scope.form);
+
+    var req = {
+      method: 'POST',
+      url: '/api/eventFormSubmit',
+      headers: {
+        'Content-Type': "application/JSON"
+      },
+      data: {
+        form: $scope.form,
+        eventUrl: $scope.eventId
+      }
+    };
+
+    $http(req).success(function(responce){
+      if (responce.state === "success"){
+        console.log("Your form has been submitted!!!");
+        $location.path('/');
+      }
+    });
+  };
+
+});
+
 app.controller('facebookController', function ($scope, $facebook)  {
   $scope.isLoggedIn = false;
   $scope.login = function() {
@@ -336,31 +396,31 @@ app.controller('myaccountController', function($http, $scope){
   $scope.myAccount();
 })
 
-  app.controller('myEventController', function ($http, $scope) {
-    $scope.findMyEvents = function () {
-      $http({
-        method:'POST',
-        url: '/event/find',
-        data:$scope.search
-      }).success(function (data) {
-        $scope.events = data;
-        console.log(data)
-      })
-      .catch(function (err) {
-        console.log(err)
-      })
-    }
-    $scope.ShowAllEvents = function () {
-      $http({
-        method:'POST',
-        url: '/event/all',
-        data:$scope.search
-      }).success(function (data) {
-        $scope.events = data;
-        console.log(data)
-      })
-      .catch(function (err) {
-        console.log(err)
-      })
-    }
-  })
+app.controller('myEventController', function ($http, $scope) {
+  $scope.findMyEvents = function () {
+    $http({
+      method:'POST',
+      url: '/event/find',
+      data:$scope.search
+    }).success(function (data) {
+      $scope.events = data;
+      console.log(data)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+  }
+  $scope.ShowAllEvents = function () {
+    $http({
+      method:'POST',
+      url: '/event/all',
+      data:$scope.search
+    }).success(function (data) {
+      $scope.events = data;
+      console.log(data)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+  }
+})

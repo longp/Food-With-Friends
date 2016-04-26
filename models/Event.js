@@ -27,6 +27,7 @@ var eventSchema = new Schema ({
   date:{
     type: Date,
   },
+  results: [],
   createdAt: {
     type: Date,
     default: Date.now

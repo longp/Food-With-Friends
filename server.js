@@ -65,6 +65,7 @@ app.use(passport.session());
 app.use("/", express.static("public"));
 app.use("/js", express.static("public/js"));
 app.use("/css", express.static("public/css"));
+app.use("/partials", express.static("public/partials"));
 
 
 // Routes
