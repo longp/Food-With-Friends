@@ -37,6 +37,7 @@ app.config(function (uiGmapGoogleMapApiProvider) {
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
   $facebookProvider.setAppId('1702470703324769');
+
   $routeProvider
     //The Welcome Cards are Displayed
     .when('/', {
@@ -75,6 +76,10 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
     .when('/facebook',{
       templateUrl:'partials/facebook.html',
       controller: 'facebookController'
+    })
+    .when('/eventform/:id',{
+      templateUrl:'/partials/eventForm.html',
+      controller: 'eventFormController'
     })
     .when('/map', {
       templateUrl:'partials/maps.html',
