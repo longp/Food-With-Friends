@@ -67,7 +67,7 @@ router.post('/eventFormSubmit', function(req, res){
 
   console.log(currentSubmission);
 
-  Event.findOneAndUpdate({"eventUrl":eventUrl}, { results: currentSubmission }, {upsert:true}, function(err, doc){
+  Event.findOne({"eventUrl":eventUrl}, function(err, doc){
     if (err) {
       console.log(err);
       return res.send({
@@ -75,13 +75,23 @@ router.post('/eventFormSubmit', function(req, res){
         msg: "Oh Noes!"
       });
     } else {
-      console.log(doc);
+
+      for(var i = 0; currentSubmission.length > i; i++) {
+        doc.results[i].result = parseInt(doc.results[i].result) + parseInt(currentSubmission[i]);
+      }
+
+      doc.markModified('results');
+      doc.save(function () {
+        console.log("event updated!");
+      });
+
       return res.send({
         state: "success",
         msg: "WOOT!"
       });
     }
   });
+
 });
 
 
