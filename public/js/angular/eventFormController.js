@@ -46,6 +46,7 @@ app.controller('eventFormController', function($scope, $http, $location, $routeP
     $http(req).success(function(responce){
       if (responce.state === "success"){
         console.log("Your form has been submitted!!!");
+        $location.path('/');
       }
     });
   };
