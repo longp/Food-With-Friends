@@ -7,8 +7,8 @@
     </div>
   </div>
   <br>
-  <div class="createEventForm">
-    <form ng-hide="newEvent.id" ng-submit="createEvent()">
+  <div class="createEventForm" >
+    <form  ng-submit="createEvent()" ng-hide="newEvent.id">
       <h3 class="newEventHeader"> Create an Event</h3>
       <input type="text" placeholder="Name of your event" ng-model="newEvent.name">
       <input type="text" placeholder="Type of Food (optional)" ng-model="newEvent.term">
@@ -16,6 +16,7 @@
       <button type="submit" name="button">submit</button>
     </form>
     <!-- shows after event is created -->
+
     <div ng-show="newEvent.id">
       <h3 class="newEventHeader">Invite friends with this url!</h3>
       <div class="col s6 offset-s3"><span class='event-url'>{{urlPath}}</span></div>
@@ -27,7 +28,7 @@
              <div ng-model="choice.name" class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
                 <input ng-model="item.name" id="icon_prefix" type="text" class="validate">
-                <label  for="icon_prefix">First Name</label>
+                <label  for="icon_prefix">Name</label>
              </div>
              <div class="input-field col s6">
                <i class="material-icons prefix">phone</i>
@@ -39,7 +40,12 @@
              </div>
            </div>
        </div>
-       <a href="/send"><button type="submit" class="btn btn-block ">Invite Friends!</button></a>
+
+       <div class="row">
+         <button type="button" class=" btn-block col s2 offset-s5" ng-click="addfield()">Add Friend!</button>
+       </div>
+       <button ng-click="goToEvent()" type="submit" class="btn btn-block ">Invite Friends!</button>
+
       </form>
     </div>
   </div>
