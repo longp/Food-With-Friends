@@ -9,6 +9,7 @@ body {
   background-image: url('/img/Recipes.jpg');
   background-size:cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 footer{
