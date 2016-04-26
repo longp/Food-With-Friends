@@ -77,7 +77,13 @@ router.post('/eventFormSubmit', function(req, res){
     } else {
 
       for(var i = 0; currentSubmission.length > i; i++) {
-        doc.results[i].result = parseInt(doc.results[i].result) + parseInt(currentSubmission[i]);
+        if (currentSubmission[i]) {
+          if (doc.results[i]) {
+            doc.results[i].result = parseInt(doc.results[i].result) + parseInt(currentSubmission[i]);
+          } else {
+            doc.results[i] = {result: parseInt(currentSubmission[i])};
+          }
+        }
       }
 
       doc.markModified('results');
