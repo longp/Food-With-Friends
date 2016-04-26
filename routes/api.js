@@ -162,6 +162,7 @@ function createEvent (req,res,randomS) {
   yelp.search({
     term: formData.term,
     location: formData.location,
+    limit:10
   })
     .then(function(data) {
       var lat = data.region.center.latitude;
@@ -200,7 +201,7 @@ function createEvent (req,res,randomS) {
 
 //creates the places found in the yelpseach location and adds to mongo
 function createPlaces (data, event){
-  for (var i = data.businesses.length-1; i >= 0; i--) {
+  for (var i = data.businesses.length-1;  i >= 0; i--) {
     var categoryArr = [];
     if (data.businesses[i].categories.length && data.businesses[i].categories.length>0) {
       for (var j = data.businesses[i].categories.length - 1; j >= 0; j--) {
