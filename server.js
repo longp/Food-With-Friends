@@ -30,7 +30,7 @@ var api = require('./routes/api.js');
 var formRoute = require('./routes/formRoute.js');
 var eventRoute = require('./routes/eventRoute.js');
 var accountRoute = require('./routes/accountRoute.js');
-
+var attendeeRoute  = require('./routes/attendeeRoute.js');
 // Express Port Declaration
 
 var PORT = process.env.PORT || 3000;
@@ -76,7 +76,7 @@ app.use('/api', api);
 app.use('/form', formRoute);
 app.use('/event', eventRoute);
 app.use('/acc', accountRoute);
-
+app.use('/attendee', attendeeRoute);
 
 
 

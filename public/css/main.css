@@ -28,6 +28,14 @@ label{
   color: MediumOrchid;
   font-size: 1.4em;
 }
+.angular-google-map-container {
+  position: absolute;
+  position: relative;
+  width: 1000px;
+  height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .myEventBtn{
   opacity: 0.9;
 }
@@ -58,7 +66,7 @@ label{
   border-radius: 5px;
   background-color: white;
   opacity: 0.9;
-  margin-top: 150px;
+  margin-top: 10vh;
   width: 700px;
   margin-left: auto;
   margin-right: auto;
@@ -101,6 +109,13 @@ label{
   margin-left: auto;
   margin-right: auto;
 }
+.myEventResults{
+  border-radius: 5px;
+  border-color: red;
+  background-color: black;
+  opacity: 0.9;
+  width: 700px;
+}
 ::-webkit-input-placeholder {
    color: #283593;
    font-weight: bold;
@@ -116,6 +131,12 @@ label{
 }
 #formHead{
 color: RED;
+}
+#map_canvas {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  position: relative;
 }
 .formtxt{
   color: teal;
@@ -139,10 +160,21 @@ input[type=email]:focus{
   box-shadow: 0 1px 0 0 white;
 
 }
+input[type=tel],
+input[type=tel]:focus{
+  color: darkblue;
+  border-bottom: 11px solid #39ACA1;
+  box-shadow: 0 1px 0 0 white;
+
+}
 #input-field {
   background-color: BlanchedAlmond;
 }
-.eventimg {
+span.ng-binding:{
+  font-size: 1.2em;
+  colr-red;
+}
+.event-img {
   width: 200px;
    height: 100px;
  }

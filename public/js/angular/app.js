@@ -1,10 +1,11 @@
-var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+var app = angular.module('mainApp', ['ngRoute', 'ngFacebook','uiGmapgoogle-maps', 'nemLogging']);
 
-app.run(function($rootScope) {
+app.run(function($rootScope, $http) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
-
+  $http.defaults.headers.common['Accept'] = 'application/json';
+   $http.defaults.headers.common['Content-Type'] = 'application/json';
   // Load the facebook SDK asynchronously
   (function(){
      // If we've already installed the SDK, we're done
@@ -25,6 +26,13 @@ app.run(function($rootScope) {
    }());
 });
 
+app.config(function (uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyDcaTjAeuU6Qb7DNvUy0i-MldMRfh0K3uk',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+})
 
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
@@ -56,7 +64,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
-    .when('/event', {
+      .when('/event', {
       templateUrl:'partials/event.html',
       controller:'myEventController'
     })
@@ -74,7 +82,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       controller: 'eventFormController'
     })
     .when('/map', {
-      templateUrl:'partials/googleMap.html',
+      templateUrl:'partials/maps.html',
       controller: 'googleController'
     })
     //send sms

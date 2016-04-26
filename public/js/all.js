@@ -1,10 +1,11 @@
-var app = angular.module('mainApp', ['ngRoute', 'ngFacebook'])
+var app = angular.module('mainApp', ['ngRoute', 'ngFacebook','uiGmapgoogle-maps', 'nemLogging']);
 
-app.run(function($rootScope) {
+app.run(function($rootScope, $http) {
   $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.message = '';
-
+  $http.defaults.headers.common['Accept'] = 'application/json';
+   $http.defaults.headers.common['Content-Type'] = 'application/json';
   // Load the facebook SDK asynchronously
   (function(){
      // If we've already installed the SDK, we're done
@@ -25,6 +26,13 @@ app.run(function($rootScope) {
    }());
 });
 
+app.config(function (uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyDcaTjAeuU6Qb7DNvUy0i-MldMRfh0K3uk',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+})
 
 
 app.config(function($routeProvider, $locationProvider, $facebookProvider){
@@ -56,7 +64,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl:'partials/createEvent.html',
       controller: 'createEventController',
     })
-    .when('/event', {
+      .when('/event', {
       templateUrl:'partials/event.html',
       controller:'myEventController'
     })
@@ -74,7 +82,7 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       controller: 'eventFormController'
     })
     .when('/map', {
-      templateUrl:'partials/googleMap.html',
+      templateUrl:'partials/maps.html',
       controller: 'googleController'
     })
     //send sms
@@ -139,10 +147,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
         $rootScope.current_user = data.user;
         $scope.user = data.user;
         $rootScope.message = '';
-        $location.path('/');
-        console.log("booyah");
-        console.log(data.user)
-      }
+        $location.path('/');      }
       else {
         $rootScope.message = data.message;
         $location.path('/login');
@@ -170,29 +175,65 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
   }
 });
 
-app.controller('createEventController', function($scope, $http, $location, $route, $rootScope) {
-  $scope.newEvent = {
-    term: "",
-    location: "",
-    eventUrl:''
-  };
+app.controller('createEventController', function($scope, $http, $location, $route, $rootScope, $window) {
+
+  // for local testing
+  var urlBegin = 'localhost:3000/eventform/';
+  // develop/heroku testng
+  // var urlBegin = 'http://getfoodwithfriends.herokuapp.com/eventform/'
+
+  // fx for creatign event and inputting to mongo db
   $scope.createEvent = function () {
     $http({
       method: "POST",
       url: "/api/createEvent",
       data: $scope.newEvent
     }).success(function (data) {
-      console.log(data)
       if (data.state == 'success') {
         $rootScope.message = data.message;
         $scope.newEvent.eventUrl = data.eventUrl;
+        $scope.newEvent.id = data.eventId;
+        $rootScope.urlPath= urlBegin + data.eventUrl;
         $location.path('/newEvent');
-        // $location.path('/newEvent/' +data.eventUrl);
       } else {
         $rootScope.message = data.message;
         $location.path('/newEvent');
       }
     });
+  };
+
+// fx to add attendee from input form and add to mongo
+  $scope.createAttendee = function () {
+      var inData = {'attendees':$scope.attendees, 'eventId':$scope.newEvent.id}
+    $http({
+      method:'POST',
+      url:'/api/createAttendee',
+      data:inData
+    })
+    .then(function (data) {
+      console.log('successful stuff')
+      console.log(data)
+      $window.location.href = '/event'
+      // $location.path('/event');
+
+
+    })
+    .catch(function (err) {console.log(err)})
+  }
+
+
+// logic for adding/removing new attendees
+   $scope.attendees = [];
+   $scope.addfield = function () {
+       $scope.attendees.push({})
+   }
+   $scope.getValue = function (item) {
+       alert(item.value)
+   }
+
+  $scope.removeChoice = function() {
+    var lastItem = $scope.attendees.length-1;
+    $scope.attendees.splice(lastItem);
   };
 });
 
@@ -271,7 +312,7 @@ app.controller('facebookController', function ($scope, $facebook)  {
   refresh();
 });
 
-  app.controller('formController', function ($http, $scope) {
+app.controller('formController', function ($http, $scope) {
     console.log('yoyo');
     $scope.form={
       term:'',
@@ -292,9 +333,24 @@ app.controller('facebookController', function ($scope, $facebook)  {
 
   })
 
+app.controller("googleController", function ($scope, nemSimpleLogger) {
+  nemSimpleLogger.doLog = true; //default is true
+  nemSimpleLogger.currentLevel = nemSimpleLogger.LEVELS.debug;//defaults to error only
+});
+
+app.controller("googleController", function($scope, uiGmapGoogleMapApi) {
+  var areaLat = 44.2126995,
+      areaLng = -100.2471641,
+      areaZoom = 3;
+  uiGmapGoogleMapApi.then(function (maps) {
+     $scope.map = { center: { latitude: areaLat, longitude: areaLng }, zoom: areaZoom };
+     $scope.options = { scrollwheel: false };
+ });
+});
+
 
 app.controller('mainController', function($scope, $rootScope, $http){
-  
+
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -302,7 +358,10 @@ app.controller('mainController', function($scope, $rootScope, $http){
       headers: {
         'Content-Type': "application/JSON"
       },
-      data: $scope.number
+      data: {
+        number: $scope.number,
+        url: $rootScope.urlPath
+      }
     };
     $http(req).success(function(data){
       if (data.state === success){
@@ -340,7 +399,7 @@ app.controller('myEventController', function ($http, $scope) {
   $scope.findMyEvents = function () {
     $http({
       method:'POST',
-      url: '/event/mine',
+      url: '/event/find',
       data:$scope.search
     }).success(function (data) {
       $scope.events = data;
@@ -350,4 +409,17 @@ app.controller('myEventController', function ($http, $scope) {
       console.log(err)
     })
   }
-});
+  $scope.ShowAllEvents = function () {
+    $http({
+      method:'POST',
+      url: '/event/all',
+      data:$scope.search
+    }).success(function (data) {
+      $scope.events = data;
+      console.log(data)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+  }
+})
