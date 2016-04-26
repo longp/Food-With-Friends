@@ -64,7 +64,29 @@ router.post('/createAttendee', function (req, res) {
 router.post('/sendSMS', function(req, res){
   client.messages.create({
       body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
-      to: req.body.number.phone1 + "",
+      to: req.body.number.phone1,
+      from: "+19086529320"
+  }, function(err, message) {
+      process.stdout.write(message.sid);
+  });
+  console.log(req.body);
+  res.send({
+    state: "success"
+  });
+  client.messages.create({
+      body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
+      to: req.body.number.phone2,
+      from: "+19086529320"
+  }, function(err, message) {
+      process.stdout.write(message.sid);
+  });
+  console.log(req.body);
+  res.send({
+    state: "success"
+  });
+  client.messages.create({
+      body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
+      to: req.body.number.phone3,
       from: "+19086529320"
   }, function(err, message) {
       process.stdout.write(message.sid);
