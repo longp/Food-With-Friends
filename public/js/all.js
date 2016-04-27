@@ -390,7 +390,7 @@ app.controller('mainController', function($scope, $rootScope, $http){
 });
 
 app.controller('myaccountController', function($http, $scope){
-  console.log("suh dude");
+
   $scope.users = {
     firstName: '',
     lastName:''
