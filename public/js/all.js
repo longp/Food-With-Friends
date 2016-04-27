@@ -474,4 +474,17 @@ app.controller('userEventController', function($http, $scope, $rootScope, $locat
     });
   }
 
+  $scope.sendEvent = function (event) {
+    $http({
+      method:'POST',
+      url: '/api/sendEvent',
+      data: {id: event._id}
+    }).success(function (data) {
+      console.log(data)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+  }
+
 })
