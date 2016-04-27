@@ -1,7 +1,20 @@
-
 app.controller('mainController', function($scope, $rootScope, $http){
 
-  $scope.submitted=false;
+  $scope.submitted = false;
+
+  $scope.numbers = [{
+      phoneNum: ""
+    }];
+
+  $scope.addNum = function () {
+    $scope.numbers.push({
+      phoneNum: ""
+    });
+  }
+
+  $scope.subNum = function () {
+    $scope.numbers.pop();
+  }
 
   $scope.sms = function(){
     var req = {
@@ -17,7 +30,7 @@ app.controller('mainController', function($scope, $rootScope, $http){
     };
     $http(req).success(function(data){
       if (data.state === "success"){
-        $scope.submitted=true;
+        $scope.submitted = true;
         console.log(data);
       }
     });
