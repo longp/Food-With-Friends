@@ -353,6 +353,8 @@ app.controller("googleController", function($scope, uiGmapGoogleMapApi) {
 
 app.controller('mainController', function($scope, $rootScope, $http){
 
+  $scope.submitted=false;
+
   $scope.sms = function(){
     var req = {
       method: 'POST',
@@ -366,7 +368,8 @@ app.controller('mainController', function($scope, $rootScope, $http){
       }
     };
     $http(req).success(function(data){
-      if (data.state === success){
+      if (data.state === "success"){
+        $scope.submitted=true;
         console.log(data);
       }
     });
