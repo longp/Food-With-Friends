@@ -69,29 +69,27 @@ router.post('/sendSMS', function(req, res){
   }, function(err, message) {
       process.stdout.write(message.sid);
   });
-  console.log(req.body);
-  res.send({
-    state: "success"
-  });
-  client.messages.create({
+
+  if (req.body.number.phone2) {
+    client.messages.create({
       body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
       to: req.body.number.phone2,
       from: "+19086529320"
-  }, function(err, message) {
-      process.stdout.write(message.sid);
-  });
-  console.log(req.body);
-  res.send({
-    state: "success"
-  });
-  client.messages.create({
+    }, function(err, message) {
+        process.stdout.write(message.sid);
+    });
+  }
+
+  if (req.body.number.phone3) {
+    client.messages.create({
       body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
       to: req.body.number.phone3,
       from: "+19086529320"
-  }, function(err, message) {
-      process.stdout.write(message.sid);
-  });
-  console.log(req.body);
+    }, function(err, message) {
+        process.stdout.write(message.sid);
+    });
+  }
+
   res.send({
     state: "success"
   });
