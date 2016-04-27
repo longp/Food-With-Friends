@@ -8,8 +8,10 @@ var yelp  = require('../config/yelp.js');
 var Event = require('../models/Event.js');
 var Attendee = require('../models/Attendee.js')
 var Place = require('../models/Place.js');
+var User = require('../models/user.js');
 // randomstring for url events
 var randomstring = require('randomstring');
+
 
 //geocoder setup
 var geocoderProvider = 'google';
@@ -62,37 +64,48 @@ router.post('/createAttendee', function (req, res) {
 
 // twilio route
 router.post('/sendSMS', function(req, res){
-  client.messages.create({
+
+  var phoneNumbers = req.body.numbers
+
+  for(var i = 0; phoneNumbers.length > i; i++) {
+    client.messages.create({
       body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
-      to: req.body.number.phone1,
+      to: phoneNumbers[i].phoneNum,
       from: "+19086529320"
-  }, function(err, message) {
+    }, function(err, message) {
       process.stdout.write(message.sid);
-  });
-
-  if (req.body.number.phone2) {
-    client.messages.create({
-      body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
-      to: req.body.number.phone2,
-      from: "+19086529320"
-    }, function(err, message) {
-        process.stdout.write(message.sid);
-    });
-  }
-
-  if (req.body.number.phone3) {
-    client.messages.create({
-      body: "You have been invited to an event by a friend, follow this link to reply " + req.body.url,
-      to: req.body.number.phone3,
-      from: "+19086529320"
-    }, function(err, message) {
-        process.stdout.write(message.sid);
     });
   }
 
   res.send({
     state: "success"
   });
+});
+
+
+router.post('/userEvents', function(req, res){
+
+  var userName = req.body.user;
+
+  User.findOne({username:userName})
+  .exec(function (err, data) {
+    var userId = data._id
+
+    var mongoose = require('mongoose');
+    var id = mongoose.Types.ObjectId(userId);
+
+    Event.find({createdby: id})
+    .populate('places')
+    .exec(function (err, eventData) {
+      if (eventData) {
+        res.send({
+          state: "success",
+          data: eventData
+        });
+      }
+    });
+  });
+
 });
 
 

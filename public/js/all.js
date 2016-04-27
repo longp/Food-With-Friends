@@ -95,6 +95,11 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl: 'partials/myaccount.html',
       controller: 'myaccountController'
     })
+    //my Events Routing
+    .when('/myEvents', {
+      templateUrl: 'partials/myEvents.html',
+      controller: 'userEventController'
+    })
     .otherwise({
         redirectTo: '/'
     });
@@ -350,10 +355,23 @@ app.controller("googleController", function($scope, uiGmapGoogleMapApi) {
  });
 });
 
-
 app.controller('mainController', function($scope, $rootScope, $http){
 
-  $scope.submitted=false;
+  $scope.submitted = false;
+
+  $scope.numbers = [{
+      phoneNum: ""
+    }];
+
+  $scope.addNum = function () {
+    $scope.numbers.push({
+      phoneNum: ""
+    });
+  }
+
+  $scope.subNum = function () {
+    $scope.numbers.pop();
+  }
 
   $scope.sms = function(){
     var req = {
@@ -363,13 +381,13 @@ app.controller('mainController', function($scope, $rootScope, $http){
         'Content-Type': "application/JSON"
       },
       data: {
-        number: $scope.number,
+        numbers: $scope.numbers,
         url: $rootScope.urlPath
       }
     };
     $http(req).success(function(data){
       if (data.state === "success"){
-        $scope.submitted=true;
+        $scope.submitted = true;
         console.log(data);
       }
     });
@@ -377,7 +395,7 @@ app.controller('mainController', function($scope, $rootScope, $http){
 });
 
 app.controller('myaccountController', function($http, $scope){
-  console.log("suh dude");
+
   $scope.users = {
     firstName: '',
     lastName:''
@@ -427,4 +445,33 @@ app.controller('myEventController', function ($http, $scope) {
       console.log(err)
     })
   }
+})
+
+app.controller('userEventController', function($http, $scope, $rootScope, $location){
+
+  $scope.events = [];
+
+  if (!$rootScope.authenticated) {
+    $location.path('/');
+  } else {
+    angular.element(document).ready(function () {
+      var req = {
+        method: 'POST',
+        url: '/api/userEvents',
+        headers: {
+          'Content-Type': "application/JSON"
+        },
+        data: {
+          user: $rootScope.current_user
+        }
+      };
+      $http(req).success(function(data){
+        if (data.state === "success"){
+          $scope.events = data.data;
+          console.log($scope.events);
+        }
+      });
+    });
+  }
+
 })
