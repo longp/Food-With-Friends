@@ -1,7 +1,5 @@
 # Food With Friends
 
-##NOTE: THIS PROJECT IS STILL IN DEVELOPMENT FOR DEMO APRIL 27TH 2016.
-
 ##This is live via https://getfoodwithfriends.herokuapp.com/
 
 ##A MEAN stack project dedicated to making bringing friends together easier.
