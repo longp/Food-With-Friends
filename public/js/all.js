@@ -376,7 +376,7 @@ app.controller('mainController', function($scope, $rootScope, $http){
         'Content-Type': "application/JSON"
       },
       data: {
-        number: $scope.number,
+        numbers: $scope.numbers,
         url: $rootScope.urlPath
       }
     };
