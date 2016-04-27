@@ -12,6 +12,7 @@ var User = require('../models/user.js');
 // randomstring for url events
 var randomstring = require('randomstring');
 
+var mongoose = require('mongoose');
 
 //geocoder setup
 var geocoderProvider = 'google';
@@ -65,7 +66,23 @@ router.post('/createAttendee', function (req, res) {
 // twilio route
 router.post('/sendSMS', function(req, res){
 
-  var phoneNumbers = req.body.numbers
+  var phoneNumbers = req.body.numbers;
+  var searchUrl = req.body.url.slice(-7);
+
+  Event.findOne({eventUrl:searchUrl})
+  .exec(function (err, eventData) {
+    if (err) {
+      console.log(err);
+    } else {
+      for(var i = 0; phoneNumbers.length > i; i++) {
+        Attendee.create({'phone':phoneNumbers[i].phoneNum, 'event':eventData.id}, function (err, doc) {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    }
+  });
 
   for(var i = 0; phoneNumbers.length > i; i++) {
     client.messages.create({
@@ -91,7 +108,6 @@ router.post('/userEvents', function(req, res){
   .exec(function (err, data) {
     var userId = data._id
 
-    var mongoose = require('mongoose');
     var id = mongoose.Types.ObjectId(userId);
 
     Event.find({createdby: id})
@@ -164,6 +180,50 @@ router.post('/eventFormSubmit', function(req, res){
   });
 
 });
+
+
+router.post('/sendEvent', function(req, res){
+
+  Attendee.find({event:req.body.id})
+  .exec(function (err, phoneData) {
+    if (phoneData) {
+      Event.findOne({_id:req.body.id})
+      .populate('places')
+      .exec(function (err, eventData) {
+        var highestIndex = 0;
+        var highestNum = 0;
+
+        for(var i = 0; eventData.results.length > i; i++) {
+          if (i === 0) {
+            highestNum = eventData.results[i].result;
+          } else {
+            if (eventData.results[i].result > highestNum) {
+              highestIndex = i;
+              highestNum = eventData.results[i].result;
+            }
+          }
+        }
+
+        for(var i = 0; phoneData.length > i; i++) {
+          console.log(phoneData[i].phone);
+          client.messages.create({
+            body: "You and your friends have decided to go to " + eventData.places[highestIndex].name + " located at " + eventData.places[highestIndex].address,
+            to: phoneData[i].phone,
+            from: "+19086529320"
+          }, function(err, message) {
+            process.stdout.write(message.sid);
+          });
+        }
+        res.send({
+          state: "success",
+          data: eventData
+        });
+      });
+    }
+  });
+
+});
+
 
 
 
