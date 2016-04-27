@@ -95,6 +95,11 @@ app.config(function($routeProvider, $locationProvider, $facebookProvider){
       templateUrl: 'partials/myaccount.html',
       controller: 'myaccountController'
     })
+    //my Events Routing
+    .when('/myEvents', {
+      templateUrl: 'partials/myEvents.html',
+      controller: 'userEventController'
+    })
     .otherwise({
         redirectTo: '/'
     });

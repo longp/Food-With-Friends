@@ -8,8 +8,10 @@ var yelp  = require('../config/yelp.js');
 var Event = require('../models/Event.js');
 var Attendee = require('../models/Attendee.js')
 var Place = require('../models/Place.js');
+var User = require('../models/user.js');
 // randomstring for url events
 var randomstring = require('randomstring');
+
 
 //geocoder setup
 var geocoderProvider = 'google';
@@ -78,6 +80,32 @@ router.post('/sendSMS', function(req, res){
   res.send({
     state: "success"
   });
+});
+
+
+router.post('/userEvents', function(req, res){
+
+  var userName = req.body.user;
+
+  User.findOne({username:userName})
+  .exec(function (err, data) {
+    var userId = data._id
+
+    var mongoose = require('mongoose');
+    var id = mongoose.Types.ObjectId(userId);
+
+    Event.find({createdby: id})
+    .populate('places')
+    .exec(function (err, eventData) {
+      if (eventData) {
+        res.send({
+          state: "success",
+          data: eventData
+        });
+      }
+    });
+  });
+
 });
 
 
